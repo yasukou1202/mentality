@@ -600,7 +600,6 @@ async function loadESPNScoreboard() {
     }
 
     GAMES['0'] = parseESPNGames(events);
-    dateOff = 0;
 
     const dateEl = document.getElementById('dbDate');
     if (dateEl) dateEl.textContent = toJPDateLabel(jp);
