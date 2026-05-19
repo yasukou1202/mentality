@@ -46,8 +46,6 @@
 <nav class="second-nav">
   <button class="sn on" id="sn-schedule" onclick="goPage('schedule',this)">試合情報</button>
   <div class="sn-divider"></div>
-  <button class="sn" id="sn-japan"    onclick="goPage('japan',this)">🇯🇵日本人</button>
-  <div class="sn-divider"></div>
   <button class="sn" id="sn-news"     onclick="goPage('news',this)">📡速報</button>
   <div class="sn-divider"></div>
   <button class="sn" id="sn-stats"    onclick="goPage('stats',this)">スタッツ</button>
@@ -86,96 +84,6 @@
 
 
 <div class="main" id="mainScroll">
-
-  
-  <div class="pg" id="pg-japan">
-    <div class="pg-title">🇯🇵 日本人選手 <span class="pg-badge badge-live">ONLY HERE</span></div>
-
-    
-    <div class="jp-section">
-      <div class="jp-section-title">🏆 今週のMVP投票</div>
-      <div class="jp-section-sub">毎週月曜リセット・結果をXでシェア</div>
-      <div class="mvp-grid" id="mvpGrid">
-        <div class="mvp-card" data-player="kawamura">
-          <div class="mvp-num">#8</div>
-          <div class="mvp-name">河村 勇輝</div>
-          <div class="mvp-team">CHI</div>
-          <div class="mvp-bar-wrap"><div class="mvp-bar" id="bar-kawamura"></div></div>
-          <div class="mvp-count" id="cnt-kawamura">0票</div>
-          <button class="mvp-vote-btn" id="btn-kawamura" onclick="votePlayer('kawamura')">投票する</button>
-        </div>
-        <div class="mvp-card" data-player="hachimura">
-          <div class="mvp-num">#28</div>
-          <div class="mvp-name">八村 塁</div>
-          <div class="mvp-team">LAL</div>
-          <div class="mvp-bar-wrap"><div class="mvp-bar" id="bar-hachimura"></div></div>
-          <div class="mvp-count" id="cnt-hachimura">0票</div>
-          <button class="mvp-vote-btn" id="btn-hachimura" onclick="votePlayer('hachimura')">投票する</button>
-        </div>
-
-      </div>
-      <button class="mvp-share-btn" onclick="shareMvpResult()">📤 結果をXでシェア</button>
-    </div>
-
-    
-    <div class="jp-section">
-      <div class="jp-section-title">📊 今シーズンのスタッツ</div>
-
-      
-      <div class="jp-player-card">
-        <div class="jp-player-header">
-          <div class="jp-player-badge">CHI #8</div>
-          <div class="jp-player-info">
-            <div class="jp-player-name">河村 勇輝</div>
-            <div class="jp-player-en">Yuki Kawamura · PG</div>
-          </div>
-        </div>
-        <div class="jp-stats-row">
-          <div class="jp-stat"><div class="jp-stat-val">12.4</div><div class="jp-stat-lbl">PTS</div></div>
-          <div class="jp-stat"><div class="jp-stat-val">2.1</div><div class="jp-stat-lbl">REB</div></div>
-          <div class="jp-stat"><div class="jp-stat-val">6.2</div><div class="jp-stat-lbl">AST</div></div>
-          <div class="jp-stat"><div class="jp-stat-val">1.4</div><div class="jp-stat-lbl">STL</div></div>
-          <div class="jp-stat"><div class="jp-stat-val">38.1%</div><div class="jp-stat-lbl">3P%</div></div>
-        </div>
-        <div class="jp-comment-wrap">
-          <div class="jp-comment-label">💬 応援コメント</div>
-          <div class="jp-comment-list" id="comments-kawamura"></div>
-          <div class="jp-comment-input-row">
-            <input class="jp-comment-input" id="cinput-kawamura" placeholder="河村選手へのコメント..." maxlength="60">
-            <button class="jp-comment-send" onclick="sendJpComment('kawamura')">送信</button>
-          </div>
-        </div>
-      </div>
-
-      
-      <div class="jp-player-card">
-        <div class="jp-player-header">
-          <div class="jp-player-badge">LAL #28</div>
-          <div class="jp-player-info">
-            <div class="jp-player-name">八村 塁</div>
-            <div class="jp-player-en">Rui Hachimura · PF</div>
-          </div>
-        </div>
-        <div class="jp-stats-row">
-          <div class="jp-stat"><div class="jp-stat-val">14.2</div><div class="jp-stat-lbl">PTS</div></div>
-          <div class="jp-stat"><div class="jp-stat-val">5.4</div><div class="jp-stat-lbl">REB</div></div>
-          <div class="jp-stat"><div class="jp-stat-val">1.8</div><div class="jp-stat-lbl">AST</div></div>
-          <div class="jp-stat"><div class="jp-stat-val">0.8</div><div class="jp-stat-lbl">STL</div></div>
-          <div class="jp-stat"><div class="jp-stat-val">41.3%</div><div class="jp-stat-lbl">3P%</div></div>
-        </div>
-        <div class="jp-comment-wrap">
-          <div class="jp-comment-label">💬 応援コメント</div>
-          <div class="jp-comment-list" id="comments-hachimura"></div>
-          <div class="jp-comment-input-row">
-            <input class="jp-comment-input" id="cinput-hachimura" placeholder="八村選手へのコメント..." maxlength="60">
-            <button class="jp-comment-send" onclick="sendJpComment('hachimura')">送信</button>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
 
   
   <div class="pg show" id="pg-schedule">
