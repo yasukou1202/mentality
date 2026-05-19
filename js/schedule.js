@@ -1,3 +1,4 @@
+function restoreNotifyBtns() {}
 // loadLiveChat stub
 function loadLiveChat(id) { console.log("chat:", id); }
 // schedule.js — 試合情報・スコア・詳細パネル
