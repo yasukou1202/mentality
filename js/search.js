@@ -552,4 +552,3 @@ document.addEventListener('DOMContentLoaded', () => {
   } catch(e) {}
 });
 
-</script>
