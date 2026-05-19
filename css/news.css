@@ -1,0 +1,152 @@
+/* news.css — 速報・RSSフィード・記事表示 */
+
+margin-bottom: .3rem;
+  overflow: hidden;
+}
+.mvp-bar {
+  height: 100%;
+  background: var(--or);
+  border-radius: 2px;
+  width: 0%;
+  transition: width .5s ease;
+}
+.mvp-count { font-size: .65rem; color: var(--tx3); margin-bottom: .4rem; }
+.mvp-vote-btn {
+  width: 100%;
+  background: var(--or);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: .3rem .2rem;
+  font-size: .65rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity .15s;
+}
+.mvp-vote-btn:disabled {
+  background: var(--bg3);
+  color: var(--tx3);
+  cursor: default;
+}
+.mvp-vote-btn.voted { background: var(--gr); }
+.mvp-share-btn {
+  width: 100%;
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: var(--r-md);
+  padding: .6rem;
+  font-size: .78rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: .02em;
+}
+
+/* =====================================================
+   🗳️ 試合前勝敗投票 (Lv2)
+   ===================================================== */
+.vote-panel {
+  background: var(--card);
+  border-radius: var(--r-md);
+  border: 1px solid var(--bd);
+  padding: .75rem;
+  margin-bottom: .5rem;
+}
+.vote-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--tx2);
+  letter-spacing: .04em;
+  text-align: center;
+  margin-bottom: .6rem;
+}
+.vote-row {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.vote-btn {
+  flex: 1;
+  padding: .55rem;
+  border: 2px solid var(--bd);
+  border-radius: var(--r-md);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  cursor: pointer;
+  background: var(--bg2);
+  color: var(--tx);
+  transition: all .15s;
+}
+.vote-btn:active { transform: scale(.97); }
+.vote-btn.voted-pick { background: var(--or); color: #fff; border-color: var(--or); }
+.vote-vs {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .9rem;
+  color: var(--tx3);
+  flex-shrink: 0;
+}
+.vote-result { margin-top: .6rem; }
+.vote-bar-wrap {
+  display: flex;
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: .35rem;
+}
+.vote-bar-home { background: var(--or); height: 100%; transition: width .5s ease; }
+.vote-bar-away { background: var(--cy); height: 100%; transition: width .5s ease; }
+.vote-pct-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: .68rem;
+  color: var(--tx3);
+  font-family: 'Space Mono', monospace;
+}
+/* =====================================================
+   🔔 Lv4: 推しチーム通知
+   ===================================================== */
+.notify-bar {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: var(--r-md);
+  padding: .6rem .75rem;
+  margin-bottom: .5rem;
+}
+.notify-bar-text { flex: 1; font-size: .75rem; color: var(--tx2); }
+.notify-bar-text strong { color: var(--tx); font-weight: 600; }
+.notify-toggle-btn {
+  background: var(--or);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: .35rem .7rem;
+  font-size: .72rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .15s;
+}
+.notify-toggle-btn.on { background: var(--gr); }
+.notify-toggle-btn.off { background: var(--bg3); color: var(--tx3); }
+
+/* =====================================================
+   🏀 Lv5: 試合ごとリアルタイム実況チャット
+   ===================================================== */
+.live-chat-panel {
+  margin-top: .4rem;
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+.live-chat-header {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .5rem .75rem;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--bd);

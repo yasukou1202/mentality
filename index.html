@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>NBA日本語まとめ・速報・ハイライト</title>
+<meta name="description" content="NBAの試合速報・ハイライト動画・海外反応を日本語でリアルタイム配信。河村勇輝・八村塁の最新情報、スタッツ、順位表も。">
+<meta name="keywords" content="NBA,NBA日本語,NBAまとめ,NBAハイライト,NBA速報,河村勇輝,八村塁,NBAプレーオフ,NBA順位表,NBAスタッツ">
+<meta name="author" content="MENTALITY">
+<meta property="og:title" content="NBA日本語まとめ・速報・ハイライト">
+<meta property="og:description" content="NBAの試合速報・ハイライト動画・海外反応を日本語でリアルタイム配信。河村勇輝・八村塁の最新情報も。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://reliable-kitsune-62166e.netlify.app">
+<meta property="og:site_name" content="MENTALITY">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NBA日本語まとめ・速報・ハイライト">
+<meta name="twitter:description" content="NBAの試合速報・ハイライト動画・海外反応を日本語でリアルタイム配信。">
+
+<!-- ===== CSS (読み込み順: base → layout → 各機能) ===== -->
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/schedule.css">
+<link rel="stylesheet" href="css/players.css">
+<link rel="stylesheet" href="css/stats.css">
+<link rel="stylesheet" href="css/chat.css">
+<link rel="stylesheet" href="css/news.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+</head>
+<body>
+
+
+<nav class="top-nav">
+  <div class="logo">MENT<span>ALITY</span></div>
+  <div class="nav-online">
+    <span class="nav-online-dot"></span>
+    <span id="siteOnlineCount">-- 人が閲覧中</span>
+  </div>
+  <div class="nav-sp"></div>
+  <button class="nav-search" onclick="toggleSearch()">🔍</button>
+</nav>
+
+
+<nav class="second-nav">
+  <button class="sn on" id="sn-schedule" onclick="goPage('schedule',this)">試合情報</button>
+  <div class="sn-divider"></div>
+  <button class="sn" id="sn-japan"    onclick="goPage('japan',this)">🇯🇵日本人</button>
+  <div class="sn-divider"></div>
+  <button class="sn" id="sn-news"     onclick="goPage('news',this)">📡速報</button>
+  <div class="sn-divider"></div>
+  <button class="sn" id="sn-stats"    onclick="goPage('stats',this)">スタッツ</button>
+  <div class="sn-divider"></div>
+  <button class="sn" id="sn-teams"    onclick="goPage('teams',this)">チャット</button>
+  <div class="sn-divider"></div>
+  <button class="sn" id="sn-players"  onclick="goPage('players',this)">選手一覧</button>
+</nav>
+
+
+<div class="srch-overlay" id="srchOverlay" onclick="if(event.target===this)closeSearch()">
+  <div class="srch-box">
+    <div class="si-row">
+      <span class="si-ico">🔍</span>
+      <input class="si-inp" id="srchInp"
+        placeholder="選手・チーム・ニュースを検索..."
+        oninput="doSearch(this.value)"
+        autocomplete="off">
+      <button class="si-close" onclick="closeSearch()">✕</button>
+    </div>
+    <div class="srch-tags">
+      <button class="stag" onclick="qs('河村勇輝')">河村勇輝</button>
+      <button class="stag" onclick="qs('八村塁')">八村塁</button>
+      <button class="stag" onclick="qs('LAL')">LAL</button>
+      <button class="stag" onclick="qs('GSW')">GSW</button>
+      <button class="stag" onclick="qs('トレード')">トレード</button>
+    </div>
+    <div class="srch-results" id="srchResults">
+      <div class="srch-empty">
+        <div style="font-size:2rem;margin-bottom:.4rem;">🏀</div>
+        <div style="font-size:.78rem;color:var(--tx3);">選手・チーム名で検索</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="main" id="mainScroll">
+
+  
+  <div class="pg" id="pg-japan">
+    <div class="pg-title">🇯🇵 日本人選手 <span class="pg-badge badge-live">ONLY HERE</span></div>
+
+    
+    <div class="jp-section">
+      <div class="jp-section-title">🏆 今週のMVP投票</div>
+      <div class="jp-section-sub">毎週月曜リセット・結果をXでシェア</div>
+      <div class="mvp-grid" id="mvpGrid">
+        <div class="mvp-card" data-player="kawamura">
+          <div class="mvp-num">#8</div>
+          <div class="mvp-name">河村 勇輝</div>
+          <div class="mvp-team">CHI</div>
+          <div class="mvp-bar-wrap"><div class="mvp-bar" id="bar-kawamura"></div></div>
+          <div class="mvp-count" id="cnt-kawamura">0票</div>
+          <button class="mvp-vote-btn" id="btn-kawamura" onclick="votePlayer('kawamura')">投票する</button>
+        </div>
+        <div class="mvp-card" data-player="hachimura">
+          <div class="mvp-num">#28</div>
+          <div class="mvp-name">八村 塁</div>
+          <div class="mvp-team">LAL</div>
+          <div class="mvp-bar-wrap"><div class="mvp-bar" id="bar-hachimura"></div></div>
+          <div class="mvp-count" id="cnt-hachimura">0票</div>
+          <button class="mvp-vote-btn" id="btn-hachimura" onclick="votePlayer('hachimura')">投票する</button>
+        </div>
+
+      </div>
+      <button class="mvp-share-btn" onclick="shareMvpResult()">📤 結果をXでシェア</button>
+    </div>
+
+    
+    <div class="jp-section">
+      <div class="jp-section-title">📊 今シーズンのスタッツ</div>
+
+      
+      <div class="jp-player-card">
+        <div class="jp-player-header">
+          <div class="jp-player-badge">CHI #8</div>
+          <div class="jp-player-info">
+            <div class="jp-player-name">河村 勇輝</div>
+            <div class="jp-player-en">Yuki Kawamura · PG</div>
+          </div>
+        </div>
+        <div class="jp-stats-row">
+          <div class="jp-stat"><div class="jp-stat-val">12.4</div><div class="jp-stat-lbl">PTS</div></div>
+          <div class="jp-stat"><div class="jp-stat-val">2.1</div><div class="jp-stat-lbl">REB</div></div>
+          <div class="jp-stat"><div class="jp-stat-val">6.2</div><div class="jp-stat-lbl">AST</div></div>
+          <div class="jp-stat"><div class="jp-stat-val">1.4</div><div class="jp-stat-lbl">STL</div></div>
+          <div class="jp-stat"><div class="jp-stat-val">38.1%</div><div class="jp-stat-lbl">3P%</div></div>
+        </div>
+        <div class="jp-comment-wrap">
+          <div class="jp-comment-label">💬 応援コメント</div>
+          <div class="jp-comment-list" id="comments-kawamura"></div>
+          <div class="jp-comment-input-row">
+            <input class="jp-comment-input" id="cinput-kawamura" placeholder="河村選手へのコメント..." maxlength="60">
+            <button class="jp-comment-send" onclick="sendJpComment('kawamura')">送信</button>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="jp-player-card">
+        <div class="jp-player-header">
+          <div class="jp-player-badge">LAL #28</div>
+          <div class="jp-player-info">
+            <div class="jp-player-name">八村 塁</div>
+            <div class="jp-player-en">Rui Hachimura · PF</div>
+          </div>
+        </div>
+        <div class="jp-stats-row">
+          <div class="jp-stat"><div class="jp-stat-val">14.2</div><div class="jp-stat-lbl">PTS</div></div>
+          <div class="jp-stat"><div class="jp-stat-val">5.4</div><div class="jp-stat-lbl">REB</div></div>
+          <div class="jp-stat"><div class="jp-stat-val">1.8</div><div class="jp-stat-lbl">AST</div></div>
+          <div class="jp-stat"><div class="jp-stat-val">0.8</div><div class="jp-stat-lbl">STL</div></div>
+          <div class="jp-stat"><div class="jp-stat-val">41.3%</div><div class="jp-stat-lbl">3P%</div></div>
+        </div>
+        <div class="jp-comment-wrap">
+          <div class="jp-comment-label">💬 応援コメント</div>
+          <div class="jp-comment-list" id="comments-hachimura"></div>
+          <div class="jp-comment-input-row">
+            <input class="jp-comment-input" id="cinput-hachimura" placeholder="八村選手へのコメント..." maxlength="60">
+            <button class="jp-comment-send" onclick="sendJpComment('hachimura')">送信</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  
+  <div class="pg show" id="pg-schedule">
+    <div class="pg-title">本日の試合情報 <span class="pg-badge badge-live">TODAY</span></div>
+    <div class="date-bar">
+      <button class="db-btn" onclick="moveDate(-1)">‹</button>
+      <div class="db-center">
+        <div class="db-date" id="dbDate"></div>
+        <div class="db-sub"  id="dbSub"></div>
+      </div>
+      <button class="db-btn" onclick="moveDate(1)">›</button>
+    </div>
+    <div id="gameWrap"></div>
+  </div>
+
+  
+  <div class="pg" id="pg-news">
+    <div class="pg-title">📡 NBA速報 <span class="pg-badge badge-live">日本語</span></div>
+    <div style="display:flex;justify-content:flex-end;margin-bottom:.5rem;">
+      <button onclick="rssLoaded=false;loadRSSNews()" style="background:var(--bg3);border:1px solid var(--bd);border-radius:6px;padding:.3rem .7rem;font-size:.7rem;color:var(--tx3);cursor:pointer;">🔄 更新</button>
+    </div>
+    <div id="rssFeed" class="rss-feed-wrap">
+      <div class="rss-loading">📡 最新ニュースを取得中...</div>
+    </div>
+  </div>
+
+  
+  <div class="pg" id="pg-stats">
+    <div class="pg-title">スタッツ/順位 <span class="pg-badge badge-season">2025-26</span></div>
+
+    
+    <div class="conf-row" style="margin-bottom:.65rem;">
+      <button class="conf-btn on" id="btn-season"  onclick="switchMode(this,'season')">レギュラー</button>
+      <button class="conf-btn"    id="btn-playoff" onclick="switchMode(this,'playoff')">プレーオフ</button>
+    </div>
+
+    <div class="pg-title" style="font-size:.95rem;margin-bottom:.45rem;">スタッツ</div>
+
+    
+    <div style="display:flex;gap:.4rem;margin-bottom:.5rem;">
+      <button class="stat-type-btn on" onclick="switchStatType(this,'avg')">平均</button>
+      <button class="stat-type-btn"    onclick="switchStatType(this,'tot')">合計</button>
+    </div>
+
+    <div class="stat-cats" id="statCats"></div>
+    <div id="statsLoading" style="display:none;">📊 データ取得中...</div>
+    <div class="leader-list" id="leaderList"></div>
+
+    
+    <div style="margin-top:1.2rem;">
+      <div class="pg-title" style="font-size:.95rem;">順位表</div>
+      <div class="conf-row">
+        <button class="conf-btn on" onclick="showConf(this,'east')">イースト</button>
+        <button class="conf-btn"    onclick="showConf(this,'west')">ウェスト</button>
+      </div>
+      <div id="standingsWrap"></div>
+    </div>
+  </div>
+
+  
+  <div id="playerModal"
+    style="display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);overflow-y:auto;"
+    onclick="if(event.target===this)closePlayerModal()">
+    <div style="max-width:480px;margin:0 auto;min-height:100%;display:flex;align-items:flex-start;padding:.5rem;">
+      <div id="playerModalInner"
+        style="background:var(--card);border-radius:12px;overflow:hidden;width:100%;margin-top:2rem;margin-bottom:2rem;">
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="pg" id="pg-teams">
+    <div class="pg-title">チームチャット <span class="pg-badge badge-season">30チーム</span></div>
+    <div class="conf-row">
+      <button class="conf-btn on" onclick="filterConf(this,'east')">イースト</button>
+      <button class="conf-btn"    onclick="filterConf(this,'west')">ウェスト</button>
+      <button class="conf-btn"    onclick="filterConf(this,'all')">全30</button>
+    </div>
+    <div id="teamList"></div>
+  </div>
+
+  
+  <div class="pg" id="pg-players">
+    <div class="pg-title">チーム/選手一覧</div>
+
+    <div style="position:relative;margin-bottom:.6rem;">
+      <span style="position:absolute;left:.6rem;top:50%;transform:translateY(-50%);color:var(--tx3);">🔍</span>
+      <input id="playerSearchInput" type="text"
+        placeholder="選手名を検索（例：LeBron, カリー）"
+        class="player-search-input"
+        oninput="filterPlayers(this.value)">
+    </div>
+
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin-bottom:.65rem;">
+      <div id="playerFilter" style="display:inline-flex;gap:.35rem;padding:.1rem .05rem;"></div>
+    </div>
+
+    <div id="playerGrid" style="display:flex;flex-direction:column;gap:.45rem;"></div>
+
+    
+    <div id="playerDetailModal"
+      style="display:none;position:fixed;inset:0;z-index:200;background:var(--bg);overflow-y:auto;">
+      <div style="max-width:480px;margin:0 auto;">
+        <div id="playerDetailContent"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<footer class="footer">
+  <div class="foot-links">
+    <span class="foot-link" onclick="openLegal('tokusho')">特定商取引法</span>
+    <span class="foot-link" onclick="openLegal('privacy')">プライバシー</span>
+    <span class="foot-link" onclick="openLegal('terms')">利用規約</span>
+    <span class="foot-link" onclick="openLegal('contact')">お問い合わせ</span>
+  </div>
+  <span class="foot-copy">© 2026 MENTALITY</span>
+</footer>
+
+
+<div id="legalModal" style="display:none;position:fixed;inset:0;z-index:500;background:var(--bg);overflow-y:auto;">
+  <div style="max-width:480px;margin:0 auto;padding:1rem;">
+    
+    <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:1.2rem;padding-bottom:.75rem;border-bottom:1px solid var(--bd);">
+      <button onclick="closeLegal()" style="width:32px;height:32px;border-radius:6px;background:var(--bg3);border:1px solid var(--bd);cursor:pointer;font-size:.85rem;color:var(--tx2);">←</button>
+      <div id="legalTitle" style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.1em;color:var(--tx);"></div>
+    </div>
+    <div id="legalContent" style="font-size:.8rem;color:var(--tx2);line-height:1.9;"></div>
+  </div>
+</div>
+
+
+
+
+<!-- ===== JS (読み込み順: data → utils → app → 各機能) ===== -->
+<!-- data.js  : 定数・API設定・固定データ。他の全ファイルが参照する -->
+<script src="js/data.js"></script>
+<!-- utils.js : 共通ユーティリティ関数。data.jsの後に読む -->
+<script src="js/utils.js"></script>
+<!-- app.js   : ページ切り替え・オンライン人数・初期化 -->
+<script src="js/app.js"></script>
+<!-- 各機能JS : app.jsの後に読む -->
+<script src="js/schedule.js"></script>
+<script src="js/stats.js"></script>
+<script src="js/news.js"></script>
+<script src="js/chat.js"></script>
+<script src="js/players.js"></script>
+<script src="js/search.js"></script>
+</body>
+</html>

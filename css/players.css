@@ -1,0 +1,165 @@
+/* players.css — 選手一覧・日本人選手カード・MVP投票・勝敗投票 */
+
+/* ===== 選手ページ 検索 ===== */
+.player-search-input {
+  width: 100%;
+  padding: .42rem .6rem .42rem 1.8rem;
+  border-radius: 6px;
+  border: 1px solid var(--bd);
+  background: var(--bg3);
+  color: var(--tx);
+  font-size: .72rem;
+  outline: none;
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   schedule.css — 試合詳細パネル・スコアボード・選手カード
+   ============================================================ */
+
+/* ===== 試合カード 追加スタイル ===== */
+.gc-mid { flex: 1; text-align: center; padding: 0 .4rem; }
+.gc-q   { font-family:'Barlow Condensed',sans-serif; font-size:.68rem; color:var(--tx3); letter-spacing:.08em; }
+.gc-t   { font-family:'Space Mono',monospace; font-size:.65rem; color:var(--rd); font-weight:700; }
+.gc-vs  { font-family:'Bebas Neue',sans-serif; font-size:1.3rem; color:var(--tx3); }
+.gc-st  { font-family:'Barlow Condensed',sans-serif; font-size:.62rem; color:var(--tx3); }
+.gc-end { font-family:'Barlow Condensed',sans-serif; font-size:.68rem; color:var(--gr); font-weight:700; letter-spacing:.06em; }
+.gc-win { color: var(--or); }
+
+/* ===== 詳細パネル ===== */
+.detail-panel {
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: .6rem;
+  display: none;
+  box-shadow: 0 8px 32px rgba(0,0,0,.4);
+}
+.detail-panel.open { display: block; animation: popIn .2s ease; }
+
+/* ===== スコアボード ===== */
+.sbd {
+  background: linear-gradient(160deg,#0E0A1A,#08121E);
+  padding: .9rem;
+  position: relative;
+  overflow: hidden;
+}
+.sbd::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg,var(--or),var(--rd),transparent);
+}
+.sbd-glow {
+  position: absolute;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+  background: rgba(255,90,0,.08);
+  top: -60px; right: -60px;
+}
+.sbd-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: .75rem; }
+.sbd-badge-live {
+  display: flex; align-items: center; gap: .25rem;
+  font-family:'Barlow Condensed',sans-serif; font-size:.65rem; font-weight:700;
+  color: var(--rd); letter-spacing: .12em;
+}
+.sbd-badge-live::before { content:''; width:5px; height:5px; border-radius:50%; background:var(--rd); animation:bl .8s infinite; }
+.sbd-badge-fin { font-family:'Barlow Condensed',sans-serif; font-size:.65rem; font-weight:700; color:var(--gr); letter-spacing:.12em; }
+.sbd-badge-pre { font-family:'Barlow Condensed',sans-serif; font-size:.65rem; color:var(--tx3); letter-spacing:.1em; }
+.sbd-q   { font-family:'Barlow Condensed',sans-serif; font-size:.65rem; color:rgba(255,255,255,.35); letter-spacing:.08em; }
+.sbd-upd { font-family:'Space Mono',monospace; font-size:.48rem; color:rgba(255,255,255,.18); }
+
+.sbd-scores { display: flex; align-items: center; justify-content: space-between; }
+.sbt        { flex: 1; text-align: center; }
+.sbt-city   { font-family:'Barlow Condensed',sans-serif; font-size:.52rem; color:rgba(255,255,255,.28); text-transform:uppercase; letter-spacing:.1em; margin-bottom:.12rem; }
+.sbt-abbr   { font-family:'Bebas Neue',sans-serif; font-size:1.8rem; letter-spacing:.1em; color:#fff; }
+.sbt-score  { font-family:'Bebas Neue',sans-serif; font-size:4rem; line-height:1; color:#fff; }
+.sbt-score.ld { color:var(--or); text-shadow:0 0 20px rgba(255,90,0,.3); }
+.sbd-mid    { text-align:center; padding:0 .4rem; }
+.sbd-sep    { font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:rgba(255,255,255,.15); }
+.sbd-clk    { font-family:'Space Mono',monospace; font-size:.72rem; color:var(--go); margin-top:.15rem; }
+
+/* クォータースコア行 */
+.q-row  { display:flex; border-top:1px solid rgba(255,255,255,.05); margin-top:.75rem; }
+.qi     { flex:1; padding:.42rem .18rem; text-align:center; border-right:1px solid rgba(255,255,255,.04); }
+.qi:last-child { border-right: none; }
+.qi-l   { font-family:'Barlow Condensed',sans-serif; font-size:.5rem; color:rgba(255,255,255,.22); letter-spacing:.08em; margin-bottom:.12rem; }
+.qi-h   { font-family:'Bebas Neue',sans-serif; font-size:.78rem; color:#fff; }
+.qi-h.cur { color: var(--go); }
+.qi-a   { font-size:.74rem; color:rgba(255,255,255,.35); }
+
+/* ===== 選手スタッツエリア ===== */
+.stats-area  { padding: .75rem .85rem; }
+.area-label  {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:.72rem; font-weight:700; letter-spacing:.1em;
+  text-transform: uppercase; color:var(--tx2);
+  margin-bottom: .5rem;
+  display: flex; align-items:center; justify-content:space-between;
+}
+.on-legend   { display:flex; align-items:center; gap:.22rem; font-size:.6rem; color:var(--tx3); font-weight:400; text-transform:none; letter-spacing:0; }
+.on-dot      { width:5px; height:5px; border-radius:50%; background:var(--gr); display:inline-block; animation:pulse 1.5s infinite; }
+.p2col       { display:grid; grid-template-columns:1fr 1fr; gap:.4rem; }
+
+.col-hdr { font-family:'Barlow Condensed',sans-serif; font-size:.62rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:.2rem .42rem; border-radius:4px; text-align:center; margin-bottom:.3rem; }
+.col-h   { color:var(--or); background:rgba(255,90,0,.1); }
+.col-a   { color:var(--cy); background:rgba(0,200,255,.08); }
+
+/* 選手カード */
+.pcrd         { border:1px solid var(--bd); border-radius:6px; padding:.44rem .4rem; margin-bottom:.26rem; background:var(--bg3); }
+.pcrd.on-c    { border-color:rgba(0,212,106,.2); background:rgba(0,212,106,.04); }
+.pcrd.hot     { border-color:rgba(255,90,0,.2); background:rgba(255,90,0,.04); }
+.pcrd.bench   { opacity:.4; }
+.p-top  { display:flex; align-items:center; gap:.15rem; margin-bottom:.2rem; }
+.p-num  { font-family:'Bebas Neue',sans-serif; font-size:.9rem; color:var(--tx3); width:15px; flex-shrink:0; }
+.p-nm   { font-size:.68rem; font-weight:600; color:var(--tx); }
+.p-nm.oc{ color:var(--gr); }
+.p-nm.hc{ color:var(--or); }
+.p-pos  { font-family:'Barlow Condensed',sans-serif; font-size:.52rem; color:var(--tx3); letter-spacing:.06em; }
+.cdot   { display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--gr); margin-right:.12rem; animation:pulse 1.5s infinite; }
+.pf     { font-size:.6rem; margin-left:auto; }
+.p-sts  { display:grid; grid-template-columns:repeat(4,1fr); text-align:center; }
+.sv     { font-family:'Space Mono',monospace; font-size:.66rem; font-weight:700; color:var(--tx); }
+.sv.hi  { color:var(--or); }
+.sv.pos { color:var(--gr); }
+.sv.neg { color:var(--rd); }
+.sl     { font-family:'Barlow Condensed',sans-serif; font-size:.46rem; color:var(--tx3); letter-spacing:.04em; }
+.no-stats { text-align:center; padding:1rem; font-size:.74rem; color:var(--tx3); }
+
+/* ===== ゲーム内チャット ===== */
+.chat-area  { padding:.1rem .85rem .85rem; }
+.chat-label { font-family:'Barlow Condensed',sans-serif; font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--tx2); margin-bottom:.5rem; display:flex; align-items:center; gap:.45rem; }
+.chat-lv    { font-size:.6rem; color:var(--tx3); font-weight:400; text-transform:none; letter-spacing:0; }
+.chat-box   { background:var(--bg3); border:1px solid var(--bd); border-radius:8px; overflow:hidden; }
+.chat-msgs  { padding:.65rem; height:280px; overflow-y:auto; display:flex; flex-direction:column; gap:.55rem; }
+.chat-msgs::-webkit-scrollbar       { width:2px; }
+.chat-msgs::-webkit-scrollbar-thumb { background:rgba(255,90,0,.3); border-radius:1px; }
+.chat-inp { display:flex; align-items:center; gap:.35rem; padding:.48rem .65rem; background:var(--bg3); border-top:1px solid var(--bd); }
+.ci-field { flex:1; background:rgba(255,255,255,.9); border:1px solid var(--bd); border-radius:20px; padding:.35rem .7rem; font-size:.75rem; color:var(--tx); outline:none; font-family:'Barlow',sans-serif; }
+.ci-field::placeholder { color:var(--tx3); }
+.ci-send  { width:27px; height:27px; border-radius:50%; background:var(--or); border:none; cursor:pointer; font-size:.72rem; display:flex; align-items:center; justify-content:center; color:#fff; flex-shrink:0; }
+
+/* チャットメッセージ共通 */
+.cm { display:flex; gap:.42rem; animation:slideIn .18s ease; }
+.cm.me { flex-direction:row-reverse; }
+.cav  { width:24px; height:24px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:.64rem; font-weight:700; font-family:'Barlow Condensed',sans-serif; }
+.cao  { background:var(--or); color:#fff; }
+.cat  { background:#0070CC; color:#fff; }
+.cap  { background:#6B3AED; color:#fff; }
+.cag  { background:#00A855; color:#fff; }
+.can  { background:#CC7A00; color:#fff; }
+.cam  { background:linear-gradient(135deg,var(--or),var(--rd)); color:#fff; }
+.cbody { max-width:78%; }
+.cm.me .cbody { align-items:flex-end; display:flex; flex-direction:column; }
+.cname  { font-family:'Barlow Condensed',sans-serif; font-size:.58rem; font-weight:600; color:var(--tx3); margin-bottom:.1rem; letter-spacing:.04em; }
+.cadm   { font-size:.46rem; font-weight:700; background:var(--or); padding:.02rem .24rem; border-radius:2px; color:#fff; margin-left:.12rem; }
+.cbbl   { padding:.4rem .58rem; border-radius:6px; font-size:.76rem; color:var(--tx); line-height:1.5; background:#F5F5F8; border:1px solid var(--bd); }
+.cm.me .cbbl { background:var(--or); color:#fff; border:none; }
+.ctime  { font-family:'Space Mono',monospace; font-size:.46rem; color:var(--tx3); margin-top:.08rem; }
+.sys-msg { text-align:center; padding:.3rem .5rem; font-family:'Barlow Condensed',sans-serif; font-size:.6rem; color:var(--tx3); letter-spacing:.04em; }
+.qreact { display:flex; gap:.2rem; padding:.3rem .65rem; background:rgba(0,0,0,.03); border-top:1px solid var(--bd); overflow-x:auto; scrollbar-width:none; }
+.qreact::-webkit-scrollbar { display:none; }
+.qr     { flex-shrink:0; font-size:.95rem; cursor:pointer; padding:.1rem .22rem; border-radius:4px; transition:transform .1s; }
+.qr:active { transform:scale(1.35); }

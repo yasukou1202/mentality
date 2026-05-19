@@ -1,0 +1,213 @@
+/* schedule.css — 試合カード・詳細パネル・スコアボード・スタッツ系ボタン */
+
+/* ===== 試合カード ===== */
+.gc {
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  margin-bottom: .5rem;
+  transition: border-color .15s, transform .1s;
+}
+.gc:active      { transform: scale(.99); }
+.gc.live        { border-color: rgba(255,59,59,.25); }
+.gc.selected    { border-color: var(--or); }
+.gc-accent      { height: 2px; }
+.accent-live    { background: linear-gradient(90deg, var(--rd), transparent); }
+.accent-pre     { background: linear-gradient(90deg, var(--tx3), transparent); }
+.accent-fin     { background: linear-gradient(90deg, var(--gr), transparent); }
+
+.gc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .35rem .75rem;
+  border-bottom: 1px solid var(--bd);
+}
+.gc-status {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+}
+.gc-status.live        { color: var(--rd); }
+.gc-status.live::before {
+  content: '';
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--rd);
+  animation: bl .8s infinite;
+}
+.gc-status.pre { color: var(--tx3); }
+.gc-status.fin { color: var(--gr); }
+
+.gc-note {
+  font-size: .6rem;
+  color: var(--or);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 500;
+  max-width: 170px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.gc-upd {
+  font-family: 'Space Mono', monospace;
+  font-size: .48rem;
+  color: var(--tx3);
+}
+
+.gc-body { display: flex; align-items: center; padding: .65rem .75rem; }
+.gc-team { flex: 1; display: flex; flex-direction: column; align-items: flex-start; }
+.gc-team.r { text-align: right; align-items: flex-end; }
+.gc-city {
+  font-size: .52rem;
+  color: var(--tx3);
+  margin-bottom: .06rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.gc-logo { width: 42px; height: 42px; object-fit: contain; margin-bottom: .25rem; }
+.gc-abbr {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.35rem;
+  letter-spacing: .06em;
+  color: var(--tx);
+  line-height: 1;
+}
+.gc-rec {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .56rem;
+  color: var(--tx3);
+  letter-spacing: .04em;
+  margin-top: .1rem;
+}
+
+.gc-center { text-align: center; padding: 0 .6rem; min-width: 80px; }
+.gc-vs {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  color: var(--tx3);
+  letter-spacing: .12em;
+}
+.gc-score {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  letter-spacing: .04em;
+  color: var(--tx);
+  line-height: 1;
+}
+.gc-score-sep { color: var(--tx3); margin: 0 .15rem; font-size: 1.6rem; }
+.gc-win { color: var(--tx); }
+.gc-lose { color: var(--tx3); }
+.gc-time-left {
+  font-family: 'Space Mono', monospace;
+  font-size: .58rem;
+  color: var(--rd);
+  margin-top: .15rem;
+}
+.gc-start {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .7rem;
+  color: var(--tx3);
+  letter-spacing: .08em;
+}
+
+/* ===== 試合詳細パネル ===== */
+.detail-panel {
+  border-top: 1px solid var(--bd);
+  background: var(--bg3);
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height .3s ease;
+}
+.detail-panel.open { max-height: 2000px; }
+
+/* ===== スタッツ系ボタン ===== */
+.stat-type-btn {
+  flex: 1;
+  padding: .3rem;
+  border-radius: 6px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  border: 1px solid var(--bd);
+  background: transparent;
+  color: var(--tx3);
+  cursor: pointer;
+}
+.stat-type-btn.on {
+  background: var(--or);
+  color: #fff;
+  border-color: transparent;
+}
+
+/* ===== 並び替えボタン（動画ページ） ===== */
+.sort-btn {
+  padding: .28rem .65rem;
+  border-radius: 5px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  border: 1px solid var(--bd);
+  background: transparent;
+  color: var(--tx3);
+  cursor: pointer;
+}
+.sort-btn.on {
+  background: var(--or);
+  color: #fff;
+  border-color: transparent;
+}
+
+/* ===== メディアフィルター（記事ページ） ===== */
+.media-filter-btn {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .2rem;
+  cursor: pointer;
+  padding: .4rem .5rem;
+  border-radius: 8px;
+  border: 1px solid var(--bd);
+  background: var(--card);
+  min-width: 62px;
+}
+.media-filter-btn.active-media {
+  border-color: var(--or);
+  background: var(--bg3);
+}
+.media-icon {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-size: 1rem;
+  color: #fff;
+}
+.media-icon img {
+  width: 20px; height: 20px;
+  object-fit: contain;
+}
+.media-name {
+  font-size: .52rem;
+  font-weight: 700;
+  color: var(--tx);
+  text-align: center;
+  line-height: 1.2;
+}
+.media-sub {
+  font-size: .44rem;
+  color: var(--tx3);
+  text-align: center;
+}

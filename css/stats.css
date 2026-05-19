@@ -1,0 +1,201 @@
+/* stats.css — スタッツリーダー・順位表・選手モーダル */
+
+/* ============================================================
+   stats.css — スタッツリーダー・順位表
+   ============================================================ */
+
+.stat-cats { display:flex; gap:.3rem; overflow-x:auto; scrollbar-width:none; margin-bottom:.75rem; }
+.stat-cats::-webkit-scrollbar { display:none; }
+.scat {
+  flex-shrink:0; padding:.3rem .8rem; border-radius:4px;
+  font-family:'Barlow Condensed',sans-serif; font-size:.72rem; font-weight:700; letter-spacing:.08em;
+  border:1px solid var(--bd); background:transparent; color:var(--tx3); cursor:pointer;
+  text-transform:uppercase; transition:all .15s;
+}
+.scat.on { background:var(--or); color:#fff; border-color:transparent; }
+
+/* リーダーリスト */
+.leader-list { display:flex; flex-direction:column; gap:.42rem; }
+.lc {
+  background:var(--card); border:1px solid var(--bd); border-radius:8px;
+  padding:.65rem .85rem; display:flex; align-items:center; gap:.65rem;
+  animation:slideIn .18s ease; cursor:pointer;
+}
+.lc.t1 { border-left:3px solid var(--go); }
+.lc.t2 { border-left:3px solid rgba(192,192,192,.5); }
+.lc.t3 { border-left:3px solid rgba(205,127,50,.5); }
+.lc-rank { font-family:'Bebas Neue',sans-serif; font-size:1.5rem; width:24px; text-align:center; flex-shrink:0; }
+.r1 { color:var(--go); }
+.r2 { color:#A0A0B8; }
+.r3 { color:#8B6040; }
+.lc-info { flex:1; min-width:0; }
+.lc-name { font-size:.82rem; font-weight:600; color:var(--tx); margin-bottom:.1rem; }
+.lc-sub  { font-family:'Barlow Condensed',sans-serif; font-size:.62rem; color:var(--tx3); letter-spacing:.06em; }
+.lc-val  { text-align:right; flex-shrink:0; }
+.lc-v    { font-family:'Bebas Neue',sans-serif; font-size:2rem; line-height:1; color:var(--tx); }
+.lc-v.gold { color:var(--go); }
+.lc-u    { font-family:'Barlow Condensed',sans-serif; font-size:.56rem; color:var(--tx3); letter-spacing:.06em; }
+
+/* 順位表 */
+.sw       { background:var(--card); border:1px solid var(--bd); border-radius:8px; overflow:hidden; }
+.sw-head  { display:flex; background:rgba(0,0,0,.03); border-bottom:1px solid var(--bd); padding:.38rem .65rem; gap:.25rem; }
+.sw-cn    { flex:2; font-family:'Barlow Condensed',sans-serif; font-size:.58rem; font-weight:700; color:var(--tx3); letter-spacing:.08em; text-transform:uppercase; }
+.sw-c     { flex:1; font-family:'Barlow Condensed',sans-serif; font-size:.58rem; font-weight:700; color:var(--tx3); letter-spacing:.08em; text-align:center; }
+.sw-row   { display:flex; padding:.44rem .65rem; border-bottom:1px solid var(--bd); align-items:center; gap:.25rem; }
+.sw-row:last-child { border-bottom:none; }
+.sw-row.po { border-left:2px solid rgba(0,212,106,.3); }
+.sw-row.pi { border-left:2px solid rgba(255,184,0,.3); }
+.sw-rk    { font-family:'Bebas Neue',sans-serif; font-size:.9rem; color:var(--tx3); width:13px; flex-shrink:0; }
+.sw-tm    { flex:2; display:flex; align-items:center; gap:.32rem; }
+.sw-logo  { font-size:.82rem; }
+.sw-abbr  { font-size:.72rem; font-weight:600; color:var(--tx); }
+.sw-badge { font-family:'Barlow Condensed',sans-serif; font-size:.5rem; font-weight:700; padding:.07rem .26rem; border-radius:3px; letter-spacing:.06em; }
+.bpo { background:rgba(0,212,106,.12); color:var(--gr); }
+.bpi { background:rgba(255,184,0,.12); color:var(--go); }
+.sw-n    { flex:1; text-align:center; font-family:'Space Mono',monospace; font-size:.68rem; color:var(--tx); }
+.sw-n.hi { color:var(--or); font-weight:700; }
+.sw-div1 { height:1px; background:linear-gradient(90deg,rgba(0,212,106,.3),transparent); }
+.sw-div2 { height:1px; background:linear-gradient(90deg,rgba(255,184,0,.2),transparent); }
+
+/* 選手モーダル（スタッツページ用） */
+#playerModal { overflow-y:auto; }
+/* ============================================================
+   videos.css — ハイライト動画カード
+   ============================================================ */
+
+.vid-card {
+  background:var(--card); border:1px solid var(--bd); border-radius:8px;
+  overflow:hidden; cursor:pointer; margin-bottom:.5rem;
+  transition:transform .1s;
+}
+.vid-card:active { transform:scale(.99); }
+
+.vid-thumb {
+  position:relative; width:100%; padding-top:52%;
+  background:linear-gradient(145deg,#1a0a2e,#2d1060);
+  overflow:hidden;
+}
+.vid-info   { padding:.58rem .75rem; }
+.vid-title  { font-size:.78rem; font-weight:600; color:var(--tx); line-height:1.4; margin-bottom:.25rem; }
+.vid-meta   { display:flex; align-items:center; justify-content:space-between; margin-bottom:.3rem; }
+.vid-ch     { font-family:'Barlow Condensed',sans-serif; font-size:.62rem; color:var(--tx3); letter-spacing:.04em; }
+.vid-time   { font-family:'Space Mono',monospace; font-size:.56rem; color:var(--tx3); }
+.vid-btn    {
+  display:inline-flex; align-items:center; gap:.22rem;
+  background:var(--rd); color:#fff;
+  font-family:'Barlow Condensed',sans-serif; font-size:.65rem; font-weight:700; letter-spacing:.06em;
+  padding:.22rem .55rem; border-radius:4px; border:none; cursor:pointer;
+}
+
+/* 動画モーダル */
+#videoModal {
+  position:fixed; inset:0; z-index:300;
+  background:rgba(0,0,0,.92); backdrop-filter:blur(12px);
+  display:none; flex-direction:column;
+  align-items:center; justify-content:center; padding:1rem;
+}
+/* ============================================================
+   notable.css — 記事・海外ニュース
+   ============================================================ */
+
+.nf { background:var(--card); border:1px solid var(--bd); border-radius:8px; overflow:hidden; margin-bottom:.55rem; }
+.nf-head { display:flex; align-items:center; justify-content:space-between; padding:.45rem .78rem; border-bottom:1px solid var(--bd); }
+.nf-src  { display:flex; align-items:center; gap:.35rem; }
+.nf-av   { width:20px; height:20px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.62rem; font-weight:700; color:#fff; flex-shrink:0; font-family:'Barlow Condensed',sans-serif; }
+.nf-name { font-size:.65rem; font-weight:600; color:var(--tx); }
+.nf-handle { font-family:'Space Mono',monospace; font-size:.52rem; color:var(--tx3); }
+.nf-t    { font-family:'Space Mono',monospace; font-size:.52rem; color:var(--tx3); }
+.nf-body { padding:.68rem .78rem; }
+.nf-orig { font-size:.65rem; color:var(--tx3); line-height:1.6; padding:.38rem .55rem; background:rgba(0,0,0,.03); border-radius:4px; border-left:2px solid rgba(255,90,0,.3); margin-bottom:.48rem; font-style:italic; }
+.nf-ja   { font-size:.8rem; color:var(--tx); line-height:1.7; font-weight:500; }
+.nf-tag  { font-family:'Barlow Condensed',sans-serif; font-size:.58rem; font-weight:700; padding:.1rem .38rem; border-radius:3px; display:inline-block; margin-top:.4rem; letter-spacing:.06em; }
+.t-break { background:var(--or); color:#fff; }
+.t-trade { background:rgba(0,112,204,.2); color:var(--cy); }
+.t-inj   { background:rgba(255,59,59,.15); color:var(--rd); }
+.t-stat  { background:rgba(0,212,106,.12); color:var(--gr); }
+.nf-btns { display:flex; gap:.28rem; margin-top:.42rem; }
+.nf-btn  { padding:.2rem .52rem; border-radius:4px; font-family:'Barlow Condensed',sans-serif; font-size:.62rem; font-weight:700; letter-spacing:.06em; border:none; cursor:pointer; }
+.btn-x   { background:#111; color:#fff; }
+.btn-cp  { background:rgba(0,0,0,.06); color:var(--tx2); border:1px solid var(--bd); }
+/* ============================================================
+   players.css — 選手一覧・詳細
+   ============================================================ */
+
+/* チームフィルターボタン */
+.pf-btn {
+  flex-shrink:0; padding:.28rem .72rem; border-radius:4px;
+  font-family:'Barlow Condensed',sans-serif; font-size:.68rem; font-weight:700; letter-spacing:.08em;
+  border:1px solid var(--bd); background:transparent; color:var(--tx3); cursor:pointer;
+  text-transform:uppercase; transition:all .15s;
+}
+.pf-btn.on { background:var(--or); color:#fff; border-color:transparent; }
+
+/* 選手カード */
+.pl-card  { background:var(--card); border:1px solid var(--bd); border-radius:8px; overflow:hidden; cursor:pointer; margin-bottom:.45rem; transition:border-color .15s; }
+.pl-card:active { border-color:var(--or); }
+.pl-card.jp { border-left:3px solid var(--or); }
+
+/* チームチャットカード */
+.team-card {
+  background:var(--card); border:1px solid var(--bd); border-radius:8px;
+  display:flex; align-items:center; gap:.7rem;
+  padding:.62rem .82rem; margin-bottom:.45rem;
+  cursor:pointer; transition:border-color .15s;
+}
+.team-card:active { border-color:var(--or); }
+.team-card.jp     { border-left:3px solid var(--or); }
+.tc-logo  { width:38px; height:38px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:1.35rem; flex-shrink:0; }
+.tc-info  { flex:1; min-width:0; }
+.tc-name  { font-size:.78rem; font-weight:600; color:var(--tx); margin-bottom:.06rem; }
+.tc-sub   { display:flex; align-items:center; gap:.35rem; }
+.tc-on    { font-family:'Barlow Condensed',sans-serif; font-size:.6rem; color:var(--gr); display:flex; align-items:center; gap:.18rem; letter-spacing:.04em; }
+.tc-on::before { content:''; width:4px; height:4px; border-radius:50%; background:var(--gr); }
+.tc-note  { font-size:.6rem; color:var(--tx3); margin-top:.08rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.tc-wl    { font-family:'Space Mono',monospace; font-size:.6rem; color:var(--tx3); flex-shrink:0; }
+.tc-unreads {
+  background:var(--or); color:#fff;
+  font-family:'Barlow Condensed',sans-serif; font-size:.6rem; font-weight:700;
+  width:18px; height:18px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+/* ============================================================
+   search.css — 検索オーバーレイ
+   ============================================================ */
+
+.srch-overlay {
+  position:fixed; inset:0; z-index:200;
+  background:rgba(17,17,30,.65); backdrop-filter:blur(12px);
+  display:none; align-items:flex-start; justify-content:center;
+}
+.srch-overlay.show { display:flex; animation:fadeUp .18s ease; }
+.srch-box {
+  width:100%; max-width:430px; background:#FFFFFF;
+  border-radius:0 0 12px 12px; box-shadow:0 16px 48px rgba(0,0,0,.6);
+  overflow:hidden; max-height:88vh; display:flex; flex-direction:column;
+  border:1px solid var(--bd); border-top:none;
+}
+.si-row  { display:flex; align-items:center; gap:.46rem; padding:.72rem .9rem; border-bottom:1px solid var(--bd); }
+.si-ico  { font-size:.9rem; color:var(--tx3); }
+.si-inp  { flex:1; border:none; outline:none; font-size:.88rem; color:var(--tx); font-family:'Barlow',sans-serif; background:transparent; }
+.si-inp::placeholder { color:var(--tx3); }
+.si-close { background:rgba(0,0,0,.06); border:none; border-radius:50%; width:24px; height:24px; cursor:pointer; font-size:.7rem; color:var(--tx3); display:flex; align-items:center; justify-content:center; }
+.srch-tags { display:flex; gap:.28rem; padding:.5rem .9rem; overflow-x:auto; scrollbar-width:none; border-bottom:1px solid var(--bd); }
+.srch-tags::-webkit-scrollbar { display:none; }
+.stag {
+  flex-shrink:0; padding:.24rem .62rem; border-radius:4px;
+  font-family:'Barlow Condensed',sans-serif; font-size:.66rem; font-weight:700; letter-spacing:.06em;
+  border:1px solid var(--bd); background:transparent; color:var(--tx3); cursor:pointer;
+  white-space:nowrap; text-transform:uppercase;
+}
+.stag:active { background:var(--or); color:#fff; border-color:transparent; }
+.srch-results { flex:1; overflow-y:auto; }
+.srch-empty   { text-align:center; padding:2rem 1rem; }
+.sr-sec   { padding:.4rem .9rem .18rem; font-family:'Barlow Condensed',sans-serif; font-size:.6rem; font-weight:700; color:var(--tx3); letter-spacing:.14em; text-transform:uppercase; }
+.sr-item  { display:flex; align-items:center; gap:.6rem; padding:.55rem .9rem; cursor:pointer; border-bottom:1px solid var(--bd); }
+.sr-item:active { background:rgba(0,0,0,.03); }
+.sri-ico  { width:32px; height:32px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:1rem; flex-shrink:0; background:var(--bg3); }
+.sri-body { flex:1; min-width:0; }
+.sri-title { font-size:.78rem; font-weight:600; color:var(--tx); margin-bottom:.08rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.sri-sub   { font-family:'Barlow Condensed',sans-serif; font-size:.62rem; color:var(--tx3); letter-spacing:.04em; }
+.sri-badge { font-family:'Barlow Condensed',sans-serif; font-size:.56rem; font-weight:700; padding:.1rem .36rem; border-radius:3px; flex-shrink:0; letter-spacing:.06em; }
+.sbg-live  { background:rgba(255,59,59,.15); color:var(--rd); }

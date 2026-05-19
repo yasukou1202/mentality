@@ -1,0 +1,204 @@
+/* layout.css — TOP ナビ・タブナビ・メインスクロール・フッター・ページ共通 */
+
+/* ============================================================
+   layout.css — ナビ・タブ・全体レイアウト・試合カード
+   ここを触っても他の機能には影響しない
+   ============================================================ */
+
+/* ===== TOP ナビ ===== */
+.top-nav {
+  flex-shrink: 0;
+  height: 52px;
+  background: rgba(255,255,255,.97);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--bd);
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  gap: .6rem;
+}
+
+.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.65rem;
+  letter-spacing: .2em;
+  color: var(--or);
+  text-shadow: 0 0 20px rgba(255,90,0,.4);
+  flex-shrink: 0;
+}
+.logo span { color: var(--tx); opacity: .7; }
+
+.nav-sp { flex: 1; }
+
+/* オンライン人数 */
+.nav-online {
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+  background: rgba(0,168,85,.1);
+  border: 1px solid rgba(0,168,85,.25);
+  padding: .18rem .5rem;
+  border-radius: 4px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .65rem;
+  font-weight: 700;
+  color: #00A855;
+  letter-spacing: .04em;
+}
+.nav-online-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #00A855;
+  display: inline-block;
+  animation: pulse 1.5s infinite;
+  flex-shrink: 0;
+}
+
+/* 検索ボタン */
+.nav-search {
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  background: var(--card);
+  border: 1px solid var(--bd);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .95rem;
+  cursor: pointer;
+  color: var(--tx2);
+}
+
+/* ===== タブ ナビ ===== */
+.second-nav {
+  flex-shrink: 0;
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--bd);
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  width: 100%;
+}
+.second-nav::-webkit-scrollbar { display: none; }
+
+.sn {
+  flex: 1;
+  padding: 0 .2rem;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  color: var(--tx3);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.sn.on {
+  color: var(--or);
+  border-bottom-color: var(--or);
+}
+
+.sn-divider {
+  width: 1px;
+  background: var(--bd);
+  flex-shrink: 0;
+  margin: .6rem 0;
+}
+
+/* ===== メインスクロール ===== */
+.main {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+.main::-webkit-scrollbar       { width: 2px; }
+.main::-webkit-scrollbar-thumb { background: rgba(255,90,0,.3); border-radius: 1px; }
+
+/* ===== フッター ===== */
+.footer {
+  flex-shrink: 0;
+  height: 44px;
+  background: #FFFFFF;
+  border-top: 1px solid var(--bd);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+.foot-links { display: flex; gap: .7rem; }
+.foot-link {
+  font-size: .58rem;
+  color: var(--tx3);
+  cursor: pointer;
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: .06em;
+}
+.foot-copy {
+  font-family: 'Space Mono', monospace;
+  font-size: .5rem;
+  color: var(--tx3);
+}
+
+/* ===== ページ共通 ===== */
+.pg { display: none; padding: .9rem; animation: fadeUp .2s ease; }
+.pg.show { display: block; }
+
+/* ===== 日付バー ===== */
+.date-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 8px;
+  padding: .55rem .85rem;
+  margin-bottom: .75rem;
+}
+.db-center { text-align: center; }
+.db-date {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: .08em;
+  color: var(--tx);
+}
+.db-sub {
+  font-size: .62rem;
+  color: var(--tx3);
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: .06em;
+}
+.db-today {
+  font-size: .58rem;
+  background: var(--or);
+  color: #fff;
+  padding: .06rem .35rem;
+  border-radius: 3px;
+  margin-left: .3rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  letter-spacing: .08em;
+}
+.db-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  background: var(--bg3);
+  border: 1px solid var(--bd);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .9rem;
+  color: var(--tx2);
+  cursor: pointer;
+}
+.db-btn:active { background: var(--card2); }
