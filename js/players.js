@@ -107,12 +107,12 @@ async function loadPlayersFromAPI() {
 
   try {
     // ESPN スタッツリーダーAPIから得点順で選手を取得
-    const url = `https://thingproxy.freeboard.io/fetch/https://site.api.espn.com/apis/site/v2/sports/basketball/nba/leaders?limit=50&season=2025&seasontype=2`;
+    const url = `https://yasukou1202.github.io/mentality/data.json`;
     const res = await fetchWithTimeout(url, {}, 8000);
     if (!res.ok) throw new Error('ESPN Error ' + res.status);
     const data = await res.json();
 
-    const categories = data.leaders || [];
+    const categories = (data.leaders && data.leaders.categories) || [];
     const ptsCategory = categories.find(c =>
       c.name === 'pointsPerGame' || c.abbreviation === 'PPG'
     ) || categories[0];

@@ -183,13 +183,13 @@ async function loadESPNLeaders(stat, mode) {
     const seasontype = mode === 'playoff' ? 3 : mode === 'playin' ? 5 : 2;
 
     // ESPN スタッツリーダーAPI
-    const url = `https://thingproxy.freeboard.io/fetch/https://site.api.espn.com/apis/site/v2/sports/basketball/nba/leaders?limit=15&season=2025&seasontype=${seasontype}`;
+    const url = `https://yasukou1202.github.io/mentality/data.json`;
     const res = await fetchWithTimeout(url, {}, 8000);
     if (!res.ok) throw new Error('ESPN Stats ' + res.status);
     const data = await res.json();
 
     // ESPN APIのレスポンスからスタッツカテゴリを探す
-    const categories = data.leaders || [];
+    const categories = (data.leaders && data.leaders.categories) || [];
     const category   = categories.find(c =>
       c.name === statInfo.espnStat ||
       c.abbreviation?.toLowerCase() === stat.toLowerCase()
@@ -411,13 +411,13 @@ async function renderStandings() {
     // シーズンタイプをモードに合わせる
     const seasontype = curMode === 'playoff' ? 3 : 2;
     const res = await fetchWithTimeout(
-      `https://thingproxy.freeboard.io/fetch/https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?season=2025&seasontype=${seasontype}`,
+      `https://yasukou1202.github.io/mentality/data.json`,
       {}, 8000
     );
     if (!res.ok) throw new Error('ESPN standings ' + res.status);
     const data = await res.json();
 
-    const groups  = data.children || [];
+    const groups = (data.standings && data.standings.children) || [];
     const confName = curConf === 'east' ? 'Eastern' : 'Western';
     const group   = groups.find(g => (g.name || '').includes(confName)) || groups[curConf === 'east' ? 0 : 1];
     if (!group) throw new Error('グループなし');
