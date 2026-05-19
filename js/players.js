@@ -107,7 +107,7 @@ async function loadPlayersFromAPI() {
 
   try {
     // ESPN スタッツリーダーAPIから得点順で選手を取得
-    const url = `https://api.allorigins.win/raw?url=https://site.api.espn.com/apis/site/v2/sports/basketball/nba/leaders?limit=50&season=2025&seasontype=2`;
+    const url = `https://thingproxy.freeboard.io/fetch/https://site.api.espn.com/apis/site/v2/sports/basketball/nba/leaders?limit=50&season=2025&seasontype=2`;
     const res = await fetchWithTimeout(url, {}, 8000);
     if (!res.ok) throw new Error('ESPN Error ' + res.status);
     const data = await res.json();

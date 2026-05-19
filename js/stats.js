@@ -183,7 +183,7 @@ async function loadESPNLeaders(stat, mode) {
     const seasontype = mode === 'playoff' ? 3 : mode === 'playin' ? 5 : 2;
 
     // ESPN スタッツリーダーAPI
-    const url = `https://api.allorigins.win/raw?url=https://site.api.espn.com/apis/site/v2/sports/basketball/nba/leaders?limit=15&season=2025&seasontype=${seasontype}`;
+    const url = `https://thingproxy.freeboard.io/fetch/https://site.api.espn.com/apis/site/v2/sports/basketball/nba/leaders?limit=15&season=2025&seasontype=${seasontype}`;
     const res = await fetchWithTimeout(url, {}, 8000);
     if (!res.ok) throw new Error('ESPN Stats ' + res.status);
     const data = await res.json();
@@ -411,7 +411,7 @@ async function renderStandings() {
     // シーズンタイプをモードに合わせる
     const seasontype = curMode === 'playoff' ? 3 : 2;
     const res = await fetchWithTimeout(
-      `https://api.allorigins.win/raw?url=https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?season=2025&seasontype=${seasontype}`,
+      `https://thingproxy.freeboard.io/fetch/https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?season=2025&seasontype=${seasontype}`,
       {}, 8000
     );
     if (!res.ok) throw new Error('ESPN standings ' + res.status);
