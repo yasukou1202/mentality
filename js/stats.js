@@ -156,12 +156,12 @@ function switchStatType(btn, type) {
 // ESPN APIのスタッツカテゴリ対応表
 // ============================================================
 const ESPN_STAT_MAP = {
-  pts: { espnStat:'pointsPerGame',       label:'PPG', totLabel:'PTS', pct:false },
-  ast: { espnStat:'assistsPerGame',      label:'APG', totLabel:'AST', pct:false },
-  reb: { espnStat:'reboundsPerGame',     label:'RPG', totLabel:'REB', pct:false },
-  stl: { espnStat:'stealsPerGame',       label:'SPG', totLabel:'STL', pct:false },
-  blk: { espnStat:'blocksPerGame',       label:'BPG', totLabel:'BLK', pct:false },
-  fg3: { espnStat:'threePointPct',       label:'3P%', totLabel:'3P%', pct:true  },
+  pts: { espnStat:'points',       label:'PPG', totLabel:'PTS', pct:false },
+  ast: { espnStat:'assists',      label:'APG', totLabel:'AST', pct:false },
+  reb: { espnStat:'rebounds',     label:'RPG', totLabel:'REB', pct:false },
+  stl: { espnStat:'steals',       label:'SPG', totLabel:'STL', pct:false },
+  blk: { espnStat:'blocks',       label:'BPG', totLabel:'BLK', pct:false },
+  fg3: { espnStat:'threePointFieldGoalPct',       label:'3P%', totLabel:'3P%', pct:true  },
   fg:  { espnStat:'fieldGoalPct',        label:'FG%', totLabel:'FG%', pct:true  },
   ft:  { espnStat:'freeThrowPct',        label:'FT%', totLabel:'FT%', pct:true  },
   to:  { espnStat:'turnoversPerGame',    label:'TPG', totLabel:'TO',  pct:false },
