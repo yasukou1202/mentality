@@ -124,7 +124,7 @@ async function loadPlayersFromAPI() {
 
     window._cachedPlayers = rs.rowSet.map(row => ({
       playerName: row[nameIdx] || '',
-      espnId:     '',
+      espnId:     (window._espnIdMap || {})[row[nameIdx]] || '',
       team:       row[teamIdx] || '',
       pts:        parseFloat(row[ptsIdx]) || 0,
       reb:        parseFloat(row[rebIdx]) || 0,
@@ -172,8 +172,9 @@ function renderPlayerCards(players) {
     const ast     = p.ast !== undefined ? Number(p.ast).toFixed(1) : '-';
     const isJP    = name === 'Yuki Kawamura' || name === 'Rui Hachimura';
 
-    // ESPN IDから顔写真取得
+    // ESPN IDから顔写真取得・ポジション取得
     const espnId   = p.espnId || '';
+    const pos      = (window._espnIdMap || {})[`_pos_${name}`] || '';
     const photoUrl = espnId
       ? `https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/${espnId}.png&w=96&h=70`
       : '';
@@ -186,7 +187,7 @@ function renderPlayerCards(players) {
       <div style="flex:1;min-width:0;">
         <div style="font-size:.78rem;font-weight:700;color:var(--tx);margin-bottom:.06rem;">${jaName}${isJP ? ' 🇯🇵' : ''}</div>
         <div style="font-family:'Barlow Condensed',sans-serif;font-size:.62rem;color:var(--tx3);letter-spacing:.04em;">${name}</div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:.58rem;color:var(--tx3);">${team}</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:.58rem;color:var(--tx3);">${pos ? pos + ' · ' : ''}${team}</div>
       </div>
       <div style="display:flex;gap:.6rem;text-align:center;flex-shrink:0;">
         <div><div style="font-size:.75rem;font-weight:700;color:var(--or);">${pts}</div><div style="font-size:.42rem;color:var(--tx3);">PTS</div></div>
