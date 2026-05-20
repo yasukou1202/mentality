@@ -23,15 +23,7 @@ jobs:
           curl -s "$BASE&SeasonType=Regular+Season&StatCategory=FT_PCT" -H "$H" > /tmp/ft.json
           curl -s "$BASE&SeasonType=Playoffs&StatCategory=PTS" -H "$H" > /tmp/po_pts.json
           curl -s "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?season=2026&seasontype=2" > /tmp/standings.json
-          python3 -c "
-import json
-data = {}
-for key, path in [('pts','/tmp/pts.json'),('ast','/tmp/ast.json'),('reb','/tmp/reb.json'),('stl','/tmp/stl.json'),('blk','/tmp/blk.json'),('fg3','/tmp/fg3.json'),('fg','/tmp/fg.json'),('ft','/tmp/ft.json'),('po_pts','/tmp/po_pts.json'),('standings','/tmp/standings.json')]:
-    with open(path) as f:
-        data[key] = json.load(f)
-with open('data.json','w') as f:
-    json.dump(data, f)
-"
+          python3 merge_data.py
       - name: Commit data
         run: |
           git config user.name "github-actions"
