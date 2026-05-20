@@ -222,7 +222,7 @@ async function loadESPNLeaders(stat, mode) {
         val = rawVal.toFixed(1);
       }
       const unitLabel = statInfo.label;
-      const espnId    = '';
+      const espnId    = (window._espnIdMap || {})[normN] || (window._espnIdMap || {})[name] || '';
       const displayName = jaName || name;
       const subName = jaName ? name : '';
       const photoUrl  = espnId ? `https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/${espnId}.png&w=96&h=70` : '';
