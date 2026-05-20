@@ -31,22 +31,25 @@ try:
 except Exception as e:
     print(f"NG: po_pts - {e}")
 
-# FG%/3P%/FT%はPTSデータから生成（NBA公式条件）
-if 'pts' in data:
-    rs = data['pts']['resultSet']
-    headers = rs['headers']
+# FG%/3P%/FT%はTotalsデータから生成（NBA公式条件）
+try:
+    pts_tot = fetch(f"{BASE_TOT}&SeasonType=Regular+Season&StatCategory=PTS")
+    rs_tot = pts_tot['resultSet']
+    headers_tot = rs_tot['headers']
     conditions = [
         ('fg',  'FG_PCT', 'FGA',  300),
         ('fg3', 'FG3_PCT','FG3A',  82),
         ('ft',  'FT_PCT', 'FTA',  125),
     ]
     for pct_key, col, att_col, min_att in conditions:
-        col_idx = headers.index(col)
-        att_idx = headers.index(att_col)
-        filtered_rows = [r for r in rs['rowSet'] if r[att_idx] >= min_att]
+        col_idx = headers_tot.index(col)
+        att_idx = headers_tot.index(att_col)
+        filtered_rows = [r for r in rs_tot['rowSet'] if r[att_idx] >= min_att]
         sorted_rows = sorted(filtered_rows, key=lambda r: r[col_idx], reverse=True)
-        data[pct_key] = {'resultSet': {'headers': headers, 'rowSet': sorted_rows}}
-        print(f"OK: {pct_key} (from pts, {len(sorted_rows)}人)")
+        data[pct_key] = {'resultSet': {'headers': headers_tot, 'rowSet': sorted_rows}}
+        print(f"OK: {pct_key} (totals, {len(sorted_rows)}人)")
+except Exception as e:
+    print(f"NG: pct totals - {e}")
 
 with open('data.json', 'w') as f:
     json.dump(data, f)
