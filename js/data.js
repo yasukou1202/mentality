@@ -1,3 +1,4 @@
+const ESPNID_MAP = {};
 // data.js — 定数・API設定・固定データ（チーム・選手・試合）
 // 読み込み順: data.js → utils.js → app.js → 各機能JS
 
