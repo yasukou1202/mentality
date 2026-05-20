@@ -11,17 +11,19 @@ jobs:
       - uses: actions/checkout@v3
       - name: Fetch NBA Data
         run: |
-          H="Referer: https://www.nba.com"
+          UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          H1="Referer: https://www.nba.com"
+          H2="User-Agent: $UA"
           BASE="https://stats.nba.com/stats/leagueleaders?LeagueID=00&PerMode=PerGame&Scope=S&Season=2025-26"
-          curl -s "$BASE&SeasonType=Regular+Season&StatCategory=PTS" -H "$H" > /tmp/pts.json
-          curl -s "$BASE&SeasonType=Regular+Season&StatCategory=AST" -H "$H" > /tmp/ast.json
-          curl -s "$BASE&SeasonType=Regular+Season&StatCategory=REB" -H "$H" > /tmp/reb.json
-          curl -s "$BASE&SeasonType=Regular+Season&StatCategory=STL" -H "$H" > /tmp/stl.json
-          curl -s "$BASE&SeasonType=Regular+Season&StatCategory=BLK" -H "$H" > /tmp/blk.json
-          curl -s "$BASE&SeasonType=Regular+Season&StatCategory=FG3_PCT" -H "$H" > /tmp/fg3.json
-          curl -s "$BASE&SeasonType=Regular+Season&StatCategory=FG_PCT" -H "$H" > /tmp/fg.json
-          curl -s "$BASE&SeasonType=Regular+Season&StatCategory=FT_PCT" -H "$H" > /tmp/ft.json
-          curl -s "$BASE&SeasonType=Playoffs&StatCategory=PTS" -H "$H" > /tmp/po_pts.json
+          curl -s "$BASE&SeasonType=Regular+Season&StatCategory=PTS" -H "$H1" -H "$H2" > /tmp/pts.json
+          curl -s "$BASE&SeasonType=Regular+Season&StatCategory=AST" -H "$H1" -H "$H2" > /tmp/ast.json
+          curl -s "$BASE&SeasonType=Regular+Season&StatCategory=REB" -H "$H1" -H "$H2" > /tmp/reb.json
+          curl -s "$BASE&SeasonType=Regular+Season&StatCategory=STL" -H "$H1" -H "$H2" > /tmp/stl.json
+          curl -s "$BASE&SeasonType=Regular+Season&StatCategory=BLK" -H "$H1" -H "$H2" > /tmp/blk.json
+          curl -s "$BASE&SeasonType=Regular+Season&StatCategory=FG3_PCT" -H "$H1" -H "$H2" > /tmp/fg3.json
+          curl -s "$BASE&SeasonType=Regular+Season&StatCategory=FG_PCT" -H "$H1" -H "$H2" > /tmp/fg.json
+          curl -s "$BASE&SeasonType=Regular+Season&StatCategory=FT_PCT" -H "$H1" -H "$H2" > /tmp/ft.json
+          curl -s "$BASE&SeasonType=Playoffs&StatCategory=PTS" -H "$H1" -H "$H2" > /tmp/po_pts.json
           curl -s "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?season=2026&seasontype=2" > /tmp/standings.json
           python3 merge_data.py
       - name: Commit data
