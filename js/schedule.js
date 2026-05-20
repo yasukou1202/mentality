@@ -126,7 +126,7 @@ function moveDate(d) {
   dt.setDate(dt.getDate() + dateOff);
 
   // 日付ラベル更新
-  document.getElementById('dbDate').textContent = toJPDateLabel(dt); // utils.js
+  document.getElementById('dbDate').innerHTML = toJPDateLabel(dt); // utils.js
   const sub = document.getElementById('dbSub');
   if (dateOff === 0) {
     sub.innerHTML = 'TODAY<span class="db-today">今日</span>';
