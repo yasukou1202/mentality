@@ -45,6 +45,11 @@ print("done")
 
 # 全30チームの選手IDを取得してESPNID_MAPを作成
 import time
+import unicodedata
+
+def normalize_name(s):
+    return unicodedata.normalize('NFD', s).encode('ascii', 'ignore').decode('ascii')
+
 espnid_map = {}
 team_ids = list(range(1, 31))
 for tid in team_ids:

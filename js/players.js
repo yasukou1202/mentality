@@ -124,7 +124,7 @@ async function loadPlayersFromAPI() {
 
     window._cachedPlayers = rs.rowSet.map(row => ({
       playerName: row[nameIdx] || '',
-      espnId:     (window._espnIdMap || {})[row[nameIdx]] || '',
+      espnId:     (window._espnIdMap || {})[row[nameIdx].normalize("NFD").replace(/[\u0300-\u036f]/g, "")] || '',
       team:       row[teamIdx] || '',
       pts:        parseFloat(row[ptsIdx]) || 0,
       reb:        parseFloat(row[rebIdx]) || 0,
@@ -173,8 +173,9 @@ function renderPlayerCards(players) {
     const isJP    = name === 'Yuki Kawamura' || name === 'Rui Hachimura';
 
     // ESPN IDから顔写真取得・ポジション取得
+    const normName = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     const espnId   = p.espnId || '';
-    const pos      = (window._espnIdMap || {})[`_pos_${name}`] || '';
+    const pos      = (window._espnIdMap || {})[`_pos_${normName}`] || '';
     const photoUrl = espnId
       ? `https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/${espnId}.png&w=96&h=70`
       : '';
