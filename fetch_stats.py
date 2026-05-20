@@ -42,3 +42,31 @@ if 'pts' in data:
 with open('data.json', 'w') as f:
     json.dump(data, f)
 print("done")
+
+# 全30チームの選手IDを取得してESPNID_MAPを作成
+import time
+espnid_map = {}
+team_ids = list(range(1, 31))
+for tid in team_ids:
+    try:
+        url = f"https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/{tid}/roster"
+        req = urllib.request.Request(url)
+        req.add_header('User-Agent', 'Mozilla/5.0')
+        with urllib.request.urlopen(req, timeout=10) as r:
+            d = json.loads(r.read())
+            for a in d.get('athletes', []):
+                name = f"{a.get('firstName','')} {a.get('lastName','')}".strip()
+                if name and a.get('id'):
+                    espnid_map[name] = a['id']
+        time.sleep(0.2)
+        print(f"Team {tid}: OK")
+    except Exception as e:
+        print(f"Team {tid}: NG - {e}")
+
+# data.jsonに追加
+with open('data.json', 'r') as f:
+    existing = json.load(f)
+existing['espnid_map'] = espnid_map
+with open('data.json', 'w') as f:
+    json.dump(existing, f)
+print(f"ESPNID_MAP: {len(espnid_map)}人")
