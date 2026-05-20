@@ -119,7 +119,7 @@ function initStats() {
   const cats = [
     ['pts','PTS'], ['ast','AST'], ['reb','REB'],
     ['stl','STL'], ['blk','BLK'], ['fg3','3P%'], ['fg3m','3PM'], ['fg','FG%'], ['ft','FT%'],
-    ['to','TO'],   ['pf','PF'],   ['min','MIN'],
+    ['to','TO'], ['min','MIN'],
   ];
   document.getElementById('statCats').innerHTML = cats.map((c, i) =>
     `<button class="scat${i === 0 ? ' on' : ''}" onclick="showStat(this,'${c[0]}')">${c[1]}</button>`

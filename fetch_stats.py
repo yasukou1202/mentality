@@ -17,7 +17,7 @@ BASE = "https://stats.nba.com/stats/leagueleaders?LeagueID=00&PerMode=PerGame&Sc
 BASE_TOT = "https://stats.nba.com/stats/leagueleaders?LeagueID=00&PerMode=Totals&Scope=S&Season=2025-26" 
 data = {}
 
-for stat, key in [('PTS','pts'),('AST','ast'),('REB','reb'),('STL','stl'),('BLK','blk'),('TOV','to'),('MIN','min'),('FG3M','fg3m'),('PF','pf')]:
+for stat, key in [('PTS','pts'),('AST','ast'),('REB','reb'),('STL','stl'),('BLK','blk'),('TOV','to'),('MIN','min'),('FG3M','fg3m')]:
     try:
         data[key] = fetch(f"{BASE}&SeasonType=Regular+Season&StatCategory={stat}")
         data[key+'_tot'] = fetch(f"{BASE_TOT}&SeasonType=Regular+Season&StatCategory={stat}")
