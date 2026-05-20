@@ -126,7 +126,7 @@
   max-height: 0;
   transition: max-height .3s ease;
 }
-.detail-panel.open { max-height: 2000px; }
+.detail-panel.open { max-height: 6000px; }
 
 /* ===== スタッツ系ボタン ===== */
 .stat-type-btn {
