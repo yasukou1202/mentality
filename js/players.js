@@ -112,7 +112,7 @@ async function loadPlayersFromAPI() {
     if (!res.ok) throw new Error('ESPN Error ' + res.status);
     const data = await res.json();
 
-    const categories = (data.leaders && data.leaders.categories) || [];
+    const categories = data.categories || [];
     const ptsCategory = categories.find(c =>
       c.name === 'pointsPerGame' || c.abbreviation === 'PPG'
     ) || categories[0];

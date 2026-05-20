@@ -189,7 +189,7 @@ async function loadESPNLeaders(stat, mode) {
     const data = await res.json();
 
     // ESPN APIのレスポンスからスタッツカテゴリを探す
-    const categories = (data.leaders && data.leaders.categories) || [];
+    const categories = data.categories || [];
     const category   = categories.find(c =>
       c.name === statInfo.espnStat ||
       c.abbreviation?.toLowerCase() === stat.toLowerCase()
