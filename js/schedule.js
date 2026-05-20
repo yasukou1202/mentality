@@ -605,7 +605,7 @@ async function loadESPNScoreboard() {
     GAMES['0'] = parseESPNGames(events);
 
     const dateEl = document.getElementById('dbDate');
-    if (dateEl) dateEl.textContent = toJPDateLabel(jp);
+    if (dateEl) dateEl.innerHTML = toJPDateLabel(jp);
     const subEl = document.getElementById('dbSub');
     if (subEl) subEl.innerHTML = 'TODAY<span class="db-today">今日</span>';
 
