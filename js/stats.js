@@ -209,7 +209,8 @@ async function loadESPNLeaders(stat, mode) {
       const rank    = i + 1;
       const medal   = rank <= 3 ? medals[i] : rank;
       const name    = row[nameIdx] || '';
-      const jaName  = JA_NAME_MAP[name] || '';
+      const normN   = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      const jaName  = JA_NAME_MAP[name] || JA_NAME_MAP[normN] || '';
       const team    = row[teamIdx] || '';
       const rawVal  = parseFloat(row[valIdx]) || 0;
       const isTop3  = rank <= 3;
