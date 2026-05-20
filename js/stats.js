@@ -161,11 +161,11 @@ const ESPN_STAT_MAP = {
   reb: { espnStat:'rebounds', nbaStatKey:'REB',     label:'RPG', totLabel:'REB', pct:false },
   stl: { espnStat:'steals', nbaStatKey:'STL',       label:'SPG', totLabel:'STL', pct:false },
   blk: { espnStat:'blocks', nbaStatKey:'BLK',       label:'BPG', totLabel:'BLK', pct:false },
-  fg3: { espnStat:'threePointFieldGoalPct',       label:'3P%', totLabel:'3P%', pct:true  },
-  fg:  { espnStat:'fieldGoalPct',        label:'FG%', totLabel:'FG%', pct:true  },
-  ft:  { espnStat:'freeThrowPct',        label:'FT%', totLabel:'FT%', pct:true  },
-  to:  { espnStat:'turnoversPerGame',    label:'TPG', totLabel:'TO',  pct:false },
-  min: { espnStat:'minutesPerGame',      label:'MPG', totLabel:'MIN', pct:false },
+  fg3: { espnStat:'threePointFieldGoalPct', nbaStatKey:'FG3_PCT', label:'3P%', totLabel:'3P%', pct:true  },
+  fg:  { espnStat:'fieldGoalPct', nbaStatKey:'FG_PCT', label:'FG%', totLabel:'FG%', pct:true  },
+  ft:  { espnStat:'freeThrowPct', nbaStatKey:'FT_PCT', label:'FT%', totLabel:'FT%', pct:true  },
+  to:  { espnStat:'turnoversPerGame', nbaStatKey:'TOV', label:'TPG', totLabel:'TO',  pct:false },
+  min: { espnStat:'minutesPerGame', nbaStatKey:'MIN', label:'MPG', totLabel:'MIN', pct:false },
 };
 
 // ============================================================
@@ -219,6 +219,8 @@ async function loadESPNLeaders(stat, mode) {
       }
       const unitLabel = statInfo.label;
       const espnId    = '';
+      const displayName = jaName || name;
+      const subName = jaName ? name : '';
       const photoUrl  = espnId ? `https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/${espnId}.png&w=96&h=70` : '';
 
       return `<div class="lc${isTop3 ? ' t' + rank : ''}" onclick="openPlayerModalByName('${name.replace(/'/g,"\\'")}','${team}')">
@@ -230,8 +232,8 @@ async function loadESPNLeaders(stat, mode) {
           }
         </div>
         <div class="lc-info">
-          <div class="lc-name">${jaName || name.split(' ').slice(-1)[0]}</div>
-          <div class="lc-sub">${name} · ${team}</div>
+          <div class="lc-name">${jaName || name}</div>
+          ${jaName ? `<div class="lc-sub" style="font-size:.6rem;color:var(--tx3);">${name} · ${team}</div>` : `<div class="lc-sub">${team}</div>`}
         </div>
         <div class="lc-val">
           <div class="lc-v${isTop3 ? ' gold' : ''}">${val}</div>
