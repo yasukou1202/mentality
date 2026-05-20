@@ -209,10 +209,11 @@ async function openPlayerDetail(name, team) {
 
   const jaName = JA_NAME_MAP[name] || name; // config.js
   const norm   = (s) => (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-  let espnId   = ESPNID_MAP[name];
+  const _emap = window._espnIdMap || {};
+  let espnId   = _emap[name];
   if (!espnId) {
     const ln = norm(name.split(' ').slice(-1)[0]);
-    for (const [key, val] of Object.entries(ESPNID_MAP)) {
+    for (const [key, val] of Object.entries(_emap)) {
       if (norm(key.split(' ').slice(-1)[0]) === ln) { espnId = val; break; }
     }
   }
