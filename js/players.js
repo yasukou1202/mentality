@@ -131,6 +131,7 @@ async function loadPlayersFromAPI() {
       ast:        parseFloat(row[astIdx]) || 0,
     }));
 
+    const filtered = pTeam !== 'all'
       ? window._cachedPlayers.filter(p => p.team === pTeam)
       : window._cachedPlayers;
 
