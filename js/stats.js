@@ -163,6 +163,7 @@ const ESPN_STAT_MAP = {
   blk: { espnStat:'blocks', nbaStatKey:'BLK',       label:'BPG', totLabel:'BLK', pct:false },
   fg3: { espnStat:'threePointFieldGoalPct', nbaStatKey:'FG3_PCT', label:'3P%', totLabel:'3P%', pct:true  },
   fg3m: { espnStat:'threePointMade', nbaStatKey:'FG3M', label:'3PM', totLabel:'3PM', pct:false },
+  pf:   { espnStat:'personalFouls', nbaStatKey:'PF', label:'FPG', totLabel:'PF', pct:false },
   fg:  { espnStat:'fieldGoalPct', nbaStatKey:'FG_PCT', label:'FG%', totLabel:'FG%', pct:true  },
   ft:  { espnStat:'freeThrowPct', nbaStatKey:'FT_PCT', label:'FT%', totLabel:'FT%', pct:true  },
   to:  { espnStat:'turnoversPerGame', nbaStatKey:'TOV', label:'TPG', totLabel:'TO',  pct:false },
