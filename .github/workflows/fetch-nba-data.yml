@@ -9,12 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Fetch ESPN Data
+      - name: Fetch NBA Data
         run: |
-          curl -s "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/leaders?limit=15&seasontype=3" > /tmp/leaders.json
+          curl -s "https://stats.nba.com/stats/leagueleaders?LeagueID=00&PerMode=PerGame&Scope=S&Season=2025-26&SeasonType=Regular+Season&StatCategory=PTS" -H "Referer: https://www.nba.com" > /tmp/pts.json
+          curl -s "https://stats.nba.com/stats/leagueleaders?LeagueID=00&PerMode=PerGame&Scope=S&Season=2025-26&SeasonType=Regular+Season&StatCategory=AST" -H "Referer: https://www.nba.com" > /tmp/ast.json
+          curl -s "https://stats.nba.com/stats/leagueleaders?LeagueID=00&PerMode=PerGame&Scope=S&Season=2025-26&SeasonType=Regular+Season&StatCategory=REB" -H "Referer: https://www.nba.com" > /tmp/reb.json
+          curl -s "https://stats.nba.com/stats/leagueleaders?LeagueID=00&PerMode=PerGame&Scope=S&Season=2025-26&SeasonType=Playoffs&StatCategory=PTS" -H "Referer: https://www.nba.com" > /tmp/po_pts.json
           curl -s "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?season=2026&seasontype=2" > /tmp/standings.json
-          curl -s "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/leaders?limit=50&seasontype=3" > /tmp/players.json
-          echo "{\"leaders\":$(cat /tmp/leaders.json),\"standings\":$(cat /tmp/standings.json),\"players\":$(cat /tmp/players.json)}" > data.json
+          echo "{\"pts\":$(cat /tmp/pts.json),\"ast\":$(cat /tmp/ast.json),\"reb\":$(cat /tmp/reb.json),\"po_pts\":$(cat /tmp/po_pts.json),\"standings\":$(cat /tmp/standings.json)}" > data.json
       - name: Commit data
         run: |
           git config user.name "github-actions"
