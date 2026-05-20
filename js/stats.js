@@ -156,11 +156,11 @@ function switchStatType(btn, type) {
 // ESPN APIのスタッツカテゴリ対応表
 // ============================================================
 const ESPN_STAT_MAP = {
-  pts: { espnStat:'points',       label:'PPG', totLabel:'PTS', pct:false },
-  ast: { espnStat:'assists',      label:'APG', totLabel:'AST', pct:false },
-  reb: { espnStat:'rebounds',     label:'RPG', totLabel:'REB', pct:false },
-  stl: { espnStat:'steals',       label:'SPG', totLabel:'STL', pct:false },
-  blk: { espnStat:'blocks',       label:'BPG', totLabel:'BLK', pct:false },
+  pts: { espnStat:'points', nbaStatKey:'PTS',       label:'PPG', totLabel:'PTS', pct:false },
+  ast: { espnStat:'assists', nbaStatKey:'AST',      label:'APG', totLabel:'AST', pct:false },
+  reb: { espnStat:'rebounds', nbaStatKey:'REB',     label:'RPG', totLabel:'REB', pct:false },
+  stl: { espnStat:'steals', nbaStatKey:'STL',       label:'SPG', totLabel:'STL', pct:false },
+  blk: { espnStat:'blocks', nbaStatKey:'BLK',       label:'BPG', totLabel:'BLK', pct:false },
   fg3: { espnStat:'threePointFieldGoalPct',       label:'3P%', totLabel:'3P%', pct:true  },
   fg:  { espnStat:'fieldGoalPct',        label:'FG%', totLabel:'FG%', pct:true  },
   ft:  { espnStat:'freeThrowPct',        label:'FT%', totLabel:'FT%', pct:true  },
@@ -182,32 +182,33 @@ async function loadESPNLeaders(stat, mode) {
     const statInfo   = ESPN_STAT_MAP[stat] || ESPN_STAT_MAP.pts;
     const seasontype = mode === 'playoff' ? 3 : mode === 'playin' ? 5 : 2;
 
-    // ESPN スタッツリーダーAPI
+    // NBA Stats API (data.json)
     const url = `https://yasukou1202.github.io/mentality/data.json`;
     const res = await fetchWithTimeout(url, {}, 8000);
-    if (!res.ok) throw new Error('ESPN Stats ' + res.status);
+    if (!res.ok) throw new Error('NBA Stats ' + res.status);
     const data = await res.json();
 
-    // ESPN APIのレスポンスからスタッツカテゴリを探す
-    const categories = data.categories || [];
-    const category   = categories.find(c =>
-      c.name === statInfo.espnStat ||
-      c.abbreviation?.toLowerCase() === stat.toLowerCase()
-    ) || categories[0];
+    // data.jsonからカテゴリを選択
+    const categoryKey = mode === 'playoff' ? 'po_' + stat : stat;
+    const statData = data[categoryKey] || data[stat];
+    if (!statData || !statData.resultSet) throw new Error('カテゴリなし');
 
-    if (!category || !category.leaders) throw new Error('カテゴリなし');
+    const headers = statData.resultSet.headers;
+    const rows = statData.resultSet.rowSet.slice(0, 15);
+    const nameIdx = headers.indexOf('PLAYER');
+    const teamIdx = headers.indexOf('TEAM');
+    const valIdx  = headers.indexOf(statInfo.nbaStatKey || 'PTS');
 
     if (loading) loading.style.display = 'none';
     const medals = ['🥇','🥈','🥉'];
 
-    list.innerHTML = category.leaders.map((entry, i) => {
+    list.innerHTML = rows.map((row, i) => {
       const rank    = i + 1;
       const medal   = rank <= 3 ? medals[i] : rank;
-      const athlete = entry.athlete || {};
-      const name    = athlete.displayName || '';
+      const name    = row[nameIdx] || '';
       const jaName  = JA_NAME_MAP[name] || '';
-      const team    = entry.team?.abbreviation || '';
-      const rawVal  = parseFloat(entry.value) || 0;
+      const team    = row[teamIdx] || '';
+      const rawVal  = parseFloat(row[valIdx]) || 0;
       const isTop3  = rank <= 3;
 
       let val = '-';
@@ -217,7 +218,7 @@ async function loadESPNLeaders(stat, mode) {
         val = rawVal.toFixed(1);
       }
       const unitLabel = statInfo.label;
-      const espnId    = athlete.id || '';
+      const espnId    = '';
       const photoUrl  = espnId ? `https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/${espnId}.png&w=96&h=70` : '';
 
       return `<div class="lc${isTop3 ? ' t' + rank : ''}" onclick="openPlayerModalByName('${name.replace(/'/g,"\\'")}','${team}')">
