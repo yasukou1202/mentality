@@ -131,23 +131,6 @@ async function loadPlayersFromAPI() {
       ast:        parseFloat(row[astIdx]) || 0,
     }));
 
-    // REB・AST補完
-    const rebCategory = categories.find(c => c.name === 'reboundsPerGame' || c.abbreviation === 'RPG');
-    const astCategory = categories.find(c => c.name === 'assistsPerGame'  || c.abbreviation === 'APG');
-    if (rebCategory?.leaders) {
-      rebCategory.leaders.forEach(e => {
-        const p = window._cachedPlayers.find(x => x.playerName === e.athlete?.displayName);
-        if (p) p.reb = parseFloat(e.value) || 0;
-      });
-    }
-    if (astCategory?.leaders) {
-      astCategory.leaders.forEach(e => {
-        const p = window._cachedPlayers.find(x => x.playerName === e.athlete?.displayName);
-        if (p) p.ast = parseFloat(e.value) || 0;
-      });
-    }
-
-    const filtered = pTeam !== 'all'
       ? window._cachedPlayers.filter(p => p.team === pTeam)
       : window._cachedPlayers;
 
