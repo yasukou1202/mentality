@@ -189,8 +189,9 @@ async function loadESPNLeaders(stat, mode) {
     if (!res.ok) throw new Error('NBA Stats ' + res.status);
     const data = await res.json();
 
-    // data.jsonからカテゴリを選択
-    const categoryKey = mode === 'playoff' ? 'po_' + stat : stat;
+    // data.jsonからカテゴリを選択（平均/合計切り替え）
+    const isTotal = typeof curStatType !== 'undefined' && curStatType === 'total';
+    const categoryKey = mode === 'playoff' ? 'po_' + stat : (isTotal ? stat + '_tot' : stat);
     const statData = data[categoryKey] || data[stat];
     if (!statData || !statData.resultSet) throw new Error('カテゴリなし');
 
