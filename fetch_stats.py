@@ -29,15 +29,22 @@ try:
 except Exception as e:
     print(f"NG: po_pts - {e}")
 
-# FG%/3P%/FT%はPTSデータから生成
+# FG%/3P%/FT%はPTSデータから生成（NBA公式条件）
 if 'pts' in data:
-    for pct_key, col in [('fg','FG_PCT'),('fg3','FG3_PCT'),('ft','FT_PCT')]:
-        rs = data['pts']['resultSet']
-        headers = rs['headers']
+    rs = data['pts']['resultSet']
+    headers = rs['headers']
+    conditions = [
+        ('fg',  'FG_PCT', 'FGA',  300),
+        ('fg3', 'FG3_PCT','FG3A',  82),
+        ('ft',  'FT_PCT', 'FTA',  125),
+    ]
+    for pct_key, col, att_col, min_att in conditions:
         col_idx = headers.index(col)
-        sorted_rows = sorted(rs['rowSet'], key=lambda r: r[col_idx], reverse=True)
+        att_idx = headers.index(att_col)
+        filtered_rows = [r for r in rs['rowSet'] if r[att_idx] >= min_att]
+        sorted_rows = sorted(filtered_rows, key=lambda r: r[col_idx], reverse=True)
         data[pct_key] = {'resultSet': {'headers': headers, 'rowSet': sorted_rows}}
-        print(f"OK: {pct_key} (from pts)")
+        print(f"OK: {pct_key} (from pts, {len(sorted_rows)}人)")
 
 with open('data.json', 'w') as f:
     json.dump(data, f)
