@@ -112,20 +112,23 @@ async function loadPlayersFromAPI() {
     if (!res.ok) throw new Error('ESPN Error ' + res.status);
     const data = await res.json();
 
-    const categories = data.categories || [];
-    const ptsCategory = categories.find(c =>
-      c.name === 'pointsPerGame' || c.abbreviation === 'PPG'
-    ) || categories[0];
+    const rs = data.pts?.resultSet;
+    if (!rs?.rowSet?.length) throw new Error('データなし');
 
-    if (!ptsCategory?.leaders?.length) throw new Error('データなし');
+    const h = rs.headers;
+    const nameIdx = h.indexOf('PLAYER');
+    const teamIdx = h.indexOf('TEAM');
+    const ptsIdx  = h.indexOf('PTS');
+    const rebIdx  = h.indexOf('REB');
+    const astIdx  = h.indexOf('AST');
 
-    window._cachedPlayers = ptsCategory.leaders.map(entry => ({
-      playerName: entry.athlete?.displayName || '',
-      espnId:     entry.athlete?.id || '',
-      team:       entry.team?.abbreviation || '',
-      pts:        parseFloat(entry.value) || 0,
-      reb:        0,
-      ast:        0,
+    window._cachedPlayers = rs.rowSet.map(row => ({
+      playerName: row[nameIdx] || '',
+      espnId:     '',
+      team:       row[teamIdx] || '',
+      pts:        parseFloat(row[ptsIdx]) || 0,
+      reb:        parseFloat(row[rebIdx]) || 0,
+      ast:        parseFloat(row[astIdx]) || 0,
     }));
 
     // REB・AST補完
