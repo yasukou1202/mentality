@@ -45,7 +45,10 @@ const DAYS = ['日', '月', '火', '水', '木', '金', '土'];
 /** Date を "M月D日（曜）" 形式に変換（日本時間基準） */
 function toJPDateLabel(date) {
   const jp = new Date(date.toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' }));
-  return `${jp.getMonth() + 1}月${jp.getDate()}日（${DAYS[jp.getDay()]}）`;
+  const et = new Date(date.toLocaleString('ja-JP', { timeZone: 'America/New_York' }));
+  const jpLabel = `${jp.getMonth() + 1}月${jp.getDate()}日（${DAYS[jp.getDay()]}）`;
+  const etLabel = `ET ${et.getMonth() + 1}/${et.getDate()}（${DAYS[et.getDay()]}）`;
+  return `${jpLabel} <span style="font-size:.65rem;color:var(--tx3);font-weight:400;">${etLabel}</span>`;
 }
 
 // ---------- 文字列 ----------
