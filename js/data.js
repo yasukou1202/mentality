@@ -139,7 +139,7 @@ const JA_NAME_MAP = {
   'Cam Thomas'              : 'カム・トーマス',
   'Ben Simmons'             : 'ベン・シモンズ',
   'Nic Claxton'             : 'ニック・クラクストン',
-  'Royce O'Neale'          : 'ロイス・オニール',
+  "Royce O'Neale"          : 'ロイス・オニール',
   'Dennis Schroder'         : 'デニス・シュルーダー',
   'Spencer Dinwiddie'       : 'スペンサー・ディンウィディ',
   'Lonzo Ball'              : 'ロンゾ・ボール',
