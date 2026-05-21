@@ -271,18 +271,30 @@ async function openPlayerDetail(name, team) {
       if (!r) return '';
       const yr = ['25-26','24-25','23-24'][i];
       const gg = r.games || 1;
-      return `<tr style="border-bottom:1px solid var(--bd);${i===0?'background:rgba(255,90,0,.04);':''}">
-        <td style="padding:.3rem .4rem;font-weight:700;color:${i===0?'var(--or)':'var(--tx)'};">${yr}</td>
-        <td style="padding:.3rem .4rem;color:var(--tx3);text-align:center;">${r.team||''}</td>
-        <td style="padding:.3rem .4rem;text-align:center;">${r.games}</td>
-        <td style="padding:.3rem .4rem;font-weight:700;text-align:center;">${(r.points/gg).toFixed(1)}</td>
-        <td style="padding:.3rem .4rem;text-align:center;">${(r.totalRb/gg).toFixed(1)}</td>
-        <td style="padding:.3rem .4rem;text-align:center;">${(r.assists/gg).toFixed(1)}</td>
-        <td style="padding:.3rem .4rem;text-align:center;">${r.steals?(r.steals/gg).toFixed(1):'-'}</td>
-        <td style="padding:.3rem .4rem;text-align:center;">${r.blocks?(r.blocks/gg).toFixed(1):'-'}</td>
-        <td style="padding:.3rem .4rem;text-align:center;">${r.fieldPercent?(r.fieldPercent*100).toFixed(1)+'%':'-'}</td>
-        <td style="padding:.3rem .4rem;text-align:center;">${r.threePercent?(r.threePercent*100).toFixed(1)+'%':'-'}</td>
-        <td style="padding:.3rem .4rem;text-align:center;">${r.ftPercent?(r.ftPercent*100).toFixed(1)+'%':'-'}</td>
+      const isNow = i === 0;
+      const stats = [
+        {k:'PTS', v:(r.points/gg).toFixed(1)},
+        {k:'REB', v:(r.totalRb/gg).toFixed(1)},
+        {k:'AST', v:(r.assists/gg).toFixed(1)},
+        {k:'STL', v:r.steals?(r.steals/gg).toFixed(1):'-'},
+        {k:'BLK', v:r.blocks?(r.blocks/gg).toFixed(1):'-'},
+        {k:'FG%', v:r.fieldPercent?(r.fieldPercent*100).toFixed(1)+'%':'-'},
+        {k:'3P%', v:r.threePercent?(r.threePercent*100).toFixed(1)+'%':'-'},
+        {k:'FT%', v:r.ftPercent?(r.ftPercent*100).toFixed(1)+'%':'-'},
+      ];
+      return `<div style="border-bottom:1px solid var(--bd);padding:.5rem .4rem;${isNow?'background:rgba(255,90,0,.04);':''}">
+        <div style="display:flex;align-items:center;gap:.4rem;margin-bottom:.35rem;">
+          <span style="font-size:.65rem;font-weight:700;color:${isNow?'var(--or)':'var(--tx)'};">${yr}</span>
+          <span style="font-size:.58rem;color:var(--tx3);">${r.team||''}</span>
+          <span style="font-size:.58rem;color:var(--tx3);">${r.games}G</span>
+        </div>
+        <div style="display:flex;gap:.4rem;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;">
+          ${stats.map(s=>`<div style="flex-shrink:0;text-align:center;min-width:36px;">
+            <div style="font-size:.5rem;color:var(--tx3);margin-bottom:.1rem;">${s.k}</div>
+            <div style="font-size:.72rem;font-weight:700;color:var(--tx);">${s.v}</div>
+          </div>`).join('')}
+        </div>
+      </div>\`;
       </tr>`;
     }).join('');
 
