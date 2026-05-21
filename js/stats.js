@@ -308,7 +308,7 @@ async function openPlayerModalByName(name, team) {
 
 // 選手モーダルのHTML描画
 async function renderPlayerModal(inner, name, team, photoUrl, espnId) {
-  const jaName = JA_NAME_MAP[name] || autoKana(name);
+  const jaName = JA_NAME_MAP[name] || name;
 
   inner.innerHTML = `
     <div style="background:linear-gradient(135deg,#0a1628,#1d428a);padding:1rem;position:relative;">
