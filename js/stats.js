@@ -373,16 +373,16 @@ async function renderPlayerModal(inner, name, team, photoUrl, espnId) {
         {k:'3P%', v:r.threePercent?(r.threePercent*100).toFixed(1)+'%':'-'},
         {k:'FT%', v:r.ftPercent?(r.ftPercent*100).toFixed(1)+'%':'-'},
       ];
-      return `<div style="border-bottom:1px solid var(--bd);padding:.5rem .4rem;${isNow?'background:rgba(255,90,0,.04);':''}">
-        <div style="display:flex;align-items:center;gap:.4rem;margin-bottom:.35rem;">
+      return `<div style="border-bottom:1px solid var(--bd);padding:.45rem .5rem;${isNow?'background:rgba(255,90,0,.04);':''}">
+        <div style="display:flex;align-items:center;gap:.3rem;margin-bottom:.3rem;">
           <span style="font-size:.65rem;font-weight:700;color:${isNow?'var(--or)':'var(--tx)'};">${yr}</span>
           <span style="font-size:.58rem;color:var(--tx3);">${r.team||''}</span>
           <span style="font-size:.58rem;color:var(--tx3);">${r.games}G</span>
         </div>
-        <div style="display:flex;gap:.4rem;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;">
-          ${stats.map(s=>`<div style="flex-shrink:0;text-align:center;min-width:36px;">
-            <div style="font-size:.5rem;color:var(--tx3);margin-bottom:.1rem;">${s.k}</div>
-            <div style="font-size:.72rem;font-weight:700;color:var(--tx);">${s.v}</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.25rem;">
+          ${stats.map(s=>`<div style="text-align:center;padding:.2rem 0;">
+            <div style="font-size:.48rem;color:var(--tx3);margin-bottom:.1rem;">${s.k}</div>
+            <div style="font-size:.7rem;font-weight:700;color:var(--tx);">${s.v}</div>
           </div>`).join('')}
         </div>
       </div>`;
