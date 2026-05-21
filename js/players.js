@@ -277,7 +277,11 @@ async function openPlayerDetail(name, team) {
         <td style="padding:.3rem .4rem;font-weight:700;text-align:center;">${(r.points/gg).toFixed(1)}</td>
         <td style="padding:.3rem .4rem;text-align:center;">${(r.totalRb/gg).toFixed(1)}</td>
         <td style="padding:.3rem .4rem;text-align:center;">${(r.assists/gg).toFixed(1)}</td>
+        <td style="padding:.3rem .4rem;text-align:center;">${r.steals?(r.steals/gg).toFixed(1):'-'}</td>
+        <td style="padding:.3rem .4rem;text-align:center;">${r.blocks?(r.blocks/gg).toFixed(1):'-'}</td>
         <td style="padding:.3rem .4rem;text-align:center;">${r.fieldPercent?(r.fieldPercent*100).toFixed(1)+'%':'-'}</td>
+        <td style="padding:.3rem .4rem;text-align:center;">${r.threePercent?(r.threePercent*100).toFixed(1)+'%':'-'}</td>
+        <td style="padding:.3rem .4rem;text-align:center;">${r.ftPercent?(r.ftPercent*100).toFixed(1)+'%':'-'}</td>
       </tr>`;
     }).join('');
 
@@ -303,7 +307,7 @@ async function openPlayerDetail(name, team) {
       <div style="overflow-x:auto;border-radius:6px;border:1px solid var(--bd);margin-bottom:.6rem;">
         <table style="width:100%;border-collapse:collapse;font-size:.62rem;min-width:320px;">
           <thead><tr style="background:var(--bg3);">
-            ${['シーズン','チーム','G','PTS','REB','AST','FG%'].map(c=>`<th style="padding:.3rem .2rem;text-align:center;color:var(--tx3);border-bottom:1px solid var(--bd);">${c}</th>`).join('')}
+            ${['シーズン','チーム','G','PTS','REB','AST','STL','BLK','FG%','3P%','FT%'].map(c=>`<th style="padding:.3rem .2rem;text-align:center;color:var(--tx3);border-bottom:1px solid var(--bd);">${c}</th>`).join('')}
           </tr></thead>
           <tbody>${histRows}</tbody>
         </table>
