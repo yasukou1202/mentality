@@ -21,13 +21,8 @@ function getJPDate() {
 
 /** NBA基準日を返す（日本時間14時前は前日扱い） */
 function getNBABaseDate() {
-  // 日本時間で現在時刻を取得
-  const nowStr = new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
-  const nowJP  = new Date(nowStr);
-  const jpHour = nowJP.getHours();
-  // 日本時間14時前（NBA試合がまだ前日分）は前日を返す
-  if (jpHour < 14) nowJP.setDate(nowJP.getDate() - 1);
-  return nowJP;
+  // 日本時間で現在日付を返す
+  return new Date(new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' }));
 }
 
 /** Date を "YYYYMMDD" 文字列に変換（日本時間基準） */
