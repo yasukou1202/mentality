@@ -377,7 +377,7 @@ async function renderPlayerModal(inner, name, team, photoUrl, espnId) {
         <div style="display:flex;align-items:center;gap:.3rem;margin-bottom:.3rem;">
           <span style="font-size:.65rem;font-weight:700;color:${isNow?'var(--or)':'var(--tx)'};">${yr}</span>
           <span style="font-size:.58rem;color:var(--tx3);">${r.team||''}</span>
-          <span style="font-size:.58rem;color:var(--tx3);">${r.games}G</span>
+          <span style="font-size:.62rem;font-weight:600;color:var(--tx2);">${r.games}G</span>
         </div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.25rem;">
           ${stats.map(s=>`<div style="text-align:center;padding:.2rem 0;">
