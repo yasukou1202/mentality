@@ -255,7 +255,7 @@ async function openPlayerDetail(name, team) {
     const pct = (v) => v !== undefined ? (v * 100).toFixed(1) + '%' : '-';
 
     const statsItems = [
-      {k:'GP',  v:cur.games},           {k:'MIN', v:cur.minutes&&cur.games?(cur.minutes/cur.games).toFixed(1):cur.minutesPg?.toFixed(1)},
+      {k:'GP',  v:cur.games},           {k:'MIN', v:cur.minutesPg&&cur.games?(cur.minutesPg/cur.games).toFixed(1):'-'},
       {k:'PTS', v:fmt(cur.points)},     {k:'REB', v:fmt(cur.totalRb)},
       {k:'AST', v:fmt(cur.assists)},    {k:'STL', v:fmt(cur.steals)},
       {k:'BLK', v:fmt(cur.blocks)},     {k:'TO',  v:fmt(cur.turnovers)},
