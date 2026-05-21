@@ -305,7 +305,7 @@ async function openPlayerDetail(name, team) {
       </div>
       <div style="font-size:.7rem;font-weight:700;color:var(--tx2);margin-bottom:.4rem;">過去シーズン</div>
       <div style="overflow-x:auto;border-radius:6px;border:1px solid var(--bd);margin-bottom:.6rem;">
-        <table style="width:100%;border-collapse:collapse;font-size:.62rem;min-width:320px;">
+        <table style="width:100%;border-collapse:collapse;font-size:.62rem;min-width:600px;">
           <thead><tr style="background:var(--bg3);">
             ${['シーズン','チーム','G','PTS','REB','AST','STL','BLK','FG%','3P%','FT%'].map(c=>`<th style="padding:.3rem .2rem;text-align:center;color:var(--tx3);border-bottom:1px solid var(--bd);">${c}</th>`).join('')}
           </tr></thead>
