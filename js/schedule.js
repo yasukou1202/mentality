@@ -573,7 +573,7 @@ async function loadESPNScoreboard() {
     const jp      = getJPDate();
     const dates   = [0, -1, 1].map(offset => {
       const d = new Date(jp);
-      d.setDate(d.getDate() + offset);
+      d.setDate(d.getDate() + offset - 1); // UTC基準のため-1
       return toDateStr(d);
     });
 
