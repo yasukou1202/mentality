@@ -112,23 +112,19 @@ async function loadPlayersFromAPI() {
     if (!res.ok) throw new Error('ESPN Error ' + res.status);
     const data = await res.json();
 
-    const rs = data.pts?.resultSet;
-    if (!rs?.rowSet?.length) throw new Error('データなし');
+    const allPlayers = data.all_players;
+    if (!allPlayers?.length) throw new Error("データなし");
 
-    const h = rs.headers;
-    const nameIdx = h.indexOf('PLAYER');
-    const teamIdx = h.indexOf('TEAM');
-    const ptsIdx  = h.indexOf('PTS');
-    const rebIdx  = h.indexOf('REB');
-    const astIdx  = h.indexOf('AST');
-
-    window._cachedPlayers = rs.rowSet.map(row => ({
-      playerName: row[nameIdx] || '',
-      espnId:     (window._espnIdMap || {})[row[nameIdx].normalize("NFD").replace(/[\u0300-\u036f]/g, "")] || '',
-      team:       row[teamIdx] || '',
-      pts:        parseFloat(row[ptsIdx]) || 0,
-      reb:        parseFloat(row[rebIdx]) || 0,
-      ast:        parseFloat(row[astIdx]) || 0,
+    window._cachedPlayers = allPlayers.map(p => ({
+      playerName: p.name || "",
+      espnId:     p.id || "",
+      team:       p.team || "",
+      pts:        parseFloat(p.pts) || 0,
+      reb:        parseFloat(p.reb) || 0,
+      ast:        parseFloat(p.ast) || 0,
+      height:     p.height || "",
+      dob:        p.dob || "",
+      pos:        p.pos || "",
     }));
 
     const filtered = pTeam !== 'all'
