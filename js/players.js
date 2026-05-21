@@ -165,7 +165,7 @@ function renderPlayerCards(players) {
 
   grid.innerHTML = filtered.map(p => {
     const name    = p.playerName || '';
-    const jaName  = JA_NAME_MAP[name] || name;
+    const jaName  = JA_NAME_MAP[name] || autoKana(name);
     const team    = p.team || '';
     const pts     = p.pts !== undefined ? Number(p.pts).toFixed(1) : '-';
     const reb     = p.reb !== undefined ? Number(p.reb).toFixed(1) : '-';
@@ -209,7 +209,7 @@ async function openPlayerDetail(name, team) {
   if (!modal || !content) return;
   modal.style.display = 'block';
 
-  const jaName = JA_NAME_MAP[name] || name; // config.js
+  const jaName = JA_NAME_MAP[name] || autoKana(name);
   const norm   = (s) => (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'');
   const _emap = window._espnIdMap || {};
   let espnId   = _emap[name];

@@ -88,6 +88,69 @@ const JA_NAME_MAP = {
   'Jamal Murray'            : 'ジャマール・マレー',
 };
 
+// ---------- 英語名→カタカナ自動変換 ----------
+function autoKana(name) {
+  // JA_NAME_MAPに登録済みならそちらを優先
+  if (JA_NAME_MAP[name]) return JA_NAME_MAP[name];
+
+  // 名前部分のみ変換（姓を優先）
+  const parts = name.split(' ');
+  const last = parts[parts.length - 1];
+
+  const map = [
+    [/sch/gi,'シュ'],[/tch/gi,'ッチ'],[/ck/gi,'ック'],[/ph/gi,'フ'],
+    [/wh/gi,'ホ'],[/th/gi,'ス'],[/sh/gi,'シ'],[/ch/gi,'チ'],
+    [/gh/gi,'ッ'],[/ng/gi,'ング'],[/nk/gi,'ンク'],[/nt/gi,'ント'],
+    [/nd/gi,'ンド'],[/mb/gi,'ンブ'],[/mp/gi,'ンプ'],
+    [/qu/gi,'クウ'],
+    [/tion/gi,'ション'],[/sion/gi,'ション'],[/ous/gi,'アス'],
+    [/ble/gi,'ブル'],[/ple/gi,'プル'],[/tle/gi,'トル'],[/dle/gi,'ドル'],
+    [/fle/gi,'フル'],[/kle/gi,'クル'],[/ngle/gi,'ングル'],
+    [/ing/gi,'イング'],[/ling/gi,'リング'],[/ring/gi,'リング'],
+    [/man/gi,'マン'],[/son/gi,'ソン'],[/ton/gi,'トン'],[/den/gi,'デン'],
+    [/ven/gi,'ベン'],[/ken/gi,'ケン'],[/ren/gi,'レン'],[/len/gi,'レン'],
+    [/ian/gi,'イアン'],[/ean/gi,'イーン'],[/aan/gi,'アーン'],
+    [/oor/gi,'アー'],[/our/gi,'アー'],[/air/gi,'エア'],[/ear/gi,'イア'],
+    [/ier/gi,'イア'],[/eer/gi,'イア'],
+    [/oo/gi,'ウー'],[/ee/gi,'イー'],[/ea/gi,'イー'],[/ai/gi,'エイ'],
+    [/au/gi,'オー'],[/aw/gi,'オー'],[/oi/gi,'オイ'],[/ou/gi,'アウ'],
+    [/ow/gi,'オウ'],[/ew/gi,'ュー'],[/ue/gi,'ュー'],[/ui/gi,'ウィ'],
+    [/ie/gi,'イー'],[/oe/gi,'オー'],
+    [/ba/gi,'バ'],[/be/gi,'ベ'],[/bi/gi,'ビ'],[/bo/gi,'ボ'],[/bu/gi,'ブ'],
+    [/ca/gi,'カ'],[/ce/gi,'ス'],[/ci/gi,'シ'],[/co/gi,'コ'],[/cu/gi,'カ'],
+    [/da/gi,'ダ'],[/de/gi,'デ'],[/di/gi,'ディ'],[/do/gi,'ド'],[/du/gi,'デュ'],
+    [/fa/gi,'ファ'],[/fe/gi,'フェ'],[/fi/gi,'フィ'],[/fo/gi,'フォ'],[/fu/gi,'フ'],
+    [/ga/gi,'ガ'],[/ge/gi,'ジ'],[/gi/gi,'ジ'],[/go/gi,'ゴ'],[/gu/gi,'グ'],
+    [/ha/gi,'ハ'],[/he/gi,'ヘ'],[/hi/gi,'ヒ'],[/ho/gi,'ホ'],[/hu/gi,'ハ'],
+    [/ja/gi,'ジャ'],[/je/gi,'ジェ'],[/ji/gi,'ジ'],[/jo/gi,'ジョ'],[/ju/gi,'ジュ'],
+    [/ka/gi,'カ'],[/ke/gi,'ケ'],[/ki/gi,'キ'],[/ko/gi,'コ'],[/ku/gi,'ク'],
+    [/la/gi,'ラ'],[/le/gi,'ル'],[/li/gi,'リ'],[/lo/gi,'ロ'],[/lu/gi,'ル'],
+    [/ma/gi,'マ'],[/me/gi,'メ'],[/mi/gi,'ミ'],[/mo/gi,'モ'],[/mu/gi,'ム'],
+    [/na/gi,'ナ'],[/ne/gi,'ネ'],[/ni/gi,'ニ'],[/no/gi,'ノ'],[/nu/gi,'ヌ'],
+    [/pa/gi,'パ'],[/pe/gi,'ペ'],[/pi/gi,'ピ'],[/po/gi,'ポ'],[/pu/gi,'プ'],
+    [/ra/gi,'ラ'],[/re/gi,'レ'],[/ri/gi,'リ'],[/ro/gi,'ロ'],[/ru/gi,'ル'],
+    [/sa/gi,'サ'],[/se/gi,'セ'],[/si/gi,'シ'],[/so/gi,'ソ'],[/su/gi,'ス'],
+    [/ta/gi,'タ'],[/te/gi,'テ'],[/ti/gi,'ティ'],[/to/gi,'ト'],[/tu/gi,'テュ'],
+    [/va/gi,'バ'],[/ve/gi,'ベ'],[/vi/gi,'ビ'],[/vo/gi,'ボ'],[/vu/gi,'ブ'],
+    [/wa/gi,'ワ'],[/we/gi,'ウェ'],[/wi/gi,'ウィ'],[/wo/gi,'ウォ'],[/wu/gi,'ウ'],
+    [/xa/gi,'ザ'],[/xe/gi,'ゼ'],[/xi/gi,'ジ'],[/xo/gi,'ゾ'],
+    [/ya/gi,'ヤ'],[/ye/gi,'イェ'],[/yi/gi,'イ'],[/yo/gi,'ヨ'],[/yu/gi,'ユ'],
+    [/za/gi,'ザ'],[/ze/gi,'ゼ'],[/zi/gi,'ジ'],[/zo/gi,'ゾ'],[/zu/gi,'ズ'],
+    [/a/gi,'ア'],[/e/gi,'エ'],[/i/gi,'イ'],[/o/gi,'オ'],[/u/gi,'ウ'],
+    [/b/gi,'ブ'],[/c/gi,'ク'],[/d/gi,'ド'],[/f/gi,'フ'],[/g/gi,'グ'],
+    [/h/gi,'ハ'],[/j/gi,'ジ'],[/k/gi,'ク'],[/l/gi,'ル'],[/m/gi,'ム'],
+    [/n/gi,'ン'],[/p/gi,'プ'],[/q/gi,'ク'],[/r/gi,'ル'],[/s/gi,'ス'],
+    [/t/gi,'ト'],[/v/gi,'ブ'],[/w/gi,'ウ'],[/x/gi,'クス'],[/y/gi,'イ'],
+    [/z/gi,'ズ'],
+  ];
+
+  let result = last;
+  for (const [pat, rep] of map) {
+    result = result.replace(pat, rep);
+  }
+  return result;
+}
+
 // ---------- チャット内 広告データ ----------
 const TEAM_ADS = {
   lal: { img:'👟', tag:'選手着用バッシュ', title:'ナイキ レブロン22 LALカラー',    old:'¥24,200', price:'¥19,360', url:'https://amzn.to/lebron-shoe' },
