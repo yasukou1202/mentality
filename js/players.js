@@ -125,6 +125,7 @@ async function loadPlayersFromAPI() {
       height:     p.height || "",
       dob:        p.dob || "",
       pos:        p.pos || "",
+      debutYear:  p.debutYear || "",
     }));
 
     const filtered = pTeam !== 'all'
