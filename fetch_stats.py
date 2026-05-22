@@ -71,6 +71,7 @@ for tid in range(1, 31):
                     'height': a.get('displayHeight',''),
                     'weight': a.get('displayWeight',''),
                     'dob': a.get('dateOfBirth','')[:10] if a.get('dateOfBirth') else '',
+                    'debutYear': a.get('debutYear',''),
                     'pos': a.get('position',{}).get('abbreviation',''),
                     'experience': a.get('experience',{}).get('years',0),
                 }
@@ -111,6 +112,7 @@ for name, info in roster.items():
         'weight': info['weight'],
         'dob': info['dob'],
         'experience': info['experience'],
+        'debutYear': info.get('debutYear',''),
         'id': info['id'],
         'pts': s.get('pts', 0),
         'reb': s.get('reb', 0),
