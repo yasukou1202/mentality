@@ -206,6 +206,12 @@ async function openPlayerDetail(name, team) {
   modal.style.display = 'block';
 
   const jaName = JA_NAME_MAP[name] || name;
+  const rosterInfo = (window._cachedPlayers||[]).find(p=>p.playerName===name)||{};
+  const height = rosterInfo.height||"";
+  const weight = rosterInfo.weight||"";
+  const dob = rosterInfo.dob||"";
+  const birthYear = dob ? dob.slice(0,4) : "";
+  const experience = rosterInfo.experience!=null ? rosterInfo.experience : "";
   const norm   = (s) => (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'');
   const _emap = window._espnIdMap || {};
   let espnId   = _emap[name];
@@ -229,6 +235,12 @@ async function openPlayerDetail(name, team) {
           <div style="font-size:.65rem;color:rgba(255,255,255,.6);">${jaName}</div>
           <div style="font-size:1.2rem;font-weight:700;color:#fff;line-height:1.2;">${name}</div>
           <div style="font-size:.62rem;color:rgba(255,255,255,.5);margin-top:.2rem;">${team}</div>
+          <div style="display:flex;gap:.6rem;margin-top:.3rem;flex-wrap:wrap;">
+            ${height ? `<span style="font-size:.58rem;color:rgba(255,255,255,.6);background:rgba(255,255,255,.1);padding:.1rem .4rem;border-radius:8px;">${height}</span>` : ''}
+            ${weight ? `<span style="font-size:.58rem;color:rgba(255,255,255,.6);background:rgba(255,255,255,.1);padding:.1rem .4rem;border-radius:8px;">${weight}</span>` : ''}
+            ${birthYear ? `<span style="font-size:.58rem;color:rgba(255,255,255,.6);background:rgba(255,255,255,.1);padding:.1rem .4rem;border-radius:8px;">${birthYear}年生</span>` : ''}
+            ${experience!=='' ? `<span style="font-size:.58rem;color:rgba(255,255,255,.6);background:rgba(255,255,255,.1);padding:.1rem .4rem;border-radius:8px;">NBA${experience}年目</span>` : ''}
+          </div>
         </div>
       </div>
     </div>
