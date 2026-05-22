@@ -163,9 +163,9 @@ function renderPlayerCards(players) {
     const name    = p.playerName || '';
     const jaName  = JA_NAME_MAP[name] || name;
     const team    = p.team || '';
-    const pts     = p.pts !== undefined ? Number(p.pts).toFixed(1) : '-';
-    const reb     = p.reb !== undefined ? Number(p.reb).toFixed(1) : '-';
-    const ast     = p.ast !== undefined ? Number(p.ast).toFixed(1) : '-';
+    const pts     = p.pts ? Number(p.pts).toFixed(1) : '-';
+    const reb     = p.reb ? Number(p.reb).toFixed(1) : '-';
+    const ast     = p.ast ? Number(p.ast).toFixed(1) : '-';
     const isJP    = name === 'Yuki Kawamura' || name === 'Rui Hachimura';
 
     // ESPN IDから顔写真取得・ポジション取得
