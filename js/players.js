@@ -126,6 +126,7 @@ async function loadPlayersFromAPI() {
       dob:        p.dob || "",
       pos:        p.pos || "",
       debutYear:  p.debutYear || "",
+      weight:     p.weight || "",
     }));
 
     const filtered = pTeam !== 'all'
@@ -210,7 +211,8 @@ async function openPlayerDetail(name, team) {
   const rosterInfo = (window._cachedPlayers||[]).find(p=>p.playerName===name)||{};
   const heightRaw = rosterInfo.height||"";
   const height = heightRaw ? (()=>{ const m=heightRaw.match(/([0-9]+).*?([0-9]+)/); return m ? Math.round((parseInt(m[1])*12+parseInt(m[2]))*2.54)+"cm" : heightRaw; })() : "";
-  const weight = rosterInfo.weight||"";
+  const weightRaw = rosterInfo.weight||"";
+  const weight = weightRaw ? (()=>{ const m=weightRaw.match(/([0-9]+)/); return m ? Math.round(parseInt(m[1])*0.453592)+"kg" : weightRaw; })() : "";
   const dob = rosterInfo.dob||"";
   const birthYear = dob ? dob.slice(0,4) : "";
   const experience = rosterInfo.experience!=null ? rosterInfo.experience : "";
