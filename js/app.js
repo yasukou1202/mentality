@@ -39,6 +39,9 @@ function goPage(id, btn) {
   if (id === 'news') {
     loadRSSNews();
   }
+  if (id === 'articles' && typeof loadArticles === 'function') {
+    loadArticles();
+  }
 }
 
 // ============================================================
