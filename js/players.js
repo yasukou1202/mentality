@@ -229,10 +229,10 @@ async function openPlayerDetail(name, team) {
   const photoUrl = espnId ? ESPN_HEADSHOT(espnId) : ''; // config.js
 
   content.innerHTML = `
-    <div style="background:linear-gradient(135deg,#0a1628,#1d428a);padding:1rem;position:sticky;top:0;z-index:10;">
+    <div style="background:linear-gradient(135deg,#0a1628,#1d428a);padding:.7rem 1rem 1rem;position:sticky;top:0;z-index:10;">
       <button onclick="closePlayerDetail()" style="position:absolute;top:.6rem;right:.6rem;background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:50%;font-size:.8rem;cursor:pointer;">✕</button>
       <button onclick="closePlayerDetail()" style="position:absolute;top:.6rem;left:.6rem;background:rgba(255,255,255,.15);border:none;color:#fff;padding:.3rem .6rem;border-radius:12px;font-size:.75rem;cursor:pointer;">← 戻る</button>
-      <div style="display:flex;gap:.8rem;align-items:center;padding-top:.5rem;">
+      <div style="display:flex;gap:.8rem;align-items:center;padding-top:1.8rem;">
         <div style="width:64px;height:64px;border-radius:50%;overflow:hidden;background:rgba(255,255,255,.1);flex-shrink:0;">
           ${photoUrl ? `<img src="${photoUrl}" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">` : ''}
         </div>
