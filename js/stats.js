@@ -454,7 +454,7 @@ async function renderStandings() {
 
     standings.forEach((entry, i) => {
       const team  = entry.team || {};
-      const abbr  = (team.abbreviation || '').toUpperCase();
+      const abbrRaw = (team.abbreviation || '').toUpperCase(); const abbrFix={'GS':'GSW','SA':'SAS','NO':'NOP','UTAH':'UTA','WSH':'WAS','NY':'NYK'}; const abbr = abbrFix[abbrRaw]||abbrRaw;
       const stats = entry.stats || [];
       const getStat = (name) => stats.find(s => s.name === name)?.value ?? '-';
       const w    = getStat('wins');
