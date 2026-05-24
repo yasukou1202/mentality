@@ -1,3 +1,29 @@
+
+// ============================================================
+// 本文レンダリング（URL自動判別）
+// ============================================================
+function renderBody(body) {
+  if (!body) return '';
+  const lines = body.split('
+');
+  return lines.map(line => {
+    const t = line.trim();
+    // YouTube / YouTubeショート
+    const yt = t.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+    if (yt) return `<div style="margin:.8rem 0;"><iframe width="100%" height="200" src="https://www.youtube.com/embed/${yt[1]}" frameborder="0" allowfullscreen style="border-radius:10px;"></iframe></div>`;
+    // TikTok
+    if (t.includes('tiktok.com')) return `<div style="margin:.8rem 0;"><blockquote class="tiktok-embed" cite="${t}"><a href="${t}">TikTok動画</a></blockquote><script async src="https://www.tiktok.com/embed.js"></script></div>`;
+    // Instagram
+    if (t.includes('instagram.com')) return `<div style="margin:.8rem 0;"><blockquote class="instagram-media" data-instgrm-permalink="${t}"><a href="${t}">Instagram投稿</a></blockquote><script async src="//www.instagram.com/embed.js"></script></div>`;
+    // X(Twitter)
+    if (t.includes('twitter.com') || t.includes('x.com')) return `<div style="margin:.8rem 0;"><blockquote class="twitter-tweet"><a href="${t}">ツイート</a></blockquote><script async src="https://platform.twitter.com/widgets.js"></script></div>`;
+    // 画像URL
+    if (t.match(/\.(jpg|jpeg|png|gif|webp)(\?.*)?$/i)) return `<div style="margin:.8rem 0;"><img src="${t}" style="width:100%;border-radius:10px;" onerror="this.style.display='none'"></div>`;
+    // 通常テキスト
+    return t ? `<p style="margin:.4rem 0;">${t}</p>` : `<br>`;
+  }).join('');
+}
+
 // articles.js — 記事投稿・一覧・詳細
 
 const FB_ARTICLES = `${FB_URL}/articles`;
@@ -55,7 +81,7 @@ async function openArticle(id) {
           <span style="font-size:.58rem;color:var(--tx3);">${new Date(a.ts).toLocaleDateString('ja-JP')}</span>
         </div>
         <div style="font-size:1rem;font-weight:700;color:var(--tx);margin-bottom:.8rem;line-height:1.5;">${a.title}</div>
-        <div style="font-size:.78rem;color:var(--tx2);line-height:1.8;white-space:pre-wrap;">${a.body}</div>
+        <div style="font-size:.78rem;color:var(--tx2);line-height:1.8;">${renderBody(a.body)}</div>
       </div>
     `;
   } catch(e) {
