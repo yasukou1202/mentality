@@ -144,11 +144,11 @@
 
   
   <div id="playerModal"
-    style="display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);overflow-y:auto;"
+    style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:300;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch;"
     onclick="if(event.target===this)closePlayerModal()">
-    <div style="max-width:480px;margin:0 auto;min-height:100%;display:flex;align-items:flex-start;">
+    <div style="width:100%;min-height:100%;display:flex;align-items:flex-start;">
       <div id="playerModalInner"
-        style="background:var(--card);border-radius:0;overflow:hidden;width:100%;min-height:100vh;">
+        style="background:var(--bg);width:100%;min-height:100%;">
       </div>
     </div>
   </div>
