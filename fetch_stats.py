@@ -127,3 +127,19 @@ with open('data.json', 'w') as f:
 
 has_pts = sum(1 for p in all_players if p['pts'] > 0)
 print(f"done: all_players={len(all_players)}人 (pts有り:{has_pts}人)")
+
+# 順位表データを取得
+try:
+    url = 'https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?season=2026'
+    req = urllib.request.Request(url)
+    req.add_header('User-Agent', 'Mozilla/5.0')
+    with urllib.request.urlopen(req, timeout=15) as r:
+        standings_data = json.loads(r.read())
+    with open('data.json', 'r') as f:
+        existing = json.load(f)
+    existing['standings'] = standings_data
+    with open('data.json', 'w') as f:
+        json.dump(existing, f)
+    print('OK: standings')
+except Exception as e:
+    print(f'NG: standings - {e}')
