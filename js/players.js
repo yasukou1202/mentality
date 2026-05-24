@@ -229,25 +229,24 @@ async function openPlayerDetail(name, team) {
   const photoUrl = espnId ? ESPN_HEADSHOT(espnId) : ''; // config.js
 
   content.innerHTML = `
-    <div style="background:linear-gradient(135deg,#0a1628,#1d428a);padding:env(safe-area-inset-top,44px) 1rem 1rem;position:sticky;top:0;z-index:10;">
-      <button onclick="closePlayerDetail()" style="position:absolute;top:.6rem;right:.6rem;background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:50%;font-size:.8rem;cursor:pointer;">✕</button>
-      <button onclick="closePlayerDetail()" style="position:absolute;top:.6rem;left:.6rem;background:rgba(255,255,255,.15);border:none;color:#fff;padding:.3rem .6rem;border-radius:12px;font-size:.75rem;cursor:pointer;">← 戻る</button>
-      <div style="display:flex;gap:.8rem;align-items:center;padding-top:1.8rem;">
-        <div style="width:64px;height:64px;border-radius:50%;overflow:hidden;background:rgba(255,255,255,.1);flex-shrink:0;">
+    <div style="background:linear-gradient(135deg,#0a1628,#1d428a);padding:.5rem 1rem .6rem;">
+      <div style="display:flex;align-items:center;gap:.6rem;">
+        <button onclick="closePlayerDetail()" style="background:rgba(255,255,255,.15);border:none;color:#fff;padding:.25rem .5rem;border-radius:10px;font-size:.7rem;cursor:pointer;flex-shrink:0;">← 戻る</button>
+        <div style="width:44px;height:44px;border-radius:50%;overflow:hidden;background:rgba(255,255,255,.1);flex-shrink:0;">
           ${photoUrl ? `<img src="${photoUrl}" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">` : ''}
         </div>
-        <div>
-          <div style="font-size:.65rem;color:rgba(255,255,255,.6);">${jaName}</div>
-          <div style="font-size:1.2rem;font-weight:700;color:#fff;line-height:1.2;">${name}</div>
-          <div style="font-size:.62rem;color:rgba(255,255,255,.5);margin-top:.2rem;">${team}</div>
-          <div style="display:flex;gap:.6rem;margin-top:.3rem;flex-wrap:wrap;">
-            ${height ? `<span style="font-size:.58rem;color:rgba(255,255,255,.6);background:rgba(255,255,255,.1);padding:.1rem .4rem;border-radius:8px;">${height}</span>` : ''}
-            ${weight ? `<span style="font-size:.58rem;color:rgba(255,255,255,.6);background:rgba(255,255,255,.1);padding:.1rem .4rem;border-radius:8px;">${weight}</span>` : ''}
-            ${birthYear ? `<span style="font-size:.58rem;color:rgba(255,255,255,.6);background:rgba(255,255,255,.1);padding:.1rem .4rem;border-radius:8px;">${birthYear}年生</span>` : ''}
-            ${experience!=='' ? `<span style="font-size:.58rem;color:rgba(255,255,255,.6);background:rgba(255,255,255,.1);padding:.1rem .4rem;border-radius:8px;">NBA${experience}年目</span>` : ''}
-            ${debutYear ? `<span style="font-size:.58rem;color:rgba(255,255,255,.6);background:rgba(255,255,255,.1);padding:.1rem .4rem;border-radius:8px;">${debutYear}年デビュー</span>` : ''}
-          </div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:.55rem;color:rgba(255,255,255,.6);">${jaName}</div>
+          <div style="font-size:.95rem;font-weight:700;color:#fff;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${name}</div>
+          <div style="font-size:.58rem;color:rgba(255,255,255,.5);">${team}</div>
         </div>
+        <button onclick="closePlayerDetail()" style="background:rgba(255,255,255,.15);border:none;color:#fff;width:26px;height:26px;border-radius:50%;font-size:.75rem;cursor:pointer;flex-shrink:0;">✕</button>
+      </div>
+      <div style="display:flex;gap:.35rem;margin-top:.4rem;flex-wrap:wrap;">
+        ${height ? `<span style="font-size:.55rem;color:rgba(255,255,255,.7);background:rgba(255,255,255,.1);padding:.1rem .35rem;border-radius:6px;">${height}</span>` : ''}
+        ${weight ? `<span style="font-size:.55rem;color:rgba(255,255,255,.7);background:rgba(255,255,255,.1);padding:.1rem .35rem;border-radius:6px;">${weight}</span>` : ''}
+        ${birthYear ? `<span style="font-size:.55rem;color:rgba(255,255,255,.7);background:rgba(255,255,255,.1);padding:.1rem .35rem;border-radius:6px;">${birthYear}年生</span>` : ''}
+        ${debutYear ? `<span style="font-size:.55rem;color:rgba(255,255,255,.7);background:rgba(255,255,255,.1);padding:.1rem .35rem;border-radius:6px;">${debutYear}年デビュー</span>` : ''}
       </div>
     </div>
     <div id="playerDetailBody" style="padding:.85rem;">
