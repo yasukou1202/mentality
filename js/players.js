@@ -263,7 +263,7 @@ async function openPlayerDetail(name, team) {
       );
       if (!r.ok) return null;
       const d = await r.json();
-      return (d.data || []).find(p => p.playerName === name) || null;
+      const normName = name.normalize("NFD").replace(/[\u0300-\u036f]/g,""); return (d.data || []).find(p => p.playerName.normalize("NFD").replace(/[\u0300-\u036f]/g,"") === normName) || null;
     }));
 
     const cur = results[0];
