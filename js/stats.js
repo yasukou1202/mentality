@@ -440,7 +440,7 @@ async function renderStandings() {
     const group   = groups.find(g => (g.name || '').includes(confName)) || groups[curConf === 'east' ? 0 : 1];
     if (!group) throw new Error('グループなし');
 
-    const standings = group.standings?.entries || [];
+    const standings = (group.standings?.entries || []).sort((a,b)=>{ const wa=(a.stats||[]).find(s=>s.name==='wins')?.value||0; const wb=(b.stats||[]).find(s=>s.name==='wins')?.value||0; return wb-wa; });
     if (!standings.length) throw new Error('データなし');
 
     let h = `<div class="sw">
