@@ -249,7 +249,7 @@ async function openPlayerDetail(name, team) {
         ${debutYear ? `<span style="font-size:.55rem;color:rgba(255,255,255,.7);background:rgba(255,255,255,.1);padding:.1rem .35rem;border-radius:6px;">${debutYear}年デビュー</span>` : ''}
       </div>
     </div>
-    <div id="playerDetailBody" style="padding:.85rem;">
+    <div id="playerDetailBody" style="padding:.85rem;overflow-y:auto;flex:1;">
       <div style="text-align:center;padding:2rem;color:var(--tx3);font-size:.75rem;">📊 データ取得中...</div>
     </div>`;
 
