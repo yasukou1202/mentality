@@ -1,33 +1,24 @@
+// articles.js — 記事投稿・一覧・詳細
+
+const FB_ARTICLES = `${FB_URL}/articles`;
+const ADMIN_PASSWORD = 'mentality2026';
 
 // ============================================================
 // 本文レンダリング（URL自動判別）
 // ============================================================
 function renderBody(body) {
   if (!body) return '';
-  const lines = body.split('
-');
-  return lines.map(line => {
+  return body.split('\n').map(line => {
     const t = line.trim();
-    // YouTube / YouTubeショート
     const yt = t.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
-    if (yt) return `<div style="margin:.8rem 0;"><iframe width="100%" height="200" src="https://www.youtube.com/embed/${yt[1]}" frameborder="0" allowfullscreen style="border-radius:10px;"></iframe></div>`;
-    // TikTok
-    if (t.includes('tiktok.com')) return `<div style="margin:.8rem 0;"><blockquote class="tiktok-embed" cite="${t}"><a href="${t}">TikTok動画</a></blockquote><script async src="https://www.tiktok.com/embed.js"></script></div>`;
-    // Instagram
-    if (t.includes('instagram.com')) return `<div style="margin:.8rem 0;"><blockquote class="instagram-media" data-instgrm-permalink="${t}"><a href="${t}">Instagram投稿</a></blockquote><script async src="//www.instagram.com/embed.js"></script></div>`;
-    // X(Twitter)
-    if (t.includes('twitter.com') || t.includes('x.com')) return `<div style="margin:.8rem 0;"><blockquote class="twitter-tweet"><a href="${t}">ツイート</a></blockquote><script async src="https://platform.twitter.com/widgets.js"></script></div>`;
-    // 画像URL
-    if (t.match(/\.(jpg|jpeg|png|gif|webp)(\?.*)?$/i)) return `<div style="margin:.8rem 0;"><img src="${t}" style="width:100%;border-radius:10px;" onerror="this.style.display='none'"></div>`;
-    // 通常テキスト
-    return t ? `<p style="margin:.4rem 0;">${t}</p>` : `<br>`;
+    if (yt) return '<div style="margin:.8rem 0;"><iframe width="100%" height="200" src="https://www.youtube.com/embed/' + yt[1] + '" frameborder="0" allowfullscreen style="border-radius:10px;"></iframe></div>';
+    if (t.includes('tiktok.com')) return '<div style="margin:.8rem 0;text-align:center;"><blockquote class="tiktok-embed" cite="' + t + '" data-video-id="' + (t.match(/video\/(\d+)/)||[])[1] + '"><a href="' + t + '">TikTok動画</a></blockquote><script async src="https://www.tiktok.com/embed.js"><\/script></div>';
+    if (t.includes('instagram.com')) return '<div style="margin:.8rem 0;"><blockquote class="instagram-media" data-instgrm-permalink="' + t + '"><a href="' + t + '">Instagram投稿</a></blockquote><script async src="//www.instagram.com/embed.js"><\/script></div>';
+    if (t.includes('twitter.com') || t.includes('x.com')) return '<div style="margin:.8rem 0;"><blockquote class="twitter-tweet"><a href="' + t + '">ツイート</a></blockquote><script async src="https://platform.twitter.com/widgets.js"><\/script></div>';
+    if (t.match(/\.(jpg|jpeg|png|gif|webp)(\?.*)?$/i)) return '<div style="margin:.8rem 0;"><img src="' + t + '" style="width:100%;border-radius:10px;" onerror="this.style.display=\'none\'"></div>';
+    return t ? '<p style="margin:.4rem 0;">' + t + '</p>' : '<br>';
   }).join('');
 }
-
-// articles.js — 記事投稿・一覧・詳細
-
-const FB_ARTICLES = `${FB_URL}/articles`;
-const ADMIN_PASSWORD = 'mentality2026';
 
 // ============================================================
 // 記事一覧を表示
@@ -35,26 +26,28 @@ const ADMIN_PASSWORD = 'mentality2026';
 async function loadArticles() {
   const wrap = document.getElementById('articlesWrap');
   if (!wrap) return;
-  wrap.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--tx3);font-size:.75rem;">📰 記事を取得中...</div>';
+  wrap.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--tx3);font-size:.75rem;">記事を取得中...</div>';
 
   try {
-    const res = await fetch(`${FB_ARTICLES}.json?orderBy="ts"&limitToLast=50`);
+    const res = await fetch(FB_ARTICLES + '.json?orderBy="ts"&limitToLast=50');
     const data = await res.json();
-    if (!data) { wrap.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--tx3);">まだ記事がありません</div>'; return; }
+    if (!data) {
+      wrap.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--tx3);">まだ記事がありません</div>';
+      return;
+    }
 
     const articles = Object.entries(data).map(([id, a]) => ({id, ...a})).sort((a,b) => b.ts - a.ts);
 
-    wrap.innerHTML = articles.map(a => `
-      <div onclick="openArticle('${a.id}')" style="background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:.8rem;margin-bottom:.6rem;cursor:pointer;">
-        ${a.img ? `<img src="${a.img}" style="width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:.6rem;" onerror="this.style.display='none'">` : ''}
-        <div style="display:flex;gap:.4rem;align-items:center;margin-bottom:.35rem;">
-          <span style="font-size:.55rem;background:var(--or);color:#fff;padding:.1rem .4rem;border-radius:6px;">${a.category||'NBA'}</span>
-          <span style="font-size:.55rem;color:var(--tx3);">${new Date(a.ts).toLocaleDateString('ja-JP')}</span>
-        </div>
-        <div style="font-size:.85rem;font-weight:700;color:var(--tx);margin-bottom:.3rem;line-height:1.4;">${a.title}</div>
-        <div style="font-size:.7rem;color:var(--tx3);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${a.body}</div>
-      </div>
-    `).join('');
+    wrap.innerHTML = articles.map(a => '<div onclick="openArticle(\'' + a.id + '\')" style="background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:.8rem;margin-bottom:.6rem;cursor:pointer;">' +
+      (a.img ? '<img src="' + a.img + '" style="width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:.6rem;" onerror="this.style.display=\'none\'">' : '') +
+      '<div style="display:flex;gap:.4rem;align-items:center;margin-bottom:.35rem;">' +
+      '<span style="font-size:.55rem;background:var(--or);color:#fff;padding:.1rem .4rem;border-radius:6px;">' + (a.category||'NBA') + '</span>' +
+      '<span style="font-size:.55rem;color:var(--tx3);">' + new Date(a.ts).toLocaleDateString('ja-JP') + '</span>' +
+      '</div>' +
+      '<div style="font-size:.85rem;font-weight:700;color:var(--tx);margin-bottom:.3rem;line-height:1.4;">' + a.title + '</div>' +
+      '<div style="font-size:.7rem;color:var(--tx3);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">' + a.body + '</div>' +
+      '</div>'
+    ).join('');
   } catch(e) {
     wrap.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--tx3);">取得に失敗しました</div>';
   }
@@ -71,19 +64,17 @@ async function openArticle(id) {
   body.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--tx3);">読み込み中...</div>';
 
   try {
-    const res = await fetch(`${FB_ARTICLES}/${id}.json`);
+    const res = await fetch(FB_ARTICLES + '/' + id + '.json');
     const a = await res.json();
-    body.innerHTML = `
-      <div style="padding:1rem;">
-        ${a.img ? `<img src="${a.img}" style="width:100%;border-radius:10px;margin-bottom:1rem;" onerror="this.style.display='none'">` : ''}
-        <div style="display:flex;gap:.4rem;align-items:center;margin-bottom:.5rem;">
-          <span style="font-size:.58rem;background:var(--or);color:#fff;padding:.15rem .5rem;border-radius:6px;">${a.category||'NBA'}</span>
-          <span style="font-size:.58rem;color:var(--tx3);">${new Date(a.ts).toLocaleDateString('ja-JP')}</span>
-        </div>
-        <div style="font-size:1rem;font-weight:700;color:var(--tx);margin-bottom:.8rem;line-height:1.5;">${a.title}</div>
-        <div style="font-size:.78rem;color:var(--tx2);line-height:1.8;">${renderBody(a.body)}</div>
-      </div>
-    `;
+    body.innerHTML = '<div style="padding:1rem;">' +
+      (a.img ? '<img src="' + a.img + '" style="width:100%;border-radius:10px;margin-bottom:1rem;" onerror="this.style.display=\'none\'">' : '') +
+      '<div style="display:flex;gap:.4rem;align-items:center;margin-bottom:.5rem;">' +
+      '<span style="font-size:.58rem;background:var(--or);color:#fff;padding:.15rem .5rem;border-radius:6px;">' + (a.category||'NBA') + '</span>' +
+      '<span style="font-size:.58rem;color:var(--tx3);">' + new Date(a.ts).toLocaleDateString('ja-JP') + '</span>' +
+      '</div>' +
+      '<div style="font-size:1rem;font-weight:700;color:var(--tx);margin-bottom:.8rem;line-height:1.5;">' + a.title + '</div>' +
+      '<div style="font-size:.78rem;color:var(--tx2);line-height:1.8;">' + renderBody(a.body) + '</div>' +
+      '</div>';
   } catch(e) {
     body.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--tx3);">取得に失敗しました</div>';
   }
@@ -122,7 +113,7 @@ async function submitArticle() {
   btn.disabled = true;
 
   try {
-    await fetch(`${FB_ARTICLES}.json`, {
+    await fetch(FB_ARTICLES + '.json', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({ title, body, img, category, ts: Date.now() })
