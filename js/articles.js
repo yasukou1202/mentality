@@ -29,7 +29,7 @@ async function loadArticles() {
   wrap.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--tx3);font-size:.75rem;">記事を取得中...</div>';
 
   try {
-    const res = await fetch(FB_ARTICLES + '.json?orderBy="ts"&limitToLast=50');
+    const res = await fetch(FB_ARTICLES + '.json');
     const data = await res.json();
     if (!data) {
       wrap.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--tx3);">まだ記事がありません</div>';
