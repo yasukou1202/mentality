@@ -17,6 +17,8 @@ const NEWS_FEEDS = [
     url:'https://news.google.com/rss/search?q=NBA+playoffs&hl=en-US&gl=US&ceid=US:en' },
   { name:'河村勇輝',      color:'#FF5A00', av:'K',
     url:'https://news.google.com/rss/search?q=%E6%B2%B3%E6%9D%91%E5%8B%87%E8%BC%9BNBA&hl=ja&gl=JP&ceid=JP:ja' },
+  { name:'八村塁',         color:'#552583', av:'H',
+    url:'https://news.google.com/rss/search?q=%E5%85%AB%E6%9D%91%E5%A1%81NBA&hl=ja&gl=JP&ceid=JP:ja' },
 ];
 
 // RSS2JSONを使ってCORSを回避
@@ -124,22 +126,19 @@ function renderArticles(articles) {
   }
 
   list.innerHTML = articles.map(a => `
-    <div class="nf" onclick="window.open('${a.link}','_blank')" style="cursor:pointer;">
-      ${a.img ? `<img src="${a.img}" style="width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:.5rem;" onerror="this.style.display='none'">` : `<div style="width:100%;height:6px;border-radius:3px;background:${a.color};margin-bottom:.5rem;"></div>`}
-      <div class="nf-head">
-        <div class="nf-src">
-          <div class="nf-av" style="background:${a.color};">${a.av}</div>
-          <div>
-            <div class="nf-name">${a.name}</div>
-          </div>
+    <div onclick="window.open('${a.link}','_blank')" style="cursor:pointer;border-bottom:1px solid var(--bd);padding:.85rem 0;display:flex;gap:.6rem;align-items:flex-start;">
+      <div style="flex-shrink:0;width:42px;height:42px;border-radius:50%;background:${a.color};display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;color:#fff;">${a.av}</div>
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:.4rem;margin-bottom:.2rem;">
+          <span style="font-size:.75rem;font-weight:700;color:var(--tx);">${a.name}</span>
+          <span style="font-size:.65rem;color:var(--tx3);">·</span>
+          <span style="font-size:.65rem;color:var(--tx3);">${timeAgo(a.pubDate)}</span>
         </div>
-        <div class="nf-t">${timeAgo(a.pubDate)}</div>
-      </div>
-      <div class="nf-body">
-        <div style="font-size:.82rem;font-weight:600;color:var(--tx);line-height:1.5;margin-bottom:.4rem;">${a.title}</div>
-        <div style="font-size:.72rem;color:var(--tx2);line-height:1.6;">${a.desc}</div>
-        <div style="margin-top:.5rem;">
-          <span style="font-size:.65rem;color:var(--or);font-weight:600;">続きを読む →</span>
+        <div style="font-size:.8rem;font-weight:600;color:var(--tx);line-height:1.5;margin-bottom:.3rem;">${a.title}</div>
+        <div style="font-size:.7rem;color:var(--tx3);line-height:1.5;margin-bottom:.4rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${a.desc}</div>
+        ${a.img ? `<img src="${a.img}" style="width:100%;max-height:200px;object-fit:cover;border-radius:12px;border:1px solid var(--bd);" onerror="this.style.display='none'">` : ''}
+        <div style="margin-top:.4rem;display:flex;gap:1rem;">
+          <span style="font-size:.65rem;color:var(--or);">続きを読む →</span>
         </div>
       </div>
     </div>
