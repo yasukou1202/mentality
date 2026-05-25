@@ -47,10 +47,11 @@ async function initNotable() {
           const data = await res.json();
           if (data.status !== 'ok') return [];
           return (data.items || []).map(item => ({
-            title:   item.title   || '',
+            title:   (item.title||'').replace(/&#39;/g,"'").replace(/&amp;/g,'&').replace(/&quot;/g,'"'),
             link:    item.link    || '',
             pubDate: item.pubDate || '',
-            desc:    (item.description || '').replace(/<[^>]*>/g,'').slice(0,150),
+            desc:    (item.description || '').replace(/<[^>]*>/g,'').replace(/&#39;/g,"'").replace(/&amp;/g,'&').slice(0,150),
+            img:     item.thumbnail || (item.enclosure && item.enclosure.link) || '',
             name:    feed.name,
             color:   feed.color,
             av:      feed.av,
@@ -124,6 +125,7 @@ function renderArticles(articles) {
 
   list.innerHTML = articles.map(a => `
     <div class="nf" onclick="window.open('${a.link}','_blank')" style="cursor:pointer;">
+      ${a.img ? `<img src="${a.img}" style="width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:.5rem;" onerror="this.style.display='none'">` : ''}
       <div class="nf-head">
         <div class="nf-src">
           <div class="nf-av" style="background:${a.color};">${a.av}</div>
