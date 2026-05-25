@@ -224,12 +224,23 @@
         <input id="adminTitle" type="text" placeholder="記事タイトル" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;box-sizing:border-box;">
       </div>
       <div style="margin-bottom:.8rem;">
-        <div style="font-size:.7rem;color:var(--tx3);margin-bottom:.3rem;">画像URL（任意）</div>
+        <div style="font-size:.7rem;color:var(--tx3);margin-bottom:.3rem;">サムネイル画像URL（任意）</div>
         <input id="adminImg" type="text" placeholder="https://..." style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;box-sizing:border-box;">
       </div>
+      <div style="margin-bottom:.5rem;">
+        <div style="font-size:.7rem;color:var(--tx3);margin-bottom:.3rem;">本文エディタ</div>
+        <div style="display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.4rem;">
+          <button onclick="insertToBody('image')" style="background:var(--bg3);border:1px solid var(--bd);color:var(--tx);padding:.3rem .6rem;border-radius:6px;font-size:.7rem;cursor:pointer;">🖼 画像</button>
+          <button onclick="insertToBody('youtube')" style="background:var(--bg3);border:1px solid var(--bd);color:var(--tx);padding:.3rem .6rem;border-radius:6px;font-size:.7rem;cursor:pointer;">▶️ YouTube</button>
+          <button onclick="insertToBody('tiktok')" style="background:var(--bg3);border:1px solid var(--bd);color:var(--tx);padding:.3rem .6rem;border-radius:6px;font-size:.7rem;cursor:pointer;">🎵 TikTok</button>
+          <button onclick="insertToBody('instagram')" style="background:var(--bg3);border:1px solid var(--bd);color:var(--tx);padding:.3rem .6rem;border-radius:6px;font-size:.7rem;cursor:pointer;">📸 Insta</button>
+          <button onclick="insertToBody('twitter')" style="background:var(--bg3);border:1px solid var(--bd);color:var(--tx);padding:.3rem .6rem;border-radius:6px;font-size:.7rem;cursor:pointer;">🐦 X</button>
+        </div>
+        <textarea id="adminBody" placeholder="本文を入力...URLを直接貼り付けもOK" rows="12" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;box-sizing:border-box;resize:vertical;" oninput="updatePreview()"></textarea>
+      </div>
       <div style="margin-bottom:1rem;">
-        <div style="font-size:.7rem;color:var(--tx3);margin-bottom:.3rem;">本文</div>
-        <textarea id="adminBody" placeholder="記事本文を入力..." rows="10" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;box-sizing:border-box;resize:vertical;"></textarea>
+        <div style="font-size:.7rem;color:var(--tx3);margin-bottom:.3rem;">プレビュー</div>
+        <div id="adminPreview" style="background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:.8rem;min-height:60px;font-size:.78rem;color:var(--tx2);line-height:1.8;"></div>
       </div>
       <button id="adminSubmitBtn" onclick="submitArticle()" style="width:100%;padding:.7rem;background:var(--or);border:none;color:#fff;border-radius:10px;font-size:.85rem;font-weight:700;cursor:pointer;">投稿する</button>
     </div>

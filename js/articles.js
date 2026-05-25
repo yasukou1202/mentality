@@ -131,3 +131,30 @@ async function submitArticle() {
     btn.disabled = false;
   }
 }
+
+// ============================================================
+// エディタ補助関数
+// ============================================================
+function insertToBody(type) {
+  const textarea = document.getElementById('adminBody');
+  const prompts = {
+    image: '画像URLを入力してください',
+    youtube: 'YouTubeのURLを入力してください',
+    tiktok: 'TikTokのURLを入力してください',
+    instagram: 'InstagramのURLを入力してください',
+    twitter: 'X(Twitter)のURLを入力してください',
+  };
+  const url = prompt(prompts[type]);
+  if (!url) return;
+  const pos = textarea.selectionStart;
+  const before = textarea.value.substring(0, pos);
+  const after = textarea.value.substring(pos);
+  textarea.value = before + '\n' + url + '\n' + after;
+  updatePreview();
+}
+
+function updatePreview() {
+  const body = document.getElementById('adminBody').value;
+  const preview = document.getElementById('adminPreview');
+  if (preview) preview.innerHTML = renderBody(body);
+}
