@@ -87,7 +87,7 @@ function setPTeam(btn, t) {
 
 // 名前検索
 function filterPlayers(q) {
-  if (q.trim() === "24") { document.getElementById("playerSearchInput").value=""; pSearch = ""; filterPlayers(""); openAdminPage(); return; }
+  if (q.trim() === "24") { document.getElementById("playerSearchInput").value=""; pSearch = ""; filterPlayers(""); setTimeout(()=>openAdminPage(),100); return; }
   pSearch = q;
   renderPlayerCards(window._cachedPlayers || PLAYERS);
 }
