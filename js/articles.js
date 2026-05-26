@@ -185,17 +185,41 @@ function closeAdManager() {
 async function renderAdManager() {
   const wrap = document.getElementById('adManagerList');
   if (!wrap) return;
-  const ads = await loadAds();
-  if (!ads.length) { wrap.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--tx3);font-size:.75rem;">広告がありません</div>'; return; }
-  wrap.innerHTML = ads.map(a => `
-    <div style="background:var(--bg3);border-radius:8px;padding:.7rem;margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem;">
-      <div style="flex:1;min-width:0;">
-        <div style="font-size:.72rem;font-weight:700;color:var(--tx);margin-bottom:.15rem;">${a.title}</div>
-        <div style="font-size:.6rem;color:var(--tx3);">${a.tag} · ${a.price}</div>
-      </div>
-      <button onclick="deleteAd('${a.id}')" style="background:rgba(255,50,50,.15);border:none;color:#ff5555;padding:.3rem .5rem;border-radius:6px;font-size:.65rem;cursor:pointer;">削除</button>
-    </div>
-  `).join('');
+  wrap.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--tx3);font-size:.75rem;">読み込み中...</div>';
+  try {
+    const [slotsRes, adsRes] = await Promise.all([
+      fetch(FB_URL + '/adslots.json'),
+      fetch(FB_ADS + '.json')
+    ]);
+    const slots = await slotsRes.json() || {};
+    const adsData = await adsRes.json() || {};
+    const ads = Object.entries(adsData).map(([id,a])=>({id,...a}));
+    wrap.innerHTML = Object.entries(slots).map(([slotId, slot]) => {
+      const currentAd = slot.adId ? adsData[slot.adId] : null;
+      const adOptions = ads.map(a => `<option value="${a.id}" ${slot.adId===a.id?'selected':''}>${a.title}</option>`).join('');
+      return `<div style="background:var(--bg3);border-radius:8px;padding:.7rem;margin-bottom:.5rem;">
+        <div style="font-size:.7rem;font-weight:700;color:var(--tx);margin-bottom:.4rem;">${slot.label}</div>
+        <div style="display:flex;gap:.4rem;align-items:center;">
+          <select onchange="setSlotAd('${slotId}',this.value)" style="flex:1;padding:.4rem;border-radius:6px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);font-size:.72rem;">
+            <option value="">-- 広告なし --</option>
+            ${adOptions}
+          </select>
+        </div>
+        ${currentAd ? `<div style="font-size:.6rem;color:var(--or);margin-top:.3rem;">現在: ${currentAd.title}</div>` : '<div style="font-size:.6rem;color:var(--tx3);margin-top:.3rem;">現在: 空き</div>'}
+      </div>`;
+    }).join('');
+  } catch(e) {
+    wrap.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--tx3);">取得失敗</div>';
+  }
+}
+
+async function setSlotAd(slotId, adId) {
+  await fetch(FB_URL + '/adslots/' + slotId + '.json', {
+    method: 'PATCH',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ adId: adId || null })
+  });
+  renderAdManager();
 }
 
 async function submitAd() {
