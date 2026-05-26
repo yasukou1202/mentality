@@ -194,7 +194,7 @@
 
   <!-- 記事ページ -->
   <div class="pg" id="pg-articles">
-    <div class="pg-title">記事 <button onclick="openAdminPage()" style="float:right;background:var(--or);border:none;color:#fff;padding:.3rem .7rem;border-radius:8px;font-size:.65rem;cursor:pointer;">＋ 投稿</button></div>
+    <div class="pg-title">記事 <button onclick="openAdminPage()" style="float:right;background:var(--or);border:none;color:#fff;padding:.3rem .7rem;border-radius:8px;font-size:.65rem;cursor:pointer;margin-left:.4rem;">＋ 投稿</button><button onclick="openAdManager()" style="float:right;background:var(--bg3);border:1px solid var(--bd);color:var(--tx);padding:.3rem .7rem;border-radius:8px;font-size:.65rem;cursor:pointer;">広告管理</button></div>
     <div id="articlesWrap"></div>
   </div>
 
@@ -204,6 +204,35 @@
       <button onclick="closeArticleModal()" style="background:var(--bg3);border:none;color:var(--tx);padding:.3rem .7rem;border-radius:8px;font-size:.75rem;cursor:pointer;">← 戻る</button>
     </div>
     <div id="articleModalBody"></div>
+  </div>
+
+  <!-- 広告管理モーダル -->
+  <div id="adManagerModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:500;background:var(--bg);overflow-y:auto;">
+    <div style="padding:.6rem 1rem;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:.5rem;position:sticky;top:0;background:var(--bg);z-index:1;">
+      <button onclick="closeAdManager()" style="background:var(--bg3);border:none;color:var(--tx);padding:.3rem .7rem;border-radius:8px;font-size:.75rem;cursor:pointer;">← 戻る</button>
+      <span style="font-size:.85rem;font-weight:700;color:var(--tx);">広告管理</span>
+    </div>
+    <div style="padding:1rem;">
+      <div style="margin-bottom:1rem;">
+        <div style="font-size:.75rem;font-weight:700;color:var(--tx2);margin-bottom:.5rem;">登録済み広告</div>
+        <div id="adManagerList"></div>
+      </div>
+      <div style="border-top:1px solid var(--bd);padding-top:1rem;">
+        <div style="font-size:.75rem;font-weight:700;color:var(--tx2);margin-bottom:.5rem;">新規追加</div>
+        <div style="margin-bottom:.6rem;"><input id="adTitle" type="text" placeholder="タイトル（必須）" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;box-sizing:border-box;"></div>
+        <div style="margin-bottom:.6rem;"><input id="adDesc" type="text" placeholder="説明文" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;box-sizing:border-box;"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.6rem;">
+          <input id="adTag" type="text" placeholder="タグ（例：バッシュ）" style="padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;box-sizing:border-box;">
+          <input id="adPrice" type="text" placeholder="価格（例：¥22,000）" style="padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;box-sizing:border-box;">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.6rem;">
+          <input id="adIcon" type="text" placeholder="アイコン絵文字（例：👟）" style="padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;box-sizing:border-box;">
+          <input id="adColor" type="color" value="#FF5A00" style="padding:.3rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);height:36px;box-sizing:border-box;">
+        </div>
+        <div style="margin-bottom:.8rem;"><input id="adUrl" type="text" placeholder="リンクURL（必須）" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;box-sizing:border-box;"></div>
+        <button id="adSubmitBtn" onclick="submitAd()" style="width:100%;padding:.7rem;background:var(--or);border:none;color:#fff;border-radius:10px;font-size:.85rem;font-weight:700;cursor:pointer;">追加する</button>
+      </div>
+    </div>
   </div>
 
   <!-- 管理者モーダル -->

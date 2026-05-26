@@ -151,35 +151,12 @@ function renderGames() {
     wrap.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--tx3);font-size:.78rem;font-family:\'Barlow Condensed\',sans-serif;letter-spacing:.06em;">この日の試合情報はありません</div>';
     return;
   }
-  const ADS = [
-    {
-      tag:'バッシュ',
-      title:'Nike Air Jordan 40 河村着用モデル',
-      desc:'限定カラー・選手着用モデルが今だけ特別価格',
-      price:'¥22,000',
-      color:'#552583',
-      icon:'👟',
-      url:'https://amzn.to/example1'
-    },
-    {
-      tag:'英語学習',
-      title:'NBAで英語を学ぶ・スタディサプリENGLISH',
-      desc:'実況・インタビューで自然にリスニング力UP',
-      price:'無料体験あり',
-      color:'#1D428A',
-      icon:'🌐',
-      url:'https://amzn.to/example2'
-    },
-    {
-      tag:'スポーツ転職',
-      title:'スポーツ業界の求人・マイナビスポーツ',
-      desc:'NBA・Bリーグ関連求人を毎週更新中',
-      price:'登録無料',
-      color:'#FF5A00',
-      icon:'💼',
-      url:'https://amzn.to/example3'
-    },
-  ];
+  let ADS = [];
+  try {
+    const adRes = await fetch(FB_URL + '/ads.json');
+    const adData = await adRes.json();
+    if (adData) ADS = Object.values(adData);
+  } catch(e) {}
 
   const adHTML = (ad) => `
     <a href="${ad.url}" target="_blank" style="display:block;text-decoration:none;margin:.5rem 0;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:.7rem .8rem;">

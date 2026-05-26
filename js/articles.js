@@ -158,3 +158,80 @@ function updatePreview() {
   const preview = document.getElementById('adminPreview');
   if (preview) preview.innerHTML = renderBody(body);
 }
+
+// ============================================================
+// 広告管理
+// ============================================================
+const FB_ADS = `${FB_URL}/ads`;
+
+async function loadAds() {
+  const res = await fetch(FB_ADS + '.json');
+  const data = await res.json();
+  if (!data) return [];
+  return Object.entries(data).map(([id, a]) => ({id, ...a}));
+}
+
+function openAdManager() {
+  const pw = prompt('パスワードを入力してください');
+  if (pw !== ADMIN_PASSWORD) { alert('パスワードが違います'); return; }
+  const modal = document.getElementById('adManagerModal');
+  if (modal) { modal.style.display = 'block'; renderAdManager(); }
+}
+
+function closeAdManager() {
+  const modal = document.getElementById('adManagerModal');
+  if (modal) modal.style.display = 'none';
+}
+
+async function renderAdManager() {
+  const wrap = document.getElementById('adManagerList');
+  if (!wrap) return;
+  const ads = await loadAds();
+  if (!ads.length) { wrap.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--tx3);font-size:.75rem;">広告がありません</div>'; return; }
+  wrap.innerHTML = ads.map(a => `
+    <div style="background:var(--bg3);border-radius:8px;padding:.7rem;margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem;">
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:.72rem;font-weight:700;color:var(--tx);margin-bottom:.15rem;">${a.title}</div>
+        <div style="font-size:.6rem;color:var(--tx3);">${a.tag} · ${a.price}</div>
+      </div>
+      <button onclick="deleteAd('${a.id}')" style="background:rgba(255,50,50,.15);border:none;color:#ff5555;padding:.3rem .5rem;border-radius:6px;font-size:.65rem;cursor:pointer;">削除</button>
+    </div>
+  `).join('');
+}
+
+async function submitAd() {
+  const title = document.getElementById('adTitle').value.trim();
+  const desc  = document.getElementById('adDesc').value.trim();
+  const price = document.getElementById('adPrice').value.trim();
+  const tag   = document.getElementById('adTag').value.trim();
+  const url   = document.getElementById('adUrl').value.trim();
+  const icon  = document.getElementById('adIcon').value.trim();
+  const color = document.getElementById('adColor').value;
+
+  if (!title || !url) { alert('タイトルとURLは必須です'); return; }
+
+  const btn = document.getElementById('adSubmitBtn');
+  btn.textContent = '保存中...'; btn.disabled = true;
+
+  await fetch(FB_ADS + '.json', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ title, desc, price, tag, url, icon, color, ts: Date.now() })
+  });
+
+  alert('広告を追加しました！');
+  document.getElementById('adTitle').value = '';
+  document.getElementById('adDesc').value = '';
+  document.getElementById('adPrice').value = '';
+  document.getElementById('adTag').value = '';
+  document.getElementById('adUrl').value = '';
+  document.getElementById('adIcon').value = '';
+  btn.textContent = '追加する'; btn.disabled = false;
+  renderAdManager();
+}
+
+async function deleteAd(id) {
+  if (!confirm('この広告を削除しますか？')) return;
+  await fetch(`${FB_ADS}/${id}.json`, { method: 'DELETE' });
+  renderAdManager();
+}
