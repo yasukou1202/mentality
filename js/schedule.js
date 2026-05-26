@@ -144,7 +144,7 @@ function moveDate(d) {
 // ============================================================
 // 試合カード一覧を描画
 // ============================================================
-function renderGames() {
+async function renderGames() {
   const games = GAMES[String(dateOff)] || [];
   const wrap  = document.getElementById('gameWrap');
   if (!games.length) {
