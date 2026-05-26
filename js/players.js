@@ -87,7 +87,24 @@ function setPTeam(btn, t) {
 
 // 名前検索
 function filterPlayers(q) {
-  if (q.trim() === "24") { document.getElementById("playerSearchInput").value=""; pSearch = ""; filterPlayers(""); setTimeout(()=>openAdminPage(),100); return; }
+  if (q.trim() === "24") {
+    document.getElementById("playerSearchInput").value="";
+    pSearch = ""; filterPlayers("");
+    setTimeout(()=>{
+      const pw = prompt("パスワードを入力してください");
+      if (pw !== "mentality2026") { alert("パスワードが違います"); return; }
+      const choice = confirm("記事投稿: OK
+広告管理: キャンセル");
+      if (choice) {
+        const m = document.getElementById("adminModal");
+        if (m) m.style.display = "block";
+      } else {
+        const m = document.getElementById("adManagerModal");
+        if (m) { m.style.display = "block"; renderAdManager(); }
+      }
+    }, 100);
+    return;
+  }
   pSearch = q;
   renderPlayerCards(window._cachedPlayers || PLAYERS);
 }
