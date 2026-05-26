@@ -162,7 +162,7 @@ async function loadPlayersFromAPI() {
 // ============================================================
 // 選手カード一覧を描画
 // ============================================================
-function renderPlayerCards(players) {
+async function renderPlayerCards(players) {
   const grid = document.getElementById('playerGrid');
   if (!grid) return;
   const q = pSearch.toLowerCase();
@@ -177,6 +177,14 @@ function renderPlayerCards(players) {
     grid.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--tx3);font-size:.75rem;">選手が見つかりませんでした</div>';
     return;
   }
+
+  // 広告取得
+  let playersAds = [];
+  try {
+    const ar = await fetch(FB_URL + '/adslots.json');
+    const ad = await ar.json() || {};
+    playersAds = ['players_1'].map(k => ad[k]).filter(a => a && a.url);
+  } catch(e) {}
 
   grid.innerHTML = filtered.map(p => {
     const name    = p.playerName || '';
@@ -212,7 +220,7 @@ function renderPlayerCards(players) {
       </div>
       <div style="color:var(--tx3);font-size:.7rem;">›</div>
     </div>`;
-  }).join('');
+  }).join('') + (playersAds[0] ? `<a href="${playersAds[0].url}" target="_blank" style="display:block;text-decoration:none;margin:.5rem 0;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:.7rem .8rem;"><div style="display:flex;align-items:center;gap:.5rem;">${playersAds[0].img ? `<img src="${playersAds[0].img}" style="width:48px;height:48px;border-radius:8px;object-fit:cover;flex-shrink:0;">` : ''}<div style="flex:1;min-width:0;"><span style="font-size:.5rem;background:rgba(255,90,0,.15);color:var(--or);padding:.1rem .4rem;border-radius:10px;font-weight:700;">PR</span><div style="font-size:.72rem;font-weight:700;color:var(--tx);">${playersAds[0].title}</div></div><div style="color:var(--tx3);font-size:.8rem;">›</div></div></a>` : '');
 }
 
 // ============================================================

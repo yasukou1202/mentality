@@ -111,7 +111,7 @@ function filterConf(btn, conf) {
   renderTeams();
 }
 
-function renderTeams() {
+async function renderTeams() {
   const filtered = TEAMS.filter(t => teamConf === 'all' || t.conf === teamConf);
   // 全体オンライン数からチームごとの人数を比例配分
   const total = _globalOnlineCount || 12;
@@ -138,6 +138,17 @@ function renderTeams() {
       </div>
     </div>`;
   }).join('');
+
+  // チャット広告追加
+  try {
+    const ar = await fetch(FB_URL + '/adslots.json');
+    const ad = await ar.json() || {};
+    const chatAds = ['chat_1','chat_2'].map(k => ad[k]).filter(a => a && a.url);
+    const el = document.getElementById('teamList');
+    chatAds.forEach(ad => {
+      el.innerHTML += `<a href="${ad.url}" target="_blank" style="display:block;text-decoration:none;margin:.5rem 0;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:.7rem .8rem;"><div style="display:flex;align-items:center;gap:.5rem;">${ad.img ? `<img src="${ad.img}" style="width:48px;height:48px;border-radius:8px;object-fit:cover;flex-shrink:0;" onerror="this.style.display='none'">` : ''}<div style="flex:1;min-width:0;"><span style="font-size:.5rem;background:rgba(255,90,0,.15);color:var(--or);padding:.1rem .4rem;border-radius:10px;font-weight:700;">PR</span><div style="font-size:.72rem;font-weight:700;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${ad.title}</div></div><div style="color:var(--tx3);font-size:.8rem;">›</div></div></a>`;
+    });
+  } catch(e) {}
 }
 
 // ============================================================
