@@ -87,7 +87,7 @@ function setPTeam(btn, t) {
 
 // 名前検索
 function filterPlayers(q) {
-  if (q.trim() === "24") {
+  if (q.trim() === "3579") {
     document.getElementById("playerSearchInput").value="";
     pSearch = "";
     setTimeout(()=>{
