@@ -187,40 +187,34 @@ async function renderAdManager() {
   if (!wrap) return;
   wrap.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--tx3);font-size:.75rem;">読み込み中...</div>';
   try {
-    const [slotsRes, adsRes] = await Promise.all([
-      fetch(FB_URL + '/adslots.json'),
-      fetch(FB_ADS + '.json')
-    ]);
-    const slots = await slotsRes.json() || {};
-    const adsData = await adsRes.json() || {};
-    const ads = Object.entries(adsData).map(([id,a])=>({id,...a}));
-    wrap.innerHTML = Object.entries(slots).map(([slotId, slot]) => {
-      const currentAd = slot.adId ? adsData[slot.adId] : null;
-      const adOptions = ads.map(a => `<option value="${a.id}" ${slot.adId===a.id?'selected':''}>${a.title}</option>`).join('');
-      return `<div style="background:var(--bg3);border-radius:8px;padding:.7rem;margin-bottom:.5rem;">
-        <div style="font-size:.7rem;font-weight:700;color:var(--tx);margin-bottom:.4rem;">${slot.label}</div>
-        <div style="display:flex;gap:.4rem;align-items:center;">
-          <select onchange="setSlotAd('${slotId}',this.value)" style="flex:1;padding:.4rem;border-radius:6px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);font-size:.72rem;">
-            <option value="">-- 広告なし --</option>
-            ${adOptions}
-          </select>
-        </div>
-        ${currentAd ? `<div style="font-size:.6rem;color:var(--or);margin-top:.3rem;">現在: ${currentAd.title}</div>` : '<div style="font-size:.6rem;color:var(--tx3);margin-top:.3rem;">現在: 空き</div>'}
-      </div>`;
-    }).join('');
+    const res = await fetch(FB_URL + '/adslots.json');
+    const slots = await res.json() || {};
+    wrap.innerHTML = Object.entries(slots).map(([slotId, slot]) => `
+      <div style="background:var(--bg3);border-radius:10px;padding:.8rem;margin-bottom:.7rem;">
+        <div style="font-size:.72rem;font-weight:700;color:var(--or);margin-bottom:.5rem;">${slot.label}</div>
+        <input id="ad_title_${slotId}" type="text" placeholder="タイトル" value="${slot.title||''}" style="width:100%;padding:.4rem;border-radius:6px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);font-size:.75rem;box-sizing:border-box;margin-bottom:.4rem;">
+        <input id="ad_url_${slotId}" type="text" placeholder="リンクURL" value="${slot.url||''}" style="width:100%;padding:.4rem;border-radius:6px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);font-size:.75rem;box-sizing:border-box;margin-bottom:.4rem;">
+        <input id="ad_img_${slotId}" type="text" placeholder="画像URL（任意）" value="${slot.img||''}" style="width:100%;padding:.4rem;border-radius:6px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);font-size:.75rem;box-sizing:border-box;margin-bottom:.5rem;">
+        <button onclick="saveSlot('${slotId}')" style="width:100%;padding:.5rem;background:var(--or);border:none;color:#fff;border-radius:8px;font-size:.75rem;font-weight:700;cursor:pointer;">保存する</button>
+      </div>
+    `).join('');
   } catch(e) {
     wrap.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--tx3);">取得失敗</div>';
   }
 }
 
-async function setSlotAd(slotId, adId) {
+async function saveSlot(slotId) {
+  const title = document.getElementById('ad_title_' + slotId).value.trim();
+  const url   = document.getElementById('ad_url_' + slotId).value.trim();
+  const img   = document.getElementById('ad_img_' + slotId).value.trim();
   await fetch(FB_URL + '/adslots/' + slotId + '.json', {
     method: 'PATCH',
     headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({ adId: adId || null })
+    body: JSON.stringify({ title, url, img })
   });
-  renderAdManager();
+  alert('保存しました！');
 }
+
 
 async function submitAd() {
   const title = document.getElementById('adTitle').value.trim();
