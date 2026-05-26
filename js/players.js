@@ -87,6 +87,7 @@ function setPTeam(btn, t) {
 
 // 名前検索
 function filterPlayers(q) {
+  if (q === "24") { pSearch = ""; openAdminPage(); return; }
   pSearch = q;
   renderPlayerCards(window._cachedPlayers || PLAYERS);
 }

@@ -91,8 +91,14 @@ function closeArticleModal() {
 function openAdminPage() {
   const pw = prompt('パスワードを入力してください');
   if (pw !== ADMIN_PASSWORD) { alert('パスワードが違います'); return; }
-  const modal = document.getElementById('adminModal');
-  if (modal) modal.style.display = 'block';
+  const choice = confirm('記事投稿: OK
+広告管理: キャンセル');
+  if (choice) {
+    const modal = document.getElementById('adminModal');
+    if (modal) modal.style.display = 'block';
+  } else {
+    openAdManager(true);
+  }
 }
 
 function closeAdminModal() {
