@@ -116,7 +116,7 @@ function filterArticles(media) {
 // ============================================================
 // 記事を描画
 // ============================================================
-function renderArticles(articles) {
+async function renderArticles(articles) {
   const list = document.getElementById('articleList');
   if (!list) return;
 
@@ -125,7 +125,27 @@ function renderArticles(articles) {
     return;
   }
 
-  list.innerHTML = articles.map(a => `
+  // adslots取得
+  let newsAds = [];
+  try {
+    const ar = await fetch(FB_URL + '/adslots.json');
+    const ad = await ar.json() || {};
+    newsAds = ['news_1','news_2'].map(k => ad[k]).filter(a => a && a.url);
+  } catch(e) {}
+
+  const adCardHTML = (ad) => `
+    <a href="${ad.url}" target="_blank" style="display:block;text-decoration:none;margin:.5rem 0;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:.7rem .8rem;">
+      <div style="display:flex;align-items:center;gap:.5rem;">
+        ${ad.img ? `<img src="${ad.img}" style="width:48px;height:48px;border-radius:8px;object-fit:cover;flex-shrink:0;" onerror="this.style.display='none'">` : '<div style="width:48px;height:48px;border-radius:8px;background:var(--bg3);flex-shrink:0;"></div>'}
+        <div style="flex:1;min-width:0;">
+          <div style="margin-bottom:.2rem;"><span style="font-size:.5rem;background:rgba(255,90,0,.15);color:var(--or);padding:.1rem .4rem;border-radius:10px;font-weight:700;">PR</span></div>
+          <div style="font-size:.72rem;font-weight:700;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${ad.title}</div>
+        </div>
+        <div style="color:var(--tx3);font-size:.8rem;">›</div>
+      </div>
+    </a>`;
+
+  list.innerHTML = articles.map((a, i) => `
     <div onclick="window.open('${a.link}','_blank')" style="cursor:pointer;border-bottom:1px solid var(--bd);padding:.85rem 0;display:flex;gap:.6rem;align-items:flex-start;">
       <div style="flex-shrink:0;width:42px;height:42px;border-radius:50%;background:${a.color};display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;color:#fff;">${a.av}</div>
       <div style="flex:1;min-width:0;">
@@ -137,11 +157,11 @@ function renderArticles(articles) {
         <div style="font-size:.8rem;font-weight:600;color:var(--tx);line-height:1.5;margin-bottom:.3rem;">${a.title}</div>
         <div style="font-size:.7rem;color:var(--tx3);line-height:1.5;margin-bottom:.4rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${a.desc}</div>
         ${a.img ? `<img src="${a.img}" style="width:100%;max-height:200px;object-fit:cover;border-radius:12px;border:1px solid var(--bd);" onerror="this.style.display='none'">` : ''}
-        <div style="margin-top:.4rem;display:flex;gap:1rem;">
-          <span style="font-size:.65rem;color:var(--or);">続きを読む →</span>
-        </div>
+        <div style="margin-top:.4rem;"><span style="font-size:.65rem;color:var(--or);">続きを読む →</span></div>
       </div>
     </div>
+    ${i === 4 && newsAds[0] ? adCardHTML(newsAds[0]) : ''}
+    ${i === 9 && newsAds[1] ? adCardHTML(newsAds[1]) : ''}
   `).join('');
 }
 // ============================================================
