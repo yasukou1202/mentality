@@ -153,23 +153,18 @@ async function renderGames() {
   }
   let ADS = [];
   try {
-    const adRes = await fetch(FB_URL + '/ads.json');
-    const adData = await adRes.json();
-    if (adData) ADS = Object.values(adData).filter(a => !a.places || a.places.includes("schedule"));
+    const adRes = await fetch(FB_URL + '/adslots.json');
+    const adData = await adRes.json() || {};
+    ADS = ['schedule_1','schedule_2'].map(k => adData[k]).filter(a => a && a.url);
   } catch(e) {}
 
   const adHTML = (ad) => `
     <a href="${ad.url}" target="_blank" style="display:block;text-decoration:none;margin:.5rem 0;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:.7rem .8rem;">
       <div style="display:flex;align-items:center;gap:.5rem;">
-        <div style="width:48px;height:48px;border-radius:8px;background:${ad.color}22;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;">${ad.icon}</div>
+        ${ad.img ? `<img src="${ad.img}" style="width:48px;height:48px;border-radius:8px;object-fit:cover;flex-shrink:0;" onerror="this.style.display='none'">` : '<div style="width:48px;height:48px;border-radius:8px;background:var(--bg3);flex-shrink:0;"></div>'}
         <div style="flex:1;min-width:0;">
-          <div style="display:flex;align-items:center;gap:.4rem;margin-bottom:.2rem;">
-            <span style="font-size:.5rem;background:${ad.color}22;color:${ad.color};padding:.1rem .4rem;border-radius:10px;font-weight:700;">PR</span>
-            <span style="font-size:.5rem;color:var(--tx3);">${ad.tag}</span>
-          </div>
+          <div style="margin-bottom:.2rem;"><span style="font-size:.5rem;background:rgba(255,90,0,.15);color:var(--or);padding:.1rem .4rem;border-radius:10px;font-weight:700;">PR</span></div>
           <div style="font-size:.72rem;font-weight:700;color:var(--tx);margin-bottom:.15rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${ad.title}</div>
-          <div style="font-size:.62rem;color:var(--tx3);margin-bottom:.2rem;">${ad.desc}</div>
-          <div style="font-size:.7rem;font-weight:700;color:${ad.color};">${ad.price}</div>
         </div>
         <div style="color:var(--tx3);font-size:.8rem;">›</div>
       </div>
@@ -180,7 +175,8 @@ async function renderGames() {
       ${gcHTML(g)}
       <div class="detail-panel" id="dp-${g.id}"></div>
     </div>
-    ${(i+1) % 2 === 0 && ADS[(i/2-1) % ADS.length] ? adHTML(ADS[Math.floor(i/2) % ADS.length]) : ''}
+    ${i === 1 && ADS[0] ? adHTML(ADS[0]) : ''}
+    ${i === 3 && ADS[1] ? adHTML(ADS[1]) : ''}
   `).join('');
 
   // ライブ試合を自動選択
