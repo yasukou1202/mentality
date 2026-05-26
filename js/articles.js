@@ -1,7 +1,7 @@
 // articles.js — 記事投稿・一覧・詳細
 
 const FB_ARTICLES = `${FB_URL}/articles`;
-const ADMIN_PASSWORD = 'mentality2026';
+const ADMIN_PASSWORD = '3579';
 
 // ============================================================
 // 本文レンダリング（URL自動判別）

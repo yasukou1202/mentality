@@ -89,10 +89,10 @@ function setPTeam(btn, t) {
 function filterPlayers(q) {
   if (q.trim() === "24") {
     document.getElementById("playerSearchInput").value="";
-    pSearch = ""; filterPlayers("");
+    pSearch = "";
     setTimeout(()=>{
       const pw = prompt("パスワードを入力してください");
-      if (pw !== "mentality2026") { alert("パスワードが違います"); return; }
+      if (pw !== "3579") { alert("パスワードが違います"); return; }
       const choice = confirm("記事投稿: OK
 広告管理: キャンセル");
       if (choice) {
