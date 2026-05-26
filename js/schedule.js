@@ -151,12 +151,60 @@ function renderGames() {
     wrap.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--tx3);font-size:.78rem;font-family:\'Barlow Condensed\',sans-serif;letter-spacing:.06em;">この日の試合情報はありません</div>';
     return;
   }
-  wrap.innerHTML = games.map(g => `
+  const ADS = [
+    {
+      tag:'バッシュ',
+      title:'Nike Air Jordan 40 河村着用モデル',
+      desc:'限定カラー・選手着用モデルが今だけ特別価格',
+      price:'¥22,000',
+      color:'#552583',
+      icon:'👟',
+      url:'https://amzn.to/example1'
+    },
+    {
+      tag:'英語学習',
+      title:'NBAで英語を学ぶ・スタディサプリENGLISH',
+      desc:'実況・インタビューで自然にリスニング力UP',
+      price:'無料体験あり',
+      color:'#1D428A',
+      icon:'🌐',
+      url:'https://amzn.to/example2'
+    },
+    {
+      tag:'スポーツ転職',
+      title:'スポーツ業界の求人・マイナビスポーツ',
+      desc:'NBA・Bリーグ関連求人を毎週更新中',
+      price:'登録無料',
+      color:'#FF5A00',
+      icon:'💼',
+      url:'https://amzn.to/example3'
+    },
+  ];
+
+  const adHTML = (ad) => `
+    <a href="${ad.url}" target="_blank" style="display:block;text-decoration:none;margin:.5rem 0;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:.7rem .8rem;">
+      <div style="display:flex;align-items:center;gap:.5rem;">
+        <div style="width:48px;height:48px;border-radius:8px;background:${ad.color}22;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;">${ad.icon}</div>
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;gap:.4rem;margin-bottom:.2rem;">
+            <span style="font-size:.5rem;background:${ad.color}22;color:${ad.color};padding:.1rem .4rem;border-radius:10px;font-weight:700;">PR</span>
+            <span style="font-size:.5rem;color:var(--tx3);">${ad.tag}</span>
+          </div>
+          <div style="font-size:.72rem;font-weight:700;color:var(--tx);margin-bottom:.15rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${ad.title}</div>
+          <div style="font-size:.62rem;color:var(--tx3);margin-bottom:.2rem;">${ad.desc}</div>
+          <div style="font-size:.7rem;font-weight:700;color:${ad.color};">${ad.price}</div>
+        </div>
+        <div style="color:var(--tx3);font-size:.8rem;">›</div>
+      </div>
+    </a>`;
+
+  wrap.innerHTML = games.map((g, i) => `
     <div id="gc-wrap-${g.id}">
       ${gcHTML(g)}
       <div class="detail-panel" id="dp-${g.id}"></div>
-    </div>`
-  ).join('');
+    </div>
+    ${(i+1) % 2 === 0 && ADS[(i/2-1) % ADS.length] ? adHTML(ADS[Math.floor(i/2) % ADS.length]) : ''}
+  `).join('');
 
   // ライブ試合を自動選択
   const first = games.find(g => g.status === 'live') || games[0];
