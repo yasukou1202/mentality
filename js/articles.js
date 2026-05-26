@@ -214,7 +214,7 @@ async function submitAd() {
   const icon  = document.getElementById('adIcon').value.trim();
   const color = document.getElementById('adColor').value;
 
-  if (!title || !url) { alert('タイトルとURLは必須です'); return; }
+  const places = []; if (document.getElementById('adPlaceSchedule')?.checked) places.push('schedule'); if (document.getElementById('adPlaceNews')?.checked) places.push('news'); if (document.getElementById('adPlaceArticles')?.checked) places.push('articles'); if (document.getElementById('adPlacePlayers')?.checked) places.push('players'); if (!title || !url) { alert('タイトルとURLは必須です'); return; }
 
   const btn = document.getElementById('adSubmitBtn');
   btn.textContent = '保存中...'; btn.disabled = true;
@@ -222,7 +222,7 @@ async function submitAd() {
   await fetch(FB_ADS + '.json', {
     method: 'POST',
     headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({ title, desc, price, tag, url, icon, color, ts: Date.now() })
+    body: JSON.stringify({ title, desc, price, tag, url, icon, color, places, ts: Date.now() })
   });
 
   alert('広告を追加しました！');

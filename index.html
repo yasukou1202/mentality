@@ -230,6 +230,15 @@
           <input id="adColor" type="color" value="#FF5A00" style="padding:.3rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);height:36px;box-sizing:border-box;">
         </div>
         <div style="margin-bottom:.8rem;"><input id="adUrl" type="text" placeholder="リンクURL（必須）" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;box-sizing:border-box;"></div>
+        <div style="margin-bottom:.8rem;">
+          <div style="font-size:.7rem;color:var(--tx3);margin-bottom:.3rem;">表示場所</div>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+            <label style="display:flex;align-items:center;gap:.3rem;font-size:.75rem;color:var(--tx);"><input type="checkbox" id="adPlaceSchedule" checked> 試合情報</label>
+            <label style="display:flex;align-items:center;gap:.3rem;font-size:.75rem;color:var(--tx);"><input type="checkbox" id="adPlaceNews"> 速報</label>
+            <label style="display:flex;align-items:center;gap:.3rem;font-size:.75rem;color:var(--tx);"><input type="checkbox" id="adPlaceArticles"> 記事</label>
+            <label style="display:flex;align-items:center;gap:.3rem;font-size:.75rem;color:var(--tx);"><input type="checkbox" id="adPlacePlayers"> 選手一覧</label>
+          </div>
+        </div>
         <button id="adSubmitBtn" onclick="submitAd()" style="width:100%;padding:.7rem;background:var(--or);border:none;color:#fff;border-radius:10px;font-size:.85rem;font-weight:700;cursor:pointer;">追加する</button>
       </div>
     </div>
