@@ -196,15 +196,29 @@
   <!-- バッシュページ -->
   <div class="pg" id="pg-sneakers">
     <div class="pg-title">バッシュ</div>
-    <div style="display:flex;gap:.4rem;overflow-x:auto;padding-bottom:.4rem;margin-bottom:.8rem;scrollbar-width:none;">
-      <button onclick="filterSneakers(this,'all')" class="conf-btn on" id="snk-all">すべて</button>
-      <button onclick="filterSneakers(this,'nike')" class="conf-btn" id="snk-nike">Nike</button>
-      <button onclick="filterSneakers(this,'jordan')" class="conf-btn" id="snk-jordan">Jordan</button>
-      <button onclick="filterSneakers(this,'adidas')" class="conf-btn" id="snk-adidas">Adidas</button>
-      <button onclick="filterSneakers(this,'underarmour')" class="conf-btn" id="snk-ua">UA</button>
-      <button onclick="filterSneakers(this,'puma')" class="conf-btn" id="snk-puma">Puma</button>
-      <button onclick="filterSneakers(this,'newbalance')" class="conf-btn" id="snk-nb">NB</button>
-      <button onclick="filterSneakers(this,'anta')" class="conf-btn" id="snk-anta">Anta</button>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.8rem;">
+      <select id="snkFilterBrand" onchange="filterSneakersDropdown()" style="padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;">
+        <option value="all">ブランド：すべて</option>
+        <option value="nike">Nike</option>
+        <option value="jordan">Jordan</option>
+        <option value="adidas">Adidas</option>
+        <option value="underarmour">Under Armour</option>
+        <option value="puma">Puma</option>
+        <option value="newbalance">New Balance</option>
+        <option value="anta">Anta</option>
+        <option value="lining">Li-Ning</option>
+      </select>
+      <select id="snkFilterPlayer" onchange="filterSneakersDropdown()" style="padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;">
+        <option value="all">選手：すべて</option>
+        <option value="河村勇輝">河村勇輝</option>
+        <option value="八村塁">八村塁</option>
+        <option value="レブロン">レブロン</option>
+        <option value="カリー">カリー</option>
+        <option value="コービー">コービー</option>
+        <option value="ジョーダン">ジョーダン</option>
+        <option value="デュラント">デュラント</option>
+        <option value="ヤニス">ヤニス</option>
+      </select>
     </div>
     <div id="sneakersWrap"></div>
   </div>

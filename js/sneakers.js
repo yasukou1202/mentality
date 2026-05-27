@@ -96,3 +96,14 @@ function closeSnkModal() {
   const modal = document.getElementById('snkModal');
   if (modal) modal.style.display = 'none';
 }
+
+function filterSneakersDropdown() {
+  const brand  = document.getElementById('snkFilterBrand').value;
+  const player = document.getElementById('snkFilterPlayer').value;
+  const filtered = _allSneakers.filter(s => {
+    const brandOK  = brand  === 'all' || s.brand  === brand;
+    const playerOK = player === 'all' || (s.player && s.player.includes(player));
+    return brandOK && playerOK;
+  });
+  renderSneakers(filtered);
+}
