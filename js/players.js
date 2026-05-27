@@ -254,7 +254,7 @@ async function openPlayerDetail(name, team) {
   const photoUrl = espnId ? ESPN_HEADSHOT(espnId) : ''; // config.js
 
   content.innerHTML = `
-    <div style="background:linear-gradient(135deg,#0a1628,#1d428a);padding:.5rem 1rem .6rem;">
+    <div style="background:linear-gradient(135deg,#0a1628,#1d428a);padding:env(safe-area-inset-top,44px) 1rem .6rem;">
       <div style="display:flex;align-items:center;gap:.6rem;">
         <button onclick="closePlayerDetail()" style="background:rgba(255,255,255,.15);border:none;color:#fff;padding:.25rem .5rem;border-radius:10px;font-size:.7rem;cursor:pointer;flex-shrink:0;">← 戻る</button>
         <div style="width:44px;height:44px;border-radius:50%;overflow:hidden;background:rgba(255,255,255,.1);flex-shrink:0;">
