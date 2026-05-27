@@ -42,6 +42,9 @@ function goPage(id, btn) {
   if (id === 'articles' && typeof loadArticles === 'function') {
     loadArticles();
   }
+  if (id === 'sneakers' && typeof loadSneakers === 'function') {
+    loadSneakers();
+  }
 }
 
 // ============================================================

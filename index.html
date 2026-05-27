@@ -51,6 +51,7 @@
   <button class="sn" id="sn-stats"    onclick="goPage('stats',this)">スタッツ</button>
   <div class="sn-divider"></div>
   <button class="sn" id="sn-teams"    onclick="goPage('teams',this)">チャット</button>
+  <button class="sn" id="sn-sneakers" onclick="goPage('sneakers',this)">バッシュ</button>
   <button class="sn" id="sn-articles" onclick="goPage('articles',this)">記事</button>
   <div class="sn-divider"></div>
   <button class="sn" id="sn-players"  onclick="goPage('players',this)">選手一覧</button>
@@ -192,10 +193,56 @@
     </div>
   </div>
 
+  <!-- バッシュページ -->
+  <div class="pg" id="pg-sneakers">
+    <div class="pg-title">バッシュ</div>
+    <div style="display:flex;gap:.4rem;overflow-x:auto;padding-bottom:.4rem;margin-bottom:.8rem;scrollbar-width:none;">
+      <button onclick="filterSneakers(this,'all')" class="conf-btn on" id="snk-all">すべて</button>
+      <button onclick="filterSneakers(this,'nike')" class="conf-btn" id="snk-nike">Nike</button>
+      <button onclick="filterSneakers(this,'jordan')" class="conf-btn" id="snk-jordan">Jordan</button>
+      <button onclick="filterSneakers(this,'adidas')" class="conf-btn" id="snk-adidas">Adidas</button>
+      <button onclick="filterSneakers(this,'underarmour')" class="conf-btn" id="snk-ua">UA</button>
+      <button onclick="filterSneakers(this,'puma')" class="conf-btn" id="snk-puma">Puma</button>
+      <button onclick="filterSneakers(this,'newbalance')" class="conf-btn" id="snk-nb">NB</button>
+      <button onclick="filterSneakers(this,'anta')" class="conf-btn" id="snk-anta">Anta</button>
+    </div>
+    <div id="sneakersWrap"></div>
+  </div>
+
   <!-- 記事ページ -->
   <div class="pg" id="pg-articles">
     <div class="pg-title">記事</div>
     <div id="articlesWrap"></div>
+  </div>
+
+  <!-- バッシュ投稿モーダル -->
+  <div id="snkModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:500;background:var(--bg);overflow-y:auto;">
+    <div style="padding:.6rem 1rem;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:.5rem;position:sticky;top:0;background:var(--bg);z-index:1;">
+      <button onclick="closeSnkModal()" style="background:var(--bg3);border:none;color:var(--tx);padding:.3rem .7rem;border-radius:8px;font-size:.75rem;cursor:pointer;">← 戻る</button>
+      <span style="font-size:.85rem;font-weight:700;color:var(--tx);">バッシュ投稿</span>
+    </div>
+    <div style="padding:1rem;">
+      <div style="margin-bottom:.6rem;"><input id="snkName" type="text" placeholder="商品名（必須）" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;box-sizing:border-box;"></div>
+      <div style="margin-bottom:.6rem;">
+        <select id="snkBrand" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;">
+          <option value="nike">Nike</option>
+          <option value="jordan">Jordan</option>
+          <option value="adidas">Adidas</option>
+          <option value="underarmour">Under Armour</option>
+          <option value="puma">Puma</option>
+          <option value="newbalance">New Balance</option>
+          <option value="anta">Anta</option>
+          <option value="lining">Li-Ning</option>
+        </select>
+      </div>
+      <div style="margin-bottom:.6rem;"><input id="snkPlayer" type="text" placeholder="選手名（任意）" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;box-sizing:border-box;"></div>
+      <div style="margin-bottom:.6rem;"><input id="snkImg" type="text" placeholder="画像URL" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;box-sizing:border-box;"></div>
+      <div style="margin-bottom:.6rem;"><input id="snkPrice" type="text" placeholder="価格（例：¥22,000）" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;box-sizing:border-box;"></div>
+      <div style="margin-bottom:.6rem;"><input id="snkUrl" type="text" placeholder="購入リンクURL" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;box-sizing:border-box;"></div>
+      <div style="margin-bottom:.6rem;"><textarea id="snkDesc" placeholder="説明・コメント" rows="4" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;box-sizing:border-box;resize:vertical;"></textarea></div>
+      <div style="margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem;"><input type="checkbox" id="snkIsNew"><label for="snkIsNew" style="font-size:.8rem;color:var(--tx);">新作フラグを付ける</label></div>
+      <button id="snkSubmitBtn" onclick="submitSneaker()" style="width:100%;padding:.7rem;background:var(--or);border:none;color:#fff;border-radius:10px;font-size:.85rem;font-weight:700;cursor:pointer;">投稿する</button>
+    </div>
   </div>
 
   <!-- 記事詳細モーダル -->
@@ -212,6 +259,7 @@
       <div style="font-size:.9rem;font-weight:700;color:var(--tx);margin-bottom:1rem;text-align:center;">管理メニュー</div>
       <button onclick="document.getElementById('adminSelectModal').style.display='none';document.getElementById('adminModal').style.display='block';" style="width:100%;padding:.8rem;background:var(--or);border:none;color:#fff;border-radius:10px;font-size:.85rem;font-weight:700;cursor:pointer;margin-bottom:.6rem;">📝 記事管理</button>
       <button onclick="document.getElementById('adminSelectModal').style.display='none';openAdManager(true);" style="width:100%;padding:.8rem;background:var(--bg3);border:1px solid var(--bd);color:var(--tx);border-radius:10px;font-size:.85rem;font-weight:700;cursor:pointer;margin-bottom:.6rem;">📢 広告管理</button>
+      <button onclick="document.getElementById('adminSelectModal').style.display='none';openSnkModal();" style="width:100%;padding:.8rem;background:var(--bg3);border:1px solid var(--bd);color:var(--tx);border-radius:10px;font-size:.85rem;font-weight:700;cursor:pointer;margin-bottom:.6rem;">👟 バッシュ投稿</button>
       <button onclick="document.getElementById('adminSelectModal').style.display='none';" style="width:100%;padding:.6rem;background:none;border:none;color:var(--tx3);font-size:.8rem;cursor:pointer;">キャンセル</button>
     </div>
   </div>
@@ -335,6 +383,7 @@
 <script src="js/news.js"></script>
 <script src="js/chat.js"></script>
 <script src="js/articles.js"></script>
+<script src="js/sneakers.js"></script>
 <script src="js/players.js"></script>
 <script src="js/search.js"></script>
 </body>
