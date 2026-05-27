@@ -175,8 +175,8 @@ async function renderGames() {
       ${gcHTML(g)}
       <div class="detail-panel" id="dp-${g.id}"></div>
     </div>
-    ${i === 1 && ADS[0] ? adHTML(ADS[0]) : ''}
-    ${i === 3 && ADS[1] ? adHTML(ADS[1]) : ''}
+    ${i === Math.floor(games.length/2)-1 && ADS[0] ? adHTML(ADS[0]) : ''}
+    ${i === games.length-1 && ADS[1] ? adHTML(ADS[1]) : ''}
   `).join('');
 
   // ライブ試合を自動選択

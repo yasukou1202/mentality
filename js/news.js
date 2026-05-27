@@ -160,8 +160,8 @@ async function renderArticles(articles) {
         <div style="margin-top:.4rem;"><span style="font-size:.65rem;color:var(--or);">続きを読む →</span></div>
       </div>
     </div>
-    ${i === 4 && newsAds[0] ? adCardHTML(newsAds[0]) : ''}
-    ${i === 9 && newsAds[1] ? adCardHTML(newsAds[1]) : ''}
+    ${i === Math.floor(articles.length/2)-1 && newsAds[0] ? adCardHTML(newsAds[0]) : ''}
+    ${i === articles.length-1 && newsAds[1] ? adCardHTML(newsAds[1]) : ''}
   `).join('');
 }
 // ============================================================
