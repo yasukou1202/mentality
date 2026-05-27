@@ -145,7 +145,7 @@ async function renderArticles(articles) {
       </div>
     </a>`;
 
-  list.innerHTML = articles.map((a, i) => `
+  list.innerHTML = (newsAds[0] ? adCardHTML(newsAds[0]) : '') + articles.map((a, i) => `
     <div onclick="window.open('${a.link}','_blank')" style="cursor:pointer;border-bottom:1px solid var(--bd);padding:.85rem 0;display:flex;gap:.6rem;align-items:flex-start;">
       <div style="flex-shrink:0;width:42px;height:42px;border-radius:50%;background:${a.color};display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;color:#fff;">${a.av}</div>
       <div style="flex:1;min-width:0;">
@@ -160,7 +160,6 @@ async function renderArticles(articles) {
         <div style="margin-top:.4rem;"><span style="font-size:.65rem;color:var(--or);">続きを読む →</span></div>
       </div>
     </div>
-    ${i === Math.floor(articles.length/2)-1 && newsAds[0] ? adCardHTML(newsAds[0]) : ''}
     ${i === articles.length-1 && newsAds[1] ? adCardHTML(newsAds[1]) : ''}
   `).join('');
 }

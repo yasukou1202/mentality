@@ -253,8 +253,8 @@ async function loadESPNLeaders(stat, mode) {
           <div class="lc-v${isTop3 ? ' gold' : ''}">${val}</div>
           <div class="lc-u">${unitLabel}</div>
         </div>
-      </div>${i === midIdx-1 && statsAds[0] ? statsAdHTML(statsAds[0]) : ''}`;
-    }).join('') + (statsAds[1] ? statsAdHTML(statsAds[1]) : '');
+      </div>`;
+    }).join('') + (statsAds[0] ? statsAdHTML(statsAds[0]) : '');
 
     console.log('✅ ESPN スタッツ取得成功:', stat, mode);
 
@@ -511,6 +511,15 @@ async function renderStandings() {
 
     h += '</div>';
     wrap.innerHTML = h;
+    // 順位表下に広告②追加
+    try {
+      const ar = await fetch(FB_URL + '/adslots.json');
+      const ad = await ar.json() || {};
+      const slot = ad['stats_2'];
+      if (slot && slot.url) {
+        wrap.innerHTML += `<a href="${slot.url}" target="_blank" style="display:block;text-decoration:none;margin:.5rem 0;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:.7rem .8rem;"><div style="display:flex;align-items:center;gap:.5rem;">${slot.img ? `<img src="${slot.img}" style="width:48px;height:48px;border-radius:8px;object-fit:cover;flex-shrink:0;">` : ''}<div style="flex:1;min-width:0;"><span style="font-size:.5rem;background:rgba(255,90,0,.15);color:var(--or);padding:.1rem .4rem;border-radius:10px;font-weight:700;">PR</span><div style="font-size:.72rem;font-weight:700;color:var(--tx);">${slot.title}</div></div><div style="color:var(--tx3);font-size:.8rem;">›</div></div></a>`;
+      }
+    } catch(e) {}
     console.log('✅ ESPN順位表取得成功');
 
   } catch(e) {
