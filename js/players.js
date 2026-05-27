@@ -93,14 +93,7 @@ function filterPlayers(q) {
     setTimeout(()=>{
       const pw = prompt("パスワードを入力してください");
       if (pw !== "3579") { alert("パスワードが違います"); return; }
-      const choice = confirm("記事投稿: OK  /  広告管理: キャンセル");
-      if (choice) {
-        const m = document.getElementById("adminModal");
-        if (m) m.style.display = "block";
-      } else {
-        const m = document.getElementById("adManagerModal");
-        if (m) { m.style.display = "block"; renderAdManager(); }
-      }
+      document.getElementById("adminSelectModal").style.display="block"; return;
     }, 100);
     return;
   }
