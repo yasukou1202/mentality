@@ -319,7 +319,7 @@ function startChatPoll(teamId) {
 
   cfpPollId = setInterval(async () => {
     try {
-      const res = await fetch(`${FB_URL}/chats/${teamId}.json?orderBy="ts"&startAt=${lastTs}&limitToLast=20`);
+      const res = await fetch(`${FB_URL}/chats/${teamId}.json?orderBy="ts"&startAt=${lastTs}&limitToLast=100`);
       if (!res.ok) return;
       const data = await res.json();
       if (!data) return;
