@@ -345,7 +345,7 @@ function selectEmoji(el, emoji) {
   userEmoji = emoji;
 }
 
-function saveNick(anon = false) {
+async function saveNick(anon = false) {
   if (anon) {
     userNick  = '匿名ファン' + Math.floor(Math.random() * 9000 + 1000);
     userEmoji = '🏀';
@@ -353,6 +353,25 @@ function saveNick(anon = false) {
     const v = document.getElementById('nickInp').value.trim();
     if (!v) { document.getElementById('nickInp').focus(); return; }
     userNick = v.slice(0, 16);
+    userEmoji = '🏀';
+
+    // プロフィール情報取得
+    const gender  = document.getElementById('nickGender')?.value || '';
+    const age     = document.getElementById('nickAge')?.value || '';
+    const team    = document.getElementById('nickTeam')?.value || '';
+    const player  = document.getElementById('nickPlayer')?.value.trim() || '';
+    const history = document.getElementById('nickHistory')?.value || '';
+
+    // Firebaseに保存
+    try {
+      const uid = lsGet('courtside_uid') || ('u' + Date.now() + Math.random().toString(36).slice(2,6));
+      lsSet('courtside_uid', uid);
+      await fetch(FB_URL + '/users/' + uid + '.json', {
+        method: 'PUT',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ nick: userNick, gender, age, team, player, history, ts: Date.now() })
+      });
+    } catch(e) {}
   }
   lsSet('mentality_nick',  userNick);
   lsSet('mentality_emoji', userEmoji);
@@ -419,13 +438,41 @@ function initChatUI() {
 
     <!-- ニックネーム設定モーダル -->
     <div id="nickModal" style="display:none;position:fixed;inset:0;z-index:400;background:rgba(17,17,30,.75);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:1rem;">
-      <div style="background:var(--card);border-radius:12px;padding:1.5rem 1.25rem;width:100%;max-width:320px;box-shadow:0 24px 64px rgba(0,0,0,.5);">
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.1em;color:var(--tx);margin-bottom:.25rem;">MENTALITY</div>
-        <div style="font-size:.74rem;color:var(--tx2);margin-bottom:1rem;line-height:1.6;">チャットに参加するニックネームを設定してください。</div>
-        <div id="nickEmojis" style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.75rem;"></div>
-        <input id="nickInp" style="width:100%;padding:.55rem .75rem;border-radius:8px;border:1.5px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.88rem;outline:none;font-family:'Barlow',sans-serif;margin-bottom:.5rem;box-sizing:border-box;" placeholder="ニックネームを入力" maxlength="16">
+      <div style="background:var(--card);border-radius:12px;padding:1.5rem 1.25rem;width:100%;max-width:320px;box-shadow:0 24px 64px rgba(0,0,0,.5);max-height:90vh;overflow-y:auto;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.1em;color:var(--tx);margin-bottom:.25rem;">COURTSIDE</div>
+        <div style="font-size:.74rem;color:var(--tx2);margin-bottom:1rem;line-height:1.6;">プロフィールを設定してチャットに参加しましょう！</div>
+        <input id="nickInp" style="width:100%;padding:.55rem .75rem;border-radius:8px;border:1.5px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.88rem;outline:none;font-family:'Barlow',sans-serif;margin-bottom:.5rem;box-sizing:border-box;" placeholder="ニックネームを入力（必須）" maxlength="16">
+        <select id="nickGender" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.82rem;margin-bottom:.5rem;">
+          <option value="">性別を選択</option>
+          <option value="male">男性</option>
+          <option value="female">女性</option>
+          <option value="other">その他</option>
+        </select>
+        <input id="nickAge" type="number" min="1" max="100" style="width:100%;padding:.5rem .75rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.82rem;margin-bottom:.5rem;box-sizing:border-box;" placeholder="年齢">
+        <select id="nickTeam" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.82rem;margin-bottom:.5rem;">
+          <option value="">推しチームを選択</option>
+          <option value="LAL">LAL レイカーズ</option>
+          <option value="GSW">GSW ウォリアーズ</option>
+          <option value="BOS">BOS セルティックス</option>
+          <option value="CHI">CHI ブルズ</option>
+          <option value="NYK">NYK ニックス</option>
+          <option value="MIL">MIL バックス</option>
+          <option value="OKC">OKC サンダー</option>
+          <option value="DEN">DEN ナゲッツ</option>
+          <option value="MEM">MEM グリズリーズ</option>
+          <option value="PHI">PHI シクサーズ</option>
+          <option value="other">その他</option>
+        </select>
+        <input id="nickPlayer" style="width:100%;padding:.5rem .75rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.82rem;margin-bottom:.5rem;box-sizing:border-box;" placeholder="推し選手（例：レブロン）" maxlength="30">
+        <select id="nickHistory" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.82rem;margin-bottom:.8rem;">
+          <option value="">バスケ好き歴</option>
+          <option value="1年未満">1年未満</option>
+          <option value="1〜3年">1〜3年</option>
+          <option value="3〜5年">3〜5年</option>
+          <option value="5〜10年">5〜10年</option>
+          <option value="10年以上">10年以上</option>
+        </select>
         <button onclick="saveNick()" style="width:100%;padding:.55rem;border-radius:8px;background:var(--or);color:#fff;border:none;font-family:'Barlow Condensed',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.08em;cursor:pointer;box-shadow:0 4px 12px rgba(255,90,0,.3);">チャットに参加する 🏀</button>
-        <button onclick="saveNick(true)" style="width:100%;padding:.42rem;border-radius:8px;background:transparent;color:var(--tx3);border:1px solid var(--bd);font-family:'Barlow Condensed',sans-serif;font-size:.78rem;cursor:pointer;margin-top:.4rem;">匿名で参加する</button>
       </div>
     </div>
     `);
