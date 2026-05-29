@@ -241,7 +241,7 @@
   <!-- バッシュ投稿モーダル -->
   <div id="snkModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:500;background:var(--bg);overflow-y:auto;">
     <div style="padding:.6rem 1rem;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:.5rem;position:sticky;top:0;background:var(--bg);z-index:1;">
-      <button onclick="closeSnkModal()" style="background:var(--bg3);border:none;color:var(--tx);padding:.3rem .7rem;border-radius:8px;font-size:.75rem;cursor:pointer;">← 戻る</button>
+      <button onclick="closeSnkModal();document.getElementById('adminSelectModal').style.display='block';" style="background:var(--bg3);border:none;color:var(--tx);padding:.3rem .7rem;border-radius:8px;font-size:.75rem;cursor:pointer;">← 戻る</button>
       <span style="font-size:.85rem;font-weight:700;color:var(--tx);">バッシュ管理</span>
     </div>
     <div style="padding:1rem;">
@@ -287,7 +287,7 @@
   <!-- ユーザー管理モーダル -->
   <div id="userModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:500;background:var(--bg);overflow-y:auto;">
     <div style="padding:.6rem 1rem;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:.5rem;position:sticky;top:0;background:var(--bg);z-index:1;">
-      <button onclick="closeUserModal()" style="background:var(--bg3);border:none;color:var(--tx);padding:.3rem .7rem;border-radius:8px;font-size:.75rem;cursor:pointer;">← 戻る</button>
+      <button onclick="closeUserModal();document.getElementById('adminSelectModal').style.display='block';" style="background:var(--bg3);border:none;color:var(--tx);padding:.3rem .7rem;border-radius:8px;font-size:.75rem;cursor:pointer;">← 戻る</button>
       <span style="font-size:.85rem;font-weight:700;color:var(--tx);">ユーザー管理</span>
     </div>
     <div style="padding:1rem;">
@@ -314,7 +314,7 @@
   <!-- 広告管理モーダル -->
   <div id="adManagerModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:500;background:var(--bg);overflow-y:auto;">
     <div style="padding:.6rem 1rem;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:.5rem;position:sticky;top:0;background:var(--bg);z-index:1;">
-      <button onclick="closeAdManager()" style="background:var(--bg3);border:none;color:var(--tx);padding:.3rem .7rem;border-radius:8px;font-size:.75rem;cursor:pointer;">← 戻る</button>
+      <button onclick="closeAdManager();document.getElementById('adminSelectModal').style.display='block';" style="background:var(--bg3);border:none;color:var(--tx);padding:.3rem .7rem;border-radius:8px;font-size:.75rem;cursor:pointer;">← 戻る</button>
       <span style="font-size:.85rem;font-weight:700;color:var(--tx);">広告管理</span>
     </div>
     <div style="padding:1rem;">
@@ -352,7 +352,7 @@
   <!-- 管理者モーダル -->
   <div id="adminModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:500;background:var(--bg);overflow-y:auto;">
     <div style="padding:.6rem 1rem;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:.5rem;position:sticky;top:0;background:var(--bg);z-index:1;">
-      <button onclick="closeAdminModal()" style="background:var(--bg3);border:none;color:var(--tx);padding:.3rem .7rem;border-radius:8px;font-size:.75rem;cursor:pointer;">← 戻る</button>
+      <button onclick="closeAdminModal();document.getElementById('adminSelectModal').style.display='block';" style="background:var(--bg3);border:none;color:var(--tx);padding:.3rem .7rem;border-radius:8px;font-size:.75rem;cursor:pointer;">← 戻る</button>
       <span style="font-size:.85rem;font-weight:700;color:var(--tx);">記事管理</span>
     </div>
     <div style="padding:1rem;">
