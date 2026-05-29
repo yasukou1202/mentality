@@ -40,6 +40,7 @@ function renderSneakers(list) {
           ${s.player ? `<span style="font-size:.6rem;color:var(--tx3);">👤 ${s.player}</span>` : ''}
         </div>
         <div style="font-size:.9rem;font-weight:700;color:var(--tx);margin-bottom:.3rem;">${s.name}</div>
+        ${s.score ? `<div style="display:flex;align-items:center;gap:.3rem;margin-bottom:.4rem;"><span style="font-size:.7rem;color:var(--tx3);">評価</span><div style="flex:1;background:var(--bg3);border-radius:10px;height:6px;"><div style="width:${s.score}%;background:var(--or);border-radius:10px;height:6px;"></div></div><span style="font-size:.75rem;font-weight:700;color:var(--or);">${s.score}/100</span></div>` : ''}
         ${s.desc ? `<div style="font-size:.75rem;color:var(--tx2);line-height:1.6;margin-bottom:.5rem;">${s.desc}</div>` : ''}
         <div style="display:flex;align-items:center;justify-content:space-between;">
           ${s.price ? `<span style="font-size:.9rem;font-weight:700;color:var(--or);">${s.price}</span>` : '<span></span>'}
@@ -67,6 +68,7 @@ async function submitSneaker() {
   const url    = document.getElementById('snkUrl').value.trim();
   const desc   = document.getElementById('snkDesc').value.trim();
   const isNew  = document.getElementById('snkIsNew').checked;
+  const score  = parseInt(document.getElementById('snkScore').value) || 0;
 
   if (!name) { alert('商品名は必須です'); return; }
 
@@ -76,7 +78,7 @@ async function submitSneaker() {
   await fetch(FB_SNEAKERS + '.json', {
     method: 'POST',
     headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({ name, brand, player, img, price, url, desc, isNew, ts: Date.now() })
+    body: JSON.stringify({ name, brand, player, img, price, url, desc, isNew, score, ts: Date.now() })
   });
 
   alert('投稿しました！');
