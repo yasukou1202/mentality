@@ -485,3 +485,68 @@ function initChatUI() {
 initChatUI();
 renderTeams();
 // ============================================================
+
+// ============================================================
+// ユーザー管理
+// ============================================================
+function openUserModal() {
+  const modal = document.getElementById('userModal');
+  if (modal) { modal.style.display = 'block'; loadUsers(); }
+}
+
+function closeUserModal() {
+  const modal = document.getElementById('userModal');
+  if (modal) modal.style.display = 'none';
+}
+
+async function loadUsers() {
+  const list  = document.getElementById('userList');
+  const stats = document.getElementById('userStats');
+  if (!list) return;
+  list.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--tx3);font-size:.75rem;">読み込み中...</div>';
+
+  try {
+    const res  = await fetch(FB_URL + '/users.json');
+    const data = await res.json() || {};
+    const users = Object.entries(data).map(([id,u]) => ({id,...u})).sort((a,b) => b.ts - a.ts);
+
+    // 集計
+    const total  = users.length;
+    const male   = users.filter(u => u.gender === 'male').length;
+    const female = users.filter(u => u.gender === 'female').length;
+    const avgAge = users.filter(u => u.age).reduce((s,u) => s + Number(u.age), 0) / (users.filter(u => u.age).length || 1);
+
+    stats.innerHTML = `
+      <div style="background:var(--bg3);border-radius:8px;padding:.7rem;text-align:center;">
+        <div style="font-size:1.2rem;font-weight:700;color:var(--or);">${total}</div>
+        <div style="font-size:.65rem;color:var(--tx3);">総ユーザー数</div>
+      </div>
+      <div style="background:var(--bg3);border-radius:8px;padding:.7rem;text-align:center;">
+        <div style="font-size:1.2rem;font-weight:700;color:var(--or);">${Math.round(avgAge)||'-'}</div>
+        <div style="font-size:.65rem;color:var(--tx3);">平均年齢</div>
+      </div>
+      <div style="background:var(--bg3);border-radius:8px;padding:.7rem;text-align:center;">
+        <div style="font-size:1.2rem;font-weight:700;color:var(--or);">${male}</div>
+        <div style="font-size:.65rem;color:var(--tx3);">男性</div>
+      </div>
+      <div style="background:var(--bg3);border-radius:8px;padding:.7rem;text-align:center;">
+        <div style="font-size:1.2rem;font-weight:700;color:var(--or);">${female}</div>
+        <div style="font-size:.65rem;color:var(--tx3);">女性</div>
+      </div>
+    `;
+
+    list.innerHTML = users.map(u => `
+      <div style="background:var(--bg3);border-radius:8px;padding:.6rem;margin-bottom:.4rem;">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div style="font-size:.78rem;font-weight:700;color:var(--tx);">${u.nick||'匿名'}</div>
+          <div style="font-size:.6rem;color:var(--tx3);">${new Date(u.ts).toLocaleDateString('ja-JP')}</div>
+        </div>
+        <div style="font-size:.65rem;color:var(--tx3);margin-top:.2rem;">
+          ${u.gender==='male'?'男性':u.gender==='female'?'女性':''}${u.age?' · '+u.age+'歳':''}${u.team?' · '+u.team:''}${u.player?' · '+u.player:''}${u.history?' · '+u.history:''}
+        </div>
+      </div>
+    `).join('');
+  } catch(e) {
+    list.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--tx3);">取得失敗</div>';
+  }
+}
