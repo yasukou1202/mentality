@@ -619,3 +619,4 @@ async function deleteUser(id) {
 
 // debug
 window._chatLoaded = true;
+// async fix 2026年 5月29日 金曜日 19時28分31秒 JST
