@@ -45,6 +45,7 @@ function renderSneakers(list) {
         <div style="display:flex;align-items:center;justify-content:space-between;">
           ${s.price ? `<span style="font-size:.9rem;font-weight:700;color:var(--or);">${s.price}</span>` : '<span></span>'}
           ${s.url ? `<a href="${s.url}" target="_blank" style="background:var(--or);color:#fff;padding:.4rem .9rem;border-radius:8px;font-size:.75rem;font-weight:700;text-decoration:none;">購入する →</a>` : ''}
+        <a href="${'https://twitter.com/intent/tweet?text=' + encodeURIComponent(s.name + ' #バッシュ #COURTSIDE https://yasukou1202.github.io/mentality/')}" target="_blank" style="background:#000;color:#fff;padding:.4rem .6rem;border-radius:8px;font-size:.75rem;text-decoration:none;">𝕏</a>
         </div>
       </div>
     </div>

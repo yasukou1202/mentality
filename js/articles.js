@@ -80,7 +80,7 @@ async function openArticle(id) {
       '<span style="font-size:.58rem;background:var(--or);color:#fff;padding:.15rem .5rem;border-radius:6px;">' + (a.category||'NBA') + '</span>' +
       '<span style="font-size:.58rem;color:var(--tx3);">' + new Date(a.ts).toLocaleDateString('ja-JP') + '</span>' +
       '</div>' +
-      '<div style="font-size:1rem;font-weight:700;color:var(--tx);margin-bottom:.8rem;line-height:1.5;">' + a.title + '</div>' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;"><div style="font-size:1rem;font-weight:700;color:var(--tx);line-height:1.5;flex:1;">' + a.title + '</div><a href="https://twitter.com/intent/tweet?text=" + encodeURIComponent(a.title + \' #COURTSIDE \' + \'https://yasukou1202.github.io/mentality/\') + "" target="_blank" style="flex-shrink:0;margin-left:.5rem;background:#000;color:#fff;padding:.3rem .6rem;border-radius:8px;font-size:.7rem;text-decoration:none;">𝕏 シェア</a></div>' +
       '<div style="font-size:.78rem;color:var(--tx2);line-height:1.8;">' + renderBody(a.body) + '</div>' +
       '</div>';
   } catch(e) {
