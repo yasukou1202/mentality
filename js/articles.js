@@ -261,3 +261,4 @@ async function deleteAd(id) {
   await fetch(`${FB_ADS}/${id}.json`, { method: 'DELETE' });
   renderAdManager();
 }
+// cache bust 2026年 5月29日 金曜日 15時10分29秒 JST
