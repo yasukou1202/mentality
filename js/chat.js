@@ -451,17 +451,36 @@ function initChatUI() {
         <input id="nickAge" type="number" min="1" max="100" style="width:100%;padding:.5rem .75rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.82rem;margin-bottom:.5rem;box-sizing:border-box;" placeholder="年齢">
         <select id="nickTeam" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.82rem;margin-bottom:.5rem;">
           <option value="">推しチームを選択</option>
-          <option value="LAL">LAL レイカーズ</option>
-          <option value="GSW">GSW ウォリアーズ</option>
+          <option value="ATL">ATL ホークス</option>
           <option value="BOS">BOS セルティックス</option>
+          <option value="BKN">BKN ネッツ</option>
+          <option value="CHA">CHA ホーネッツ</option>
           <option value="CHI">CHI ブルズ</option>
-          <option value="NYK">NYK ニックス</option>
-          <option value="MIL">MIL バックス</option>
-          <option value="OKC">OKC サンダー</option>
+          <option value="CLE">CLE キャバリアーズ</option>
+          <option value="DAL">DAL マーベリックス</option>
           <option value="DEN">DEN ナゲッツ</option>
+          <option value="DET">DET ピストンズ</option>
+          <option value="GSW">GSW ウォリアーズ</option>
+          <option value="HOU">HOU ロケッツ</option>
+          <option value="IND">IND ペイサーズ</option>
+          <option value="LAC">LAC クリッパーズ</option>
+          <option value="LAL">LAL レイカーズ</option>
           <option value="MEM">MEM グリズリーズ</option>
+          <option value="MIA">MIA ヒート</option>
+          <option value="MIL">MIL バックス</option>
+          <option value="MIN">MIN ティンバーウルブズ</option>
+          <option value="NOP">NOP ペリカンズ</option>
+          <option value="NYK">NYK ニックス</option>
+          <option value="OKC">OKC サンダー</option>
+          <option value="ORL">ORL マジック</option>
           <option value="PHI">PHI シクサーズ</option>
-          <option value="other">その他</option>
+          <option value="PHX">PHX サンズ</option>
+          <option value="POR">POR トレイルブレイザーズ</option>
+          <option value="SAC">SAC キングス</option>
+          <option value="SAS">SAS スパーズ</option>
+          <option value="TOR">TOR ラプターズ</option>
+          <option value="UTA">UTA ジャズ</option>
+          <option value="WAS">WAS ウィザーズ</option>
         </select>
         <input id="nickPlayer" style="width:100%;padding:.5rem .75rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.82rem;margin-bottom:.5rem;box-sizing:border-box;" placeholder="推し選手（例：レブロン）" maxlength="30">
         <select id="nickHistory" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.82rem;margin-bottom:.8rem;">
