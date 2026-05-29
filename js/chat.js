@@ -248,7 +248,7 @@ function getChatAdHTML() {
 // ============================================================
 // メッセージ送信
 // ============================================================
-function cfpSend() {
+async function cfpSend() {
   const inp = document.getElementById('cfpField');
   const txt = inp.value.trim();
   if (!txt) return;
@@ -257,7 +257,7 @@ function cfpSend() {
   const t = TEAMS.find(x => x.id === cfpTeamId);
   if (!t) return;
 
-  const CHAT_NG = ['死ね','殺す','氏ね','消えろ','基地外','レイプ','強姦','チンポ','まんこ','セックス','変態','エロ','ヤリマン','援交','売春'];
+  const CHAT_NG = ['死ね','殺す','氏ね','消えろ','基地外','レイプ','強姦','チンポ','まんこ','セックス','エロ','ヤリマン','援交','売春'];
   if (CHAT_NG.some(w => txt.includes(w))) {
     alert('その言葉は使用できません');
     return;
@@ -367,7 +367,7 @@ async function saveNick(anon = false) {
     const v = document.getElementById('nickInp').value.trim();
     if (!v) { document.getElementById('nickInp').focus(); return; }
 
-    const NG_WORDS = ['死ね','殺す','氏ね','消えろ','基地外','レイプ','強姦','チンポ','まんこ','セックス','変態','エロ','ヤリマン','援交','売春'];
+    const NG_WORDS = ['死ね','殺す','氏ね','消えろ','基地外','レイプ','強姦','チンポ','まんこ','セックス','エロ','ヤリマン','援交','売春'];
     if (NG_WORDS.some(w => v.includes(w))) {
       alert('そのニックネームは使用できません');
       return;
