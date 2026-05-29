@@ -110,3 +110,33 @@ function filterSneakersDropdown() {
   });
   renderSneakers(filtered);
 }
+
+async function loadAdminSneakers() {
+  const wrap = document.getElementById('adminSneakerList');
+  if (!wrap) return;
+  wrap.innerHTML = '<div style="font-size:.7rem;color:var(--tx3);">読み込み中...</div>';
+  try {
+    const res = await fetch(FB_SNEAKERS + '.json');
+    const data = await res.json();
+    if (!data) { wrap.innerHTML = '<div style="font-size:.7rem;color:var(--tx3);">バッシュがありません</div>'; return; }
+    const list = Object.entries(data).map(([id,s]) => ({id,...s})).sort((a,b) => b.ts - a.ts);
+    wrap.innerHTML = list.map(s => `
+      <div style="background:var(--bg3);border-radius:8px;padding:.6rem;margin-bottom:.4rem;display:flex;align-items:center;gap:.5rem;">
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:.72rem;font-weight:700;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${s.name}</div>
+          <div style="font-size:.58rem;color:var(--tx3);">${BRANDS[s.brand]||s.brand||''} ${s.player ? '· ' + s.player : ''}</div>
+        </div>
+        <button onclick="deleteSneaker('${s.id}')" style="background:rgba(255,50,50,.15);border:none;color:#ff5555;padding:.3rem .5rem;border-radius:6px;font-size:.65rem;cursor:pointer;flex-shrink:0;">削除</button>
+      </div>
+    `).join('');
+  } catch(e) {
+    wrap.innerHTML = '<div style="font-size:.7rem;color:var(--tx3);">取得失敗</div>';
+  }
+}
+
+async function deleteSneaker(id) {
+  if (!confirm('このバッシュを削除しますか？')) return;
+  await fetch(`${FB_SNEAKERS}/${id}.json`, { method: 'DELETE' });
+  loadAdminSneakers();
+  loadSneakers();
+}

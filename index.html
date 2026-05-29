@@ -242,9 +242,16 @@
   <div id="snkModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:500;background:var(--bg);overflow-y:auto;">
     <div style="padding:.6rem 1rem;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:.5rem;position:sticky;top:0;background:var(--bg);z-index:1;">
       <button onclick="closeSnkModal()" style="background:var(--bg3);border:none;color:var(--tx);padding:.3rem .7rem;border-radius:8px;font-size:.75rem;cursor:pointer;">← 戻る</button>
-      <span style="font-size:.85rem;font-weight:700;color:var(--tx);">バッシュ投稿</span>
+      <span style="font-size:.85rem;font-weight:700;color:var(--tx);">バッシュ管理</span>
     </div>
     <div style="padding:1rem;">
+      <div style="margin-bottom:1rem;">
+        <div style="font-size:.75rem;font-weight:700;color:var(--tx2);margin-bottom:.5rem;">投稿済みバッシュ</div>
+        <div id="adminSneakerList" style="max-height:250px;overflow-y:auto;"></div>
+      </div>
+      <div style="border-top:1px solid var(--bd);padding-top:1rem;margin-bottom:.5rem;">
+        <div style="font-size:.75rem;font-weight:700;color:var(--tx2);margin-bottom:.5rem;">新規投稿</div>
+      </div>
       <div style="margin-bottom:.6rem;"><input id="snkName" type="text" placeholder="商品名（必須）" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;box-sizing:border-box;"></div>
       <div style="margin-bottom:.6rem;">
         <select id="snkBrand" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;">
