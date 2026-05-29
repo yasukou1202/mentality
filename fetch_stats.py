@@ -83,18 +83,26 @@ for tid in range(1, 31):
 data['espnid_map'] = espnid_map
 data['roster'] = roster
 
-# 全選手スタッツ（600人）
+# 全選手スタッツ（leagueleadersから合成）
 try:
-    url = 'https://api.server.nbaapi.com/api/playertotals?page=1&pageSize=600&sortBy=games&ascending=false&season=2026&isPlayoff=false'
-    sd = fetch(url)
     stats600 = {}
-    for p in sd.get('data', []):
-        g = p.get('games') or 1
-        stats600[norm(p.get('playerName',''))] = {
-            'pts': round(p['points']/g, 1),
-            'reb': round(p['totalRb']/g, 1),
-            'ast': round(p['assists']/g, 1),
-        }
+    for stat_key, stat_name in [('pts','PTS'),('reb','REB'),('ast','AST')]:
+        rs = data.get(stat_key, {}).get('resultSet', {})
+        headers_list = rs.get('headers', [])
+        rows = rs.get('rowSet', [])
+        if not headers_list or not rows:
+            continue
+        idx = {h: i for i, h in enumerate(headers_list)}
+        player_idx = idx.get('PLAYER', 2)
+        stat_idx = idx.get(stat_name)
+        if stat_idx is None:
+            continue
+        for row in rows:
+            name = row[player_idx]
+            k = norm(name)
+            if k not in stats600:
+                stats600[k] = {'pts': 0, 'reb': 0, 'ast': 0}
+            stats600[k][stat_key] = row[stat_idx] or 0
     print(f"OK: all_stats ({len(stats600)}人)")
 except Exception as e:
     print(f"NG: all_stats - {e}")
