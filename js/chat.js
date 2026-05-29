@@ -257,6 +257,22 @@ function cfpSend() {
   const t = TEAMS.find(x => x.id === cfpTeamId);
   if (!t) return;
 
+  const CHAT_NG = ['死ね','殺す','氏ね','消えろ','基地外','レイプ','強姦','チンポ','まんこ','セックス','変態','エロ','ヤリマン','援交','売春'];
+  if (CHAT_NG.some(w => txt.includes(w))) {
+    alert('その言葉は使用できません');
+    return;
+  }
+
+  // BANチェック
+  try {
+    const uid = lsGet('courtside_uid');
+    if (uid) {
+      const res = await fetch(FB_URL + '/users/' + uid + '.json');
+      const user = await res.json();
+      if (user && user.banned) { alert('あなたはBANされています'); return; }
+    }
+  } catch(e) {}
+
   const now    = ntime(); // utils.js
   const newMsg = { n: userNick, msg: txt, t: now };
   t.msgs.push(newMsg);
@@ -350,6 +366,20 @@ async function saveNick(anon = false) {
   } else {
     const v = document.getElementById('nickInp').value.trim();
     if (!v) { document.getElementById('nickInp').focus(); return; }
+
+    const NG_WORDS = ['死ね','殺す','氏ね','消えろ','基地外','レイプ','強姦','チンポ','まんこ','セックス','変態','エロ','ヤリマン','援交','売春'];
+    if (NG_WORDS.some(w => v.includes(w))) {
+      alert('そのニックネームは使用できません');
+      return;
+    }
+
+    try {
+      const res = await fetch(FB_URL + '/users.json');
+      const data = await res.json() || {};
+      const exists = Object.values(data).some(u => u.nick === v.slice(0,16));
+      if (exists) { alert('このニックネームはすでに使われています'); return; }
+    } catch(e) {}
+
     userNick = v.slice(0, 16);
     userEmoji = '🏀';
 
@@ -555,8 +585,12 @@ async function loadUsers() {
     list.innerHTML = users.map(u => `
       <div style="background:var(--bg3);border-radius:8px;padding:.6rem;margin-bottom:.4rem;">
         <div style="display:flex;align-items:center;justify-content:space-between;">
-          <div style="font-size:.78rem;font-weight:700;color:var(--tx);">${u.nick||'匿名'}</div>
-          <div style="font-size:.6rem;color:var(--tx3);">${new Date(u.ts).toLocaleDateString('ja-JP')}</div>
+          <div style="font-size:.78rem;font-weight:700;color:var(--tx);">${u.nick||'匿名'}${u.banned?'<span style="color:#ff5555;font-size:.6rem;"> BAN</span>':''}</div>
+          <div style="display:flex;gap:.3rem;align-items:center;">
+            <div style="font-size:.6rem;color:var(--tx3);">${new Date(u.ts).toLocaleDateString('ja-JP')}</div>
+            <button onclick="banUser('${u.id}',${!u.banned})" style="background:${u.banned?'rgba(50,200,50,.15)':'rgba(255,50,50,.15)'};border:none;color:${u.banned?'#33cc33':'#ff5555'};padding:.2rem .4rem;border-radius:4px;font-size:.6rem;cursor:pointer;">${u.banned?'解除':'BAN'}</button>
+            <button onclick="deleteUser('${u.id}')" style="background:rgba(100,100,100,.15);border:none;color:var(--tx3);padding:.2rem .4rem;border-radius:4px;font-size:.6rem;cursor:pointer;">削除</button>
+          </div>
         </div>
         <div style="font-size:.65rem;color:var(--tx3);margin-top:.2rem;">
           ${u.gender==='male'?'男性':u.gender==='female'?'女性':''}${u.age?' · '+u.age+'歳':''}${u.team?' · '+u.team:''}${u.player?' · '+u.player:''}${u.history?' · '+u.history:''}
@@ -566,4 +600,19 @@ async function loadUsers() {
   } catch(e) {
     list.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--tx3);">取得失敗</div>';
   }
+}
+
+async function banUser(id, banned) {
+  await fetch(FB_URL + '/users/' + id + '.json', {
+    method: 'PATCH',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ banned })
+  });
+  loadUsers();
+}
+
+async function deleteUser(id) {
+  if (!confirm('このユーザーを削除しますか？')) return;
+  await fetch(FB_URL + '/users/' + id + '.json', { method: 'DELETE' });
+  loadUsers();
 }
