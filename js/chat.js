@@ -114,7 +114,7 @@ function filterConf(btn, conf) {
 async function renderTeams() {
   const filtered = TEAMS.filter(t => teamConf === 'all' || t.conf === teamConf);
   // 全体オンライン数からチームごとの人数を比例配分
-  const total = _globalOnlineCount || 12;
+  const total = Math.min(_globalOnlineCount || 5, 20);
   document.getElementById('teamList').innerHTML = filtered.map((t, i) => {
     const cdnId   = TEAM_CDN_IDS[t.abbr] || '';
     const logoHtml = cdnId
@@ -124,7 +124,6 @@ async function renderTeams() {
     const preview = lastMsg ? lastMsg.msg.slice(0, 28) + '…' : 'まだ投稿がありません';
     // チームごとのオンライン数 = 全体の5〜15%をランダムに分配（合計が全体を超えない）
     const teamOnline = Math.max(1, Math.floor(total * (0.05 + Math.random() * 0.1)));
-    const unread  = i < 3 ? Math.floor(Math.random() * 8) + 1 : 0;
     return `<div class="team-card${t.jp ? ' jp' : ''}" onclick="openChatFull('${t.id}')">
       <div class="tc-logo">${logoHtml}</div>
       <div class="tc-info">
@@ -134,7 +133,6 @@ async function renderTeams() {
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:.3rem;flex-shrink:0;">
         <div class="tc-wl">${t.w}-${t.l}</div>
-        ${unread ? `<div class="tc-unreads">${unread}</div>` : ''}
       </div>
     </div>`;
   }).join('');

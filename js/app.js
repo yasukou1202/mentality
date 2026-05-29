@@ -70,10 +70,10 @@ async function updateOnlineCount() {
     if (!res.ok) throw new Error('no');
     const data  = await res.json();
     const count = data ? Object.keys(data).length : 0;
-    _globalOnlineCount = count > 0 ? count : Math.floor(Math.random() * 8) + 3;
+    _globalOnlineCount = count > 0 ? Math.min(count, 20) : Math.floor(Math.random() * 8) + 3;
   } catch(e) {
     // Firebaseが失敗した場合はランダムで一定範囲内
-    if (_globalOnlineCount === 0) _globalOnlineCount = Math.floor(Math.random() * 8) + 3;
+    if (_globalOnlineCount === 0) _globalOnlineCount = Math.floor(Math.random() * 5) + 1;
   }
   // ナビとチャット一覧を同じ数値で更新
   _syncOnlineDisplay();
