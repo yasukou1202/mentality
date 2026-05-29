@@ -82,6 +82,7 @@ async function openArticle(id) {
       '</div>' +
       '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;"><div style="font-size:1rem;font-weight:700;color:var(--tx);line-height:1.5;flex:1;">' + a.title + '</div><a href="https://twitter.com/intent/tweet?text=" + encodeURIComponent(a.title + \' #COURTSIDE \' + \'https://yasukou1202.github.io/mentality/\') + "" target="_blank" style="flex-shrink:0;margin-left:.5rem;background:#000;color:#fff;padding:.3rem .6rem;border-radius:8px;font-size:.7rem;text-decoration:none;">𝕏 シェア</a></div>' +
       '<div style="font-size:.78rem;color:var(--tx2);line-height:1.8;">' + renderBody(a.body) + '</div>' +
+      '<div style="margin-top:1rem;padding-top:.8rem;border-top:1px solid var(--bd);text-align:center;"><a href="https://twitter.com/intent/tweet?text=" + encodeURIComponent(a.title + \' #COURTSIDE \' + \'https://yasukou1202.github.io/mentality/\') + "" target="_blank" style="display:inline-flex;align-items:center;gap:.4rem;background:#000;color:#fff;padding:.6rem 1.2rem;border-radius:10px;font-size:.8rem;font-weight:700;text-decoration:none;">𝕏 この記事をシェア</a></div>' +
       '</div>';
   } catch(e) {
     body.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--tx3);">取得に失敗しました</div>';
