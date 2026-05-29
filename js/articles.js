@@ -80,7 +80,7 @@ async function openArticle(id) {
       '<span style="font-size:.58rem;background:var(--or);color:#fff;padding:.15rem .5rem;border-radius:6px;">' + (a.category||'NBA') + '</span>' +
       '<span style="font-size:.58rem;color:var(--tx3);">' + new Date(a.ts).toLocaleDateString('ja-JP') + '</span>' +
       '</div>' +
-      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;"><div style="font-size:1rem;font-weight:700;color:var(--tx);line-height:1.5;flex:1;">' + a.title + '</div><a href="https://twitter.com/intent/tweet?text=" + encodeURIComponent(a.title + \' #COURTSIDE \' + \'https://yasukou1202.github.io/mentality/\') + "" target="_blank" style="flex-shrink:0;margin-left:.5rem;background:#000;color:#fff;padding:.3rem .6rem;border-radius:8px;font-size:.7rem;text-decoration:none;">𝕏 シェア</a></div>' +
+      '<div style="font-size:1rem;font-weight:700;color:var(--tx);line-height:1.5;margin-bottom:.8rem;">' + a.title + '</div>' +
       '<div style="font-size:.78rem;color:var(--tx2);line-height:1.8;">' + renderBody(a.body) + '</div>' +
       '<div style="margin-top:1rem;padding-top:.8rem;border-top:1px solid var(--bd);text-align:center;">' +
       '<a href="' + 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(a.title + ' #COURTSIDE #NBA https://yasukou1202.github.io/mentality/') + '" target="_blank" style="display:inline-flex;align-items:center;gap:.4rem;background:#000;color:#fff;padding:.6rem 1.2rem;border-radius:10px;font-size:.8rem;font-weight:700;text-decoration:none;">\u{1D54F} \u3053\u306e\u8a18\u4e8b\u3092\u30b7\u30a7\u30a2</a></div>' +
