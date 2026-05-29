@@ -616,3 +616,6 @@ async function deleteUser(id) {
   await fetch(FB_URL + '/users/' + id + '.json', { method: 'DELETE' });
   loadUsers();
 }
+
+// debug
+window._chatLoaded = true;
