@@ -109,9 +109,11 @@
 
 .sn-divider {
   width: 1px;
+  height: 20px;
   background: var(--bd);
   flex-shrink: 0;
-  margin: .6rem 0;
+  margin: auto .1rem;
+  align-self: center;
 }
 
 /* ===== メインスクロール ===== */
