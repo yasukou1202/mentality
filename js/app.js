@@ -131,3 +131,23 @@ setInterval(updateOnlineCount, 30000); // 30秒ごとに更新
     console.warn('ESPNID_MAP読み込み失敗:', e.message);
   }
 })();
+
+// トップバナー
+async function loadTopBanner() {
+  try {
+    const res = await fetch(FB_URL + '/adslots/topbanner.json');
+    const ad = await res.json();
+    if (!ad || !ad.url || ad.url === 'https://example.com') return;
+    const wrap = document.getElementById('topBanner');
+    if (!wrap) return;
+    wrap.style.display = 'block';
+    wrap.innerHTML = `<a href="${ad.url}" target="_blank" style="display:flex;align-items:center;gap:.6rem;text-decoration:none;background:var(--bg3);border:1px solid var(--bd);border-radius:8px;padding:.5rem .8rem;">
+      ${ad.img ? `<img src="${ad.img}" style="width:40px;height:40px;object-fit:cover;border-radius:6px;flex-shrink:0;">` : '<div style="font-size:1.2rem;">📺</div>'}
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:.72rem;font-weight:700;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${ad.title}</div>
+      </div>
+      <div style="font-size:.65rem;background:rgba(255,90,0,.15);color:var(--or);padding:.2rem .5rem;border-radius:6px;font-weight:700;flex-shrink:0;">PR</div>
+    </a>`;
+  } catch(e) {}
+}
+loadTopBanner();
