@@ -122,7 +122,7 @@ setInterval(updateOnlineCount, 30000); // 30秒ごとに更新
 // data.jsonからESPNID_MAPを読み込む
 (async () => {
   try {
-    const res = await fetch('https://yasukou1202.github.io/mentality/data.json');
+    const res = await fetch('https://courtside-jp.github.io/mentality/data.json');
     const data = await res.json();
     window._espnIdMap = data.espnid_map || {};
     console.log('✅ ESPNID_MAP読み込み:', Object.keys(window._espnIdMap).length, '人');
