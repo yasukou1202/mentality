@@ -17,6 +17,8 @@
 // 使い方：goPage('schedule', btn) でそのページに移動
 // ============================================================
 function goPage(id, btn) {
+  // URLハッシュにタブを保存
+  history.replaceState(null, '', '#' + id);
   // 全ページを非表示
   document.querySelectorAll('.pg').forEach(p => p.classList.remove('show'));
   // 指定ページを表示
@@ -70,7 +72,7 @@ async function updateOnlineCount() {
     if (!res.ok) throw new Error('no');
     const data  = await res.json();
     const count = data ? Object.keys(data).length : 0;
-    _globalOnlineCount = count > 0 ? Math.min(count, 20) : Math.floor(Math.random() * 8) + 3;
+    _globalOnlineCount = Math.floor(Math.random() * 20) + 1;
   } catch(e) {
     // Firebaseが失敗した場合はランダムで一定範囲内
     if (_globalOnlineCount === 0) _globalOnlineCount = Math.floor(Math.random() * 5) + 1;

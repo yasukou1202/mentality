@@ -438,5 +438,16 @@
 <script src="js/sneakers.js"></script>
 <script src="js/players.js"></script>
 <script src="js/search.js"></script>
+<script>
+// タブ復元
+(function(){
+  const hash = location.hash.replace('#','');
+  const validTabs = ['schedule','stats','teams','sneakers','articles','players'];
+  if (hash && validTabs.includes(hash)) {
+    const btn = document.getElementById('sn-' + hash);
+    if (btn) goPage(hash, btn);
+  }
+})();
+</script>
 </body>
 </html>
