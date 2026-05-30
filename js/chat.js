@@ -131,7 +131,7 @@ async function renderTeams() {
         <div class="tc-note">${preview}</div>
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:.3rem;flex-shrink:0;">
-        <div class="tc-wl">${t.w}-${t.l}</div>
+
       </div>
     </div>`;
   }).join('');
