@@ -16,6 +16,11 @@ function renderBody(body) {
     if (t.includes('instagram.com')) return '<div style="margin:.8rem 0;"><blockquote class="instagram-media" data-instgrm-permalink="' + t + '"><a href="' + t + '">Instagram投稿</a></blockquote><script async src="//www.instagram.com/embed.js"><\/script></div>';
     if (t.includes('twitter.com') || t.includes('x.com')) return '<div style="margin:.8rem 0;"><blockquote class="twitter-tweet"><a href="' + t + '">ツイート</a></blockquote><script async src="https://platform.twitter.com/widgets.js"><\/script></div>';
     if (t.match(/\.(jpg|jpeg|png|gif|webp)(\?.*)?$/i)) return '<div style="margin:.8rem 0;"><img src="' + t + '" style="width:100%;border-radius:10px;" onerror="this.style.display=\'none\'"></div>';
+    const productMatch = t.match(/\[product name="([^"]*)" price="([^"]*)" url="([^"]*)"\]/);
+    if (productMatch) {
+      const [, pName, pPrice, pUrl] = productMatch;
+      return '<a href="' + pUrl + '" target="_blank" style="display:block;text-decoration:none;margin:.8rem 0;background:var(--bg3);border:1px solid var(--bd);border-radius:12px;padding:.8rem;"><div style="display:flex;align-items:center;gap:.6rem;"><div style="font-size:1.5rem;">🛒</div><div style="flex:1;min-width:0;"><div style="font-size:.82rem;font-weight:700;color:var(--tx);margin-bottom:.2rem;">' + pName + '</div>' + (pPrice ? '<div style="font-size:.85rem;font-weight:700;color:var(--or);">' + pPrice + '</div>' : '') + '</div><div style="background:var(--or);color:#fff;padding:.4rem .8rem;border-radius:8px;font-size:.72rem;font-weight:700;flex-shrink:0;">購入する →</div></div></a>';
+    }
     return t ? '<p style="margin:.4rem 0;">' + t + '</p>' : '<br>';
   }).join('');
 }
@@ -293,4 +298,20 @@ async function deleteArticle(id) {
   await fetch(`${FB_ARTICLES}/${id}.json`, { method: 'DELETE' });
   loadAdminArticles();
   loadArticles();
+}
+
+// 商品リンク挿入
+function insertProductLink(targetId) {
+  const name  = prompt('商品名を入力してください');
+  if (!name) return;
+  const price = prompt('価格を入力してください（例：¥22,000）') || '';
+  const url   = prompt('購入URLを入力してください');
+  if (!url) return;
+
+  const card = `\n[product name="${name}" price="${price}" url="${url}"]\n`;
+  const ta = document.getElementById(targetId);
+  if (!ta) return;
+  const pos = ta.selectionStart;
+  ta.value = ta.value.slice(0, pos) + card + ta.value.slice(pos);
+  ta.dispatchEvent(new Event('input'));
 }

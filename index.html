@@ -269,6 +269,9 @@
       <div style="margin-bottom:.6rem;"><input id="snkImg" type="text" placeholder="画像URL" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;box-sizing:border-box;"></div>
       <div style="margin-bottom:.6rem;"><input id="snkPrice" type="text" placeholder="価格（例：¥22,000）" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;box-sizing:border-box;"></div>
       <div style="margin-bottom:.6rem;"><input id="snkUrl" type="text" placeholder="購入リンクURL" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;box-sizing:border-box;"></div>
+      <div style="margin-bottom:.4rem;display:flex;gap:.4rem;">
+        <button type="button" onclick="insertProductLink('snkDesc')" style="background:var(--bg3);border:1px solid var(--bd);color:var(--tx);padding:.3rem .7rem;border-radius:8px;font-size:.72rem;cursor:pointer;">🛒 商品リンク追加</button>
+      </div>
       <div style="margin-bottom:.6rem;"><textarea id="snkDesc" placeholder="説明・コメント" rows="4" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;box-sizing:border-box;resize:vertical;"></textarea></div>
       <div style="margin-bottom:.6rem;"><input id="snkScore" type="number" min="1" max="100" placeholder="評価スコア（1〜100）" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;box-sizing:border-box;"></div>
       <div style="margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem;"><input type="checkbox" id="snkIsNew"><label for="snkIsNew" style="font-size:.8rem;color:var(--tx);">新作フラグを付ける</label></div>
@@ -383,6 +386,9 @@
           <button onclick="insertToBody('tiktok')" style="background:var(--bg3);border:1px solid var(--bd);color:var(--tx);padding:.3rem .6rem;border-radius:6px;font-size:.7rem;cursor:pointer;">🎵 TikTok</button>
           <button onclick="insertToBody('instagram')" style="background:var(--bg3);border:1px solid var(--bd);color:var(--tx);padding:.3rem .6rem;border-radius:6px;font-size:.7rem;cursor:pointer;">📸 Insta</button>
           <button onclick="insertToBody('twitter')" style="background:var(--bg3);border:1px solid var(--bd);color:var(--tx);padding:.3rem .6rem;border-radius:6px;font-size:.7rem;cursor:pointer;">🐦 X</button>
+        </div>
+        <div style="margin-bottom:.4rem;display:flex;gap:.4rem;">
+          <button type="button" onclick="insertProductLink('adminBody')" style="background:var(--bg3);border:1px solid var(--bd);color:var(--tx);padding:.3rem .7rem;border-radius:8px;font-size:.72rem;cursor:pointer;">🛒 商品リンク追加</button>
         </div>
         <textarea id="adminBody" placeholder="本文を入力...URLを直接貼り付けもOK" rows="12" style="width:100%;padding:.5rem;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);font-size:.8rem;box-sizing:border-box;resize:vertical;" oninput="updatePreview()"></textarea>
       </div>
