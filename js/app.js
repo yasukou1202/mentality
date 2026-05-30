@@ -137,7 +137,7 @@ async function loadTopBanner() {
   try {
     const res = await fetch(FB_URL + '/adslots/topbanner.json');
     const ad = await res.json();
-    if (!ad || !ad.url || ad.url === 'https://example.com') return;
+    if (!ad || !ad.url) return;
     const wrap = document.getElementById('topBanner');
     if (!wrap) return;
     wrap.style.display = 'block';
