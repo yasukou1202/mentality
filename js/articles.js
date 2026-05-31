@@ -185,9 +185,11 @@ async function loadAds() {
   return Object.entries(data).map(([id, a]) => ({id, ...a}));
 }
 
-function openAdManager() {
-  const pw = prompt('パスワードを入力してください');
-  if (pw !== ADMIN_PASSWORD) { alert('パスワードが違います'); return; }
+function openAdManager(skipAuth) {
+  if (!skipAuth) {
+    const pw = prompt('パスワードを入力してください');
+    if (pw !== ADMIN_PASSWORD) { alert('パスワードが違います'); return; }
+  }
   const modal = document.getElementById('adManagerModal');
   if (modal) { modal.style.display = 'block'; renderAdManager(); }
 }
