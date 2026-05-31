@@ -307,9 +307,21 @@
       <div style="font-size:.9rem;font-weight:700;color:var(--tx);margin-bottom:1rem;text-align:center;">管理メニュー</div>
       <button onclick="document.getElementById('adminSelectModal').style.display='none';document.getElementById('adminModal').style.display='block';loadAdminArticles();loadDrafts();" style="width:100%;padding:.8rem;background:var(--or);border:none;color:#fff;border-radius:10px;font-size:.85rem;font-weight:700;cursor:pointer;margin-bottom:.6rem;">📝 記事管理</button>
       <button onclick="document.getElementById('adminSelectModal').style.display='none';openAdManager(true);" style="width:100%;padding:.8rem;background:var(--bg3);border:1px solid var(--bd);color:var(--tx);border-radius:10px;font-size:.85rem;font-weight:700;cursor:pointer;margin-bottom:.6rem;">📢 広告管理</button>
+      <button onclick="document.getElementById('adminSelectModal').style.display='none';openSnsManager();" style="width:100%;padding:.8rem;background:var(--bg3);border:1px solid var(--bd);color:var(--tx);border-radius:10px;font-size:.85rem;font-weight:700;cursor:pointer;margin-bottom:.6rem;">📱 SNS管理</button>
       <button onclick="document.getElementById('adminSelectModal').style.display='none';openSnkModal();loadAdminSneakers();" style="width:100%;padding:.8rem;background:var(--bg3);border:1px solid var(--bd);color:var(--tx);border-radius:10px;font-size:.85rem;font-weight:700;cursor:pointer;margin-bottom:.6rem;">👟 バッシュ投稿</button>
       <button onclick="document.getElementById('adminSelectModal').style.display='none';openUserModal();" style="width:100%;padding:.8rem;background:var(--bg3);border:1px solid var(--bd);color:var(--tx);border-radius:10px;font-size:.85rem;font-weight:700;cursor:pointer;margin-bottom:.6rem;">👥 ユーザー管理</button>
       <button onclick="document.getElementById('adminSelectModal').style.display='none';" style="width:100%;padding:.6rem;background:none;border:none;color:var(--tx3);font-size:.8rem;cursor:pointer;">キャンセル</button>
+    </div>
+  </div>
+
+  <!-- SNS管理モーダル -->
+  <div id="snsManagerModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:500;background:var(--bg);overflow-y:auto;">
+    <div style="padding:1rem;max-width:480px;margin:0 auto;">
+      <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;">
+        <button onclick="closeSnsManager();document.getElementById('adminSelectModal').style.display='block';" style="background:var(--bg3);border:none;color:var(--tx);padding:.3rem .7rem;border-radius:8px;font-size:.75rem;cursor:pointer;">← 戻る</button>
+        <span style="font-size:.85rem;font-weight:700;color:var(--tx);">SNS管理</span>
+      </div>
+      <div id="snsManagerList"></div>
     </div>
   </div>
 
@@ -411,6 +423,8 @@
 </div>
 
 
+<div id="snsBar" style="display:none;position:fixed;bottom:48px;left:0;right:0;z-index:90;background:var(--bg2);border-top:1px solid var(--bd);padding:.5rem 1rem;display:flex;justify-content:center;gap:1.5rem;">
+</div>
 <footer class="footer">
   <div class="foot-links">
     <span class="foot-link" onclick="openLegal('tokusho')">特定商取引法</span>
