@@ -323,7 +323,7 @@ async function saveDraft() {
   const title    = document.getElementById('adminTitle').value.trim();
   const body     = document.getElementById('adminBody').value.trim();
   const category = document.getElementById('adminCategory').value;
-  const thumb    = document.getElementById('adminThumb').value.trim();
+  const thumb    = document.getElementById('adminThumb')?.value.trim() || '';
 
   if (!title && !body) { alert('タイトルか本文を入力してください'); return; }
 
