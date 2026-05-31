@@ -210,7 +210,7 @@ async function loadESPNLeaders(stat, mode) {
     try {
       const ar = await fetch(FB_URL + '/adslots.json');
       const ad = await ar.json() || {};
-      statsAds = ['stats_1','stats_2'].map(k => ad[k]).filter(a => a && a.url);
+      statsAds = ['stats_1','stats_2'].map(k => ad[k]).filter(a => a && a.url && a.enabled !== false);
     } catch(e) {}
     const statsAdHTML = (ad) => `<a href="${ad.url}" target="_blank" style="display:block;text-decoration:none;margin:.3rem 0;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:.6rem .8rem;"><div style="display:flex;align-items:center;gap:.5rem;">${ad.img ? `<img src="${ad.img}" style="width:40px;height:40px;border-radius:6px;object-fit:cover;flex-shrink:0;" onerror="this.style.display='none'">` : ''}<div style="flex:1;min-width:0;"><span style="font-size:.5rem;background:rgba(255,90,0,.15);color:var(--or);padding:.1rem .4rem;border-radius:10px;font-weight:700;">PR</span><div style="font-size:.7rem;font-weight:700;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${ad.title}</div></div><div style="color:var(--tx3);font-size:.8rem;">›</div></div></a>`;
 

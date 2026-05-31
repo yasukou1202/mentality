@@ -130,7 +130,7 @@ async function renderArticles(articles) {
   try {
     const ar = await fetch(FB_URL + '/adslots.json');
     const ad = await ar.json() || {};
-    newsAds = ['news_1','news_2'].map(k => ad[k]).filter(a => a && a.url);
+    newsAds = ['news_1','news_2'].map(k => ad[k]).filter(a => a && a.url && a.enabled !== false);
   } catch(e) {}
 
   const adCardHTML = (ad) => `

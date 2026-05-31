@@ -41,7 +41,7 @@ async function loadArticles() {
     try {
       const ar = await fetch(FB_URL + '/adslots.json');
       const ad = await ar.json() || {};
-      articleAds = ['articles_1'].map(k => ad[k]).filter(a => a && a.url);
+      articleAds = ['articles_1'].map(k => ad[k]).filter(a => a && a.url && a.enabled !== false);
     } catch(e) {}
 
     if (!data) {
@@ -206,7 +206,15 @@ async function renderAdManager() {
     const slots = await res.json() || {};
     wrap.innerHTML = Object.entries(slots).map(([slotId, slot]) => `
       <div style="background:var(--bg3);border-radius:10px;padding:.8rem;margin-bottom:.7rem;">
-        <div style="font-size:.72rem;font-weight:700;color:var(--or);margin-bottom:.5rem;">${slot.label}</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem;">
+          <div style="font-size:.72rem;font-weight:700;color:var(--or);">${slot.label}</div>
+          <label style="display:flex;align-items:center;gap:.4rem;cursor:pointer;">
+            <span style="font-size:.65rem;color:var(--tx3);">${slot.enabled === false ? 'OFF' : 'ON'}</span>
+            <div onclick="toggleSlot('${slotId}', ${slot.enabled === false})" style="width:36px;height:20px;border-radius:10px;background:${slot.enabled === false ? 'var(--bd)' : 'var(--or)'};position:relative;cursor:pointer;transition:background .2s;">
+              <div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;${slot.enabled === false ? 'left:2px' : 'left:18px'};transition:left .2s;"></div>
+            </div>
+          </label>
+        </div>
         <input id="ad_title_${slotId}" type="text" placeholder="タイトル" value="${slot.title||''}" style="width:100%;padding:.4rem;border-radius:6px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);font-size:.75rem;box-sizing:border-box;margin-bottom:.4rem;">
         <input id="ad_url_${slotId}" type="text" placeholder="リンクURL" value="${slot.url||''}" style="width:100%;padding:.4rem;border-radius:6px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);font-size:.75rem;box-sizing:border-box;margin-bottom:.4rem;">
         <input id="ad_img_${slotId}" type="text" placeholder="画像URL（任意）" value="${slot.img||''}" style="width:100%;padding:.4rem;border-radius:6px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);font-size:.75rem;box-sizing:border-box;margin-bottom:.5rem;">
@@ -378,3 +386,12 @@ async function deleteDraft(id) {
   loadDrafts();
 }
 // draft fix v2
+
+async function toggleSlot(slotId, currentlyOff) {
+  await fetch(FB_URL + '/adslots/' + slotId + '.json', {
+    method: 'PATCH',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ enabled: currentlyOff })
+  });
+  renderAdManager();
+}

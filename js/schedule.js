@@ -155,7 +155,7 @@ async function renderGames() {
   try {
     const adRes = await fetch(FB_URL + '/adslots.json');
     const adData = await adRes.json() || {};
-    ADS = ['schedule_1','schedule_2'].map(k => adData[k]).filter(a => a && a.url);
+    ADS = ['schedule_1','schedule_2'].map(k => adData[k]).filter(a => a && a.url && a.enabled !== false);
   } catch(e) {}
 
   const adHTML = (ad) => `

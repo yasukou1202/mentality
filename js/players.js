@@ -176,7 +176,7 @@ async function renderPlayerCards(players) {
   try {
     const ar = await fetch(FB_URL + '/adslots.json');
     const ad = await ar.json() || {};
-    playersAds = ['players_1'].map(k => ad[k]).filter(a => a && a.url);
+    playersAds = ['players_1'].map(k => ad[k]).filter(a => a && a.url && a.enabled !== false);
   } catch(e) {}
 
   grid.innerHTML = filtered.map(p => {
