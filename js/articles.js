@@ -377,3 +377,4 @@ async function deleteDraft(id) {
   await fetch(`${FB_DRAFTS}/${id}.json`, { method: 'DELETE' });
   loadDrafts();
 }
+// draft fix v2
