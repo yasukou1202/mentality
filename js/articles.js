@@ -315,3 +315,65 @@ function insertProductLink(targetId) {
   ta.value = ta.value.slice(0, pos) + card + ta.value.slice(pos);
   ta.dispatchEvent(new Event('input'));
 }
+
+// 下書き保存
+const FB_DRAFTS = `${FB_URL}/drafts`;
+
+async function saveDraft() {
+  const title    = document.getElementById('adminTitle').value.trim();
+  const body     = document.getElementById('adminBody').value.trim();
+  const category = document.getElementById('adminCategory').value;
+  const thumb    = document.getElementById('adminThumb').value.trim();
+
+  if (!title && !body) { alert('タイトルか本文を入力してください'); return; }
+
+  await fetch(FB_DRAFTS + '.json', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ title, body, category, thumb, ts: Date.now() })
+  });
+
+  alert('下書きを保存しました！');
+  loadDrafts();
+}
+
+async function loadDrafts() {
+  const wrap = document.getElementById('draftList');
+  if (!wrap) return;
+  try {
+    const res = await fetch(FB_DRAFTS + '.json');
+    const data = await res.json();
+    if (!data) { wrap.innerHTML = '<div style="font-size:.7rem;color:var(--tx3);">下書きがありません</div>'; return; }
+    const drafts = Object.entries(data).map(([id,d]) => ({id,...d})).sort((a,b) => b.ts - a.ts);
+    wrap.innerHTML = drafts.map(d => `
+      <div style="background:var(--bg3);border-radius:8px;padding:.6rem;margin-bottom:.4rem;display:flex;align-items:center;gap:.5rem;">
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:.72rem;font-weight:700;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${d.title || '無題'}</div>
+          <div style="font-size:.58rem;color:var(--tx3);">${new Date(d.ts).toLocaleDateString('ja-JP')}</div>
+        </div>
+        <button onclick="loadDraft('${d.id}')" style="background:rgba(0,150,255,.15);border:none;color:#0096ff;padding:.3rem .5rem;border-radius:6px;font-size:.65rem;cursor:pointer;">編集</button>
+        <button onclick="deleteDraft('${d.id}')" style="background:rgba(255,50,50,.15);border:none;color:#ff5555;padding:.3rem .5rem;border-radius:6px;font-size:.65rem;cursor:pointer;">削除</button>
+      </div>
+    `).join('');
+  } catch(e) {
+    wrap.innerHTML = '<div style="font-size:.7rem;color:var(--tx3);">取得失敗</div>';
+  }
+}
+
+async function loadDraft(id) {
+  const res = await fetch(`${FB_DRAFTS}/${id}.json`);
+  const d = await res.json();
+  if (!d) return;
+  document.getElementById('adminTitle').value    = d.title || '';
+  document.getElementById('adminBody').value     = d.body || '';
+  document.getElementById('adminCategory').value = d.category || 'NBA';
+  document.getElementById('adminThumb').value    = d.thumb || '';
+  updatePreview();
+  alert('下書きを読み込みました！編集後に投稿するか再保存してください。');
+}
+
+async function deleteDraft(id) {
+  if (!confirm('この下書きを削除しますか？')) return;
+  await fetch(`${FB_DRAFTS}/${id}.json`, { method: 'DELETE' });
+  loadDrafts();
+}
